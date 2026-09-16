@@ -93,7 +93,8 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'FIREFOX', price: '0 ₽', image: 'skins/firefox.png' },
         { name: 'Тимоша Музыка', price: '0 ₽', image: 'skins/tmusic.png' },
         { name: 'beatlewind', price: '0 ₽', image: 'skins/beatlewind.png' },
-        { name: 'Toxinator', price: '50 ₽', image: 'skins/toxinator.png' }
+        { name: 'Toxinator', price: '50 ₽', image: 'skins/toxinator.png' },
+        { name: 'арсик', price: '0 ₽', image: 'skins/zakazMAJORrender.png' }
     ];
 
     const itemsPerPage = 4;
