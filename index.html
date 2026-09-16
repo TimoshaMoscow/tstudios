@@ -9,10 +9,10 @@
     <!-- ====== КАНОНИЧЕСКАЯ ССЫЛКА ====== -->
     <link rel="canonical" href="https://timoshamoscow.github.io/tstudios/">
     
-    <!-- ====== ЗАГОЛОВОК (70-75 символов) ====== -->
+    <!-- ====== ЗАГОЛОВОК ====== -->
     <title>TStudios — Заказ скинов и рендеров Minecraft | Тимошка из Москвы</title>
     
-    <!-- ====== ОПИСАНИЕ (150-160 символов) ====== -->
+    <!-- ====== ОПИСАНИЕ ====== -->
     <meta name="description" content="TStudios — студия по созданию скинов, рендеров и клипов Minecraft на заказ. Индивидуальный дизайн, низкие цены от 49₽. Основатель — Тимошка из Москвы.">
     
     <!-- ====== КЛЮЧЕВЫЕ СЛОВА ====== -->
@@ -23,7 +23,7 @@
     <meta name="robots" content="index, follow">
     <meta name="revisit-after" content="7 days">
     
-    <!-- ====== OPEN GRAPH (для соцсетей) ====== -->
+    <!-- ====== OPEN GRAPH ====== -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://timoshamoscow.github.io/tstudios/">
     <meta property="og:title" content="TStudios — Заказ скинов и рендеров Minecraft">
@@ -41,13 +41,13 @@
     <meta name="twitter:description" content="Студия TStudios: скины, рендеры и клипы Minecraft на заказ. Индивидуальный дизайн от Тимошки из Москвы.">
     <meta name="twitter:image" content="https://timoshamoscow.github.io/tstudios/logo.png">
     
-    <!-- ====== GEO META (для локального поиска) ====== -->
+    <!-- ====== GEO META ====== -->
     <meta name="geo.region" content="RU-MOW">
     <meta name="geo.placename" content="Moscow">
     <meta name="geo.position" content="55.7558;37.6173">
     <meta name="ICBM" content="55.7558, 37.6173">
     
-    <!-- ====== ПРОВЕРКА ВЛАДЕЛЬЦА (Google Search Console) ====== -->
+    <!-- ====== ПРОВЕРКА ВЛАДЕЛЬЦА ====== -->
     <meta name="google-site-verification" content="jBY-ytvwYjSY1Jn9kXCqns11_XIrfqZlssMgNCpi8t0" />
     
     <!-- ====== ПРОДВИНУТЫЕ META ====== -->
@@ -100,7 +100,7 @@
     }
     </script>
     
-    <!-- ====== ХЛЕБНЫЕ КРОШКИ (BreadcrumbList) ====== -->
+    <!-- ====== ХЛЕБНЫЕ КРОШКИ ====== -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -128,7 +128,7 @@
     }
     </script>
     
-    <!-- ====== FAQPage (часто задаваемые вопросы) ====== -->
+    <!-- ====== FAQPage ====== -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -174,7 +174,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- ====== ПРЕДЗАГРУЗКА (Preload) ====== -->
+    <!-- ====== ПРЕДЗАГРУЗКА ====== -->
     <link rel="preload" href="logo.png" as="image">
     <link rel="preload" href="style.css" as="style">
     <link rel="preload" href="script.js" as="script">
@@ -185,6 +185,14 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 </head>
 <body>
+
+    <!-- ====== ФОНОВЫЕ ЭФФЕКТЫ ====== -->
+    <div class="bg-effects" aria-hidden="true">
+        <div class="bg-orb bg-orb-1"></div>
+        <div class="bg-orb bg-orb-2"></div>
+        <div class="bg-orb bg-orb-3"></div>
+        <div class="bg-grid"></div>
+    </div>
 
     <!-- ====== ХЕДЕР/НАВИГАЦИЯ ====== -->
     <header class="header glass" role="banner" itemscope itemtype="https://schema.org/WPHeader">
@@ -212,8 +220,12 @@
     <section class="hero" id="home" itemscope itemtype="https://schema.org/WebPageElement">
         <div class="container hero-content">
             <div class="hero-text glass">
+                <div class="hero-badge">
+                    <i class="fas fa-star"></i> Официальная студия Тимошки из Москвы
+                </div>
                 <h1 class="glitch" data-text="TStudios" itemprop="headline">TStudios</h1>
                 <p class="subtitle">Скины и рендеры <span class="highlight">Minecraft</span> на заказ</p>
+                <p class="hero-description">Индивидуальный дизайн, быстрые сроки и доступные цены. От идеи до готового результата — за 1-2 дня.</p>
                 <div class="hero-buttons">
                     <a href="https://www.youtube.com/channel/UCnyaLt81O3C-S5uWcpxwhIA" target="_blank" class="btn btn-primary" rel="noopener" aria-label="Перейти на YouTube канал"><i class="fab fa-youtube"></i> YouTube</a>
                     <a href="#contact" class="btn btn-secondary" aria-label="Перейти к контактам для заказа"><i class="fab fa-discord"></i> Заказать</a>
@@ -221,12 +233,16 @@
             </div>
             <div class="hero-stats glass" itemscope itemtype="https://schema.org/Offer">
                 <div class="stat-item">
-                    <span class="stat-number">5+</span>
+                    <span class="stat-number" data-count="5">0</span>
                     <span class="stat-label">Готовых работ</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-number">100%</span>
                     <span class="stat-label">Индивидуально</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">На связи</span>
                 </div>
             </div>
         </div>
@@ -241,26 +257,35 @@
             <h2 class="section-title glass-title" itemprop="name">Что мы делаем</h2>
             <div class="services-grid">
                 <div class="service-card glass" data-aos="fade-up" data-aos-delay="100" itemprop="hasOfferCatalog" itemscope itemtype="https://schema.org/OfferCatalog">
-                    <i class="fas fa-paint-brush service-icon" aria-hidden="true"></i>
+                    <div class="service-icon-wrapper">
+                        <i class="fas fa-paint-brush service-icon" aria-hidden="true"></i>
+                    </div>
                     <h3 itemprop="name">Скины</h3>
                     <p itemprop="description">Разработка уникальных скинов с нуля под ваш образ или бренд.</p>
                     <meta itemprop="price" content="99">
                     <meta itemprop="priceCurrency" content="RUB">
+                    <div class="service-price-tag">от 99 ₽</div>
                 </div>
                 <div class="service-card glass" data-aos="fade-up" data-aos-delay="200" itemprop="hasOfferCatalog" itemscope itemtype="https://schema.org/OfferCatalog">
-                    <i class="fas fa-cube service-icon" aria-hidden="true"></i>
+                    <div class="service-icon-wrapper">
+                        <i class="fas fa-cube service-icon" aria-hidden="true"></i>
+                    </div>
                     <h3 itemprop="name">Рендеры</h3>
                     <p itemprop="description">Профессиональные рендеры ваших скинов для обложек и аватарок.</p>
                     <meta itemprop="price" content="49">
                     <meta itemprop="priceCurrency" content="RUB">
+                    <div class="service-price-tag">от 49 ₽</div>
                 </div>
                 <div class="service-card glass" data-aos="fade-up" data-aos-delay="300" itemprop="hasOfferCatalog" itemscope itemtype="https://schema.org/OfferCatalog">
-                    <i class="fas fa-music service-icon" aria-hidden="true"></i>
+                    <div class="service-icon-wrapper">
+                        <i class="fas fa-music service-icon" aria-hidden="true"></i>
+                    </div>
                     <h3 itemprop="name">Клипы</h3>
                     <p itemprop="description">Полноценные музыкальные клипы в стилистике Minecraft.</p>
                     <a href="https://youtube.com/playlist?list=PLIhDnx_q8JExX9YkmUKPxAZ7qVjfxIKfV&si=DOXWCUkR0cUQ87UG" target="_blank" class="service-link" rel="noopener" aria-label="Смотреть плейлист клипов на YouTube">Смотреть плейлист <i class="fas fa-arrow-right"></i></a>
                     <meta itemprop="price" content="499">
                     <meta itemprop="priceCurrency" content="RUB">
+                    <div class="service-price-tag">от 499 ₽</div>
                 </div>
             </div>
         </div>
@@ -273,7 +298,7 @@
 
             <div class="pricing-grid">
                 <!-- Карточка: Скины -->
-                <div class="pricing-card glass featured" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                <div class="pricing-card glass featured" id="skinCard" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                     <div class="pricing-badge">Популярное</div>
                     <div class="pricing-icon">
                         <i class="fas fa-paint-brush" aria-hidden="true"></i>
@@ -380,57 +405,11 @@
         <div class="container">
             <h2 class="section-title glass-title" itemprop="name">Отзывы клиентов</h2>
             <div class="reviews-slider" id="reviewsSlider">
-                <!-- Отзыв 1 -->
-                <div class="review-card glass active" itemprop="review" itemscope itemtype="https://schema.org/Review">
-                    <div class="review-header">
-                        <span class="reviewer-name" itemprop="author">FIREFOX</span>
-                        <div class="stars" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
-                            <meta itemprop="ratingValue" content="5">
-                            <meta itemprop="bestRating" content="5">
-                            ★★★★★
-                        </div>
-                    </div>
-                    <p class="review-text" itemprop="reviewBody">"Очень хорошее качество и очень не плохое качество рук и буква моего канала."</p>
-                </div>
-                <!-- Отзыв 2 -->
-                <div class="review-card glass" itemprop="review" itemscope itemtype="https://schema.org/Review">
-                    <div class="review-header">
-                        <span class="reviewer-name" itemprop="author">Beatlewind</span>
-                        <div class="stars" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
-                            <meta itemprop="ratingValue" content="4">
-                            <meta itemprop="bestRating" content="5">
-                            ★★★★☆
-                        </div>
-                    </div>
-                    <p class="review-text" itemprop="reviewBody">"Хорошо подобран стиль, но не хватает уникальности и изюминки в скине."</p>
-                </div>
-                <!-- Отзыв 3 -->
-                <div class="review-card glass active" itemprop="review" itemscope itemtype="https://schema.org/Review">
-                    <div class="review-header">
-                        <span class="reviewer-name" itemprop="author">Тимоша Музыка</span>
-                        <div class="stars" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
-                            <meta itemprop="ratingValue" content="5">
-                            <meta itemprop="bestRating" content="5">
-                            ★★★★★
-                        </div>
-                    </div>
-                    <p class="review-text" itemprop="reviewBody">"Классный Скин!"</p>
-                </div>
-                <!-- Отзыв 3 -->
-                <div class="review-card glass active" itemprop="review" itemscope itemtype="https://schema.org/Review">
-                    <div class="review-header">
-                        <span class="reviewer-name" itemprop="author">арсик</span>
-                        <div class="stars" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
-                            <meta itemprop="ratingValue" content="5">
-                            <meta itemprop="bestRating" content="5">
-                            ★★★★★
-                        </div>
-                    </div>
-                    <p class="review-text" itemprop="reviewBody">"автор красава, все четко сделал:)"</p>
-                </div>
+                <!-- Отзывы загружаются через JavaScript -->
             </div>
             <div class="slider-controls">
                 <button class="slider-btn" id="prevReview" aria-label="Предыдущий отзыв"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+                <div class="slider-dots" id="reviewDots"></div>
                 <button class="slider-btn" id="nextReview" aria-label="Следующий отзыв"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
             </div>
         </div>
@@ -467,7 +446,7 @@
         </div>
     </footer>
 
-    <!-- ====== СТРУКТУРИРОВАННЫЙ ДАННЫЕ ДЛЯ LOCAL BUSINESS ====== -->
+    <!-- ====== LOCAL BUSINESS ====== -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
