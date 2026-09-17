@@ -55,6 +55,7 @@
     <link rel="apple-touch-icon" href="logo.png">
     <link rel="shortcut icon" href="logo.png" type="image/x-icon">
     
+    <!-- ====== СТРУКТУРИРОВАННЫЕ ДАННЫЕ: Organization ====== -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -88,6 +89,7 @@
     }
     </script>
     
+    <!-- ====== СТРУКТУРИРОВАННЫЕ ДАННЫЕ: BreadcrumbList ====== -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -115,6 +117,7 @@
     }
     </script>
     
+    <!-- ====== СТРУКТУРИРОВАННЫЕ ДАННЫЕ: FAQPage ====== -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -150,6 +153,170 @@
                 "acceptedAnswer": {
                     "@type": "Answer",
                     "text": "Стоимость клипов начинается от 499 рублей и зависит от сложности проекта. Включает полноценный монтаж, эффекты и звуковое сопровождение."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- ====== СТРУКТУРИРОВАННЫЕ ДАННЫЕ: Товары (Product + Offer с корректными полями) ====== -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "TStudios — Услуги для Minecraft",
+        "description": "Скины, рендеры и клипы Minecraft на заказ от студии TStudios",
+        "image": "https://timoshamoscow.github.io/tstudios/logo.png",
+        "brand": {
+            "@type": "Brand",
+            "name": "TStudios"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "bestRating": "5",
+            "worstRating": "1",
+            "ratingCount": "4",
+            "reviewCount": "4"
+        },
+        "offers": [
+            {
+                "@type": "Offer",
+                "name": "Скины Minecraft на заказ",
+                "description": "Уникальный дизайн скина, 3D-рендер в подарок, правки до 3-х раз. Срок изготовления: 1-2 дня.",
+                "price": "99",
+                "priceCurrency": "RUB",
+                "availability": "https://schema.org/InStock",
+                "url": "https://timoshamoscow.github.io/tstudios/#pricing",
+                "image": "https://timoshamoscow.github.io/tstudios/logo.png",
+                "seller": {
+                    "@type": "Organization",
+                    "name": "TStudios"
+                }
+            },
+            {
+                "@type": "Offer",
+                "name": "Рендеры Minecraft на заказ",
+                "description": "HD-качество, выбор фона, правки до 2-х раз. Срок изготовления: до 24 часов.",
+                "price": "49",
+                "priceCurrency": "RUB",
+                "availability": "https://schema.org/InStock",
+                "url": "https://timoshamoscow.github.io/tstudios/#pricing",
+                "image": "https://timoshamoscow.github.io/tstudios/logo.png",
+                "seller": {
+                    "@type": "Organization",
+                    "name": "TStudios"
+                }
+            },
+            {
+                "@type": "Offer",
+                "name": "Клипы Minecraft на заказ",
+                "description": "Полноценный клип, монтаж и эффекты, звуковое сопровождение. Срок изготовления: от 3 дней.",
+                "price": "499",
+                "priceCurrency": "RUB",
+                "availability": "https://schema.org/InStock",
+                "url": "https://timoshamoscow.github.io/tstudios/#pricing",
+                "image": "https://timoshamoscow.github.io/tstudios/logo.png",
+                "seller": {
+                    "@type": "Organization",
+                    "name": "TStudios"
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- ====== СТРУКТУРИРОВАННЫЕ ДАННЫЕ: Отзывы (правильная структура) ====== -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "TStudios — Услуги для Minecraft",
+        "image": "https://timoshamoscow.github.io/tstudios/logo.png",
+        "description": "Скины, рендеры и клипы Minecraft на заказ от студии TStudios",
+        "brand": {
+            "@type": "Brand",
+            "name": "TStudios"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "bestRating": "5",
+            "worstRating": "1",
+            "ratingCount": "4",
+            "reviewCount": "4"
+        },
+        "review": [
+            {
+                "@type": "Review",
+                "author": {
+                    "@type": "Person",
+                    "name": "FIREFOX"
+                },
+                "reviewRating": {
+                    "@type": "Rating",
+                    "ratingValue": "5",
+                    "bestRating": "5",
+                    "worstRating": "1"
+                },
+                "reviewBody": "Очень хорошее качество и очень не плохое качество рук и буква моего канала.",
+                "itemReviewed": {
+                    "@type": "Product",
+                    "name": "TStudios — Услуги для Minecraft"
+                }
+            },
+            {
+                "@type": "Review",
+                "author": {
+                    "@type": "Person",
+                    "name": "Beatlewind"
+                },
+                "reviewRating": {
+                    "@type": "Rating",
+                    "ratingValue": "4",
+                    "bestRating": "5",
+                    "worstRating": "1"
+                },
+                "reviewBody": "Хорошо подобран стиль, но не хватает уникальности и изюминки в скине.",
+                "itemReviewed": {
+                    "@type": "Product",
+                    "name": "TStudios — Услуги для Minecraft"
+                }
+            },
+            {
+                "@type": "Review",
+                "author": {
+                    "@type": "Person",
+                    "name": "Тимоша Музыка"
+                },
+                "reviewRating": {
+                    "@type": "Rating",
+                    "ratingValue": "5",
+                    "bestRating": "5",
+                    "worstRating": "1"
+                },
+                "reviewBody": "Классный Скин!",
+                "itemReviewed": {
+                    "@type": "Product",
+                    "name": "TStudios — Услуги для Minecraft"
+                }
+            },
+            {
+                "@type": "Review",
+                "author": {
+                    "@type": "Person",
+                    "name": "арсик"
+                },
+                "reviewRating": {
+                    "@type": "Rating",
+                    "ratingValue": "5",
+                    "bestRating": "5",
+                    "worstRating": "1"
+                },
+                "reviewBody": "автор красава, все четко сделал:)",
+                "itemReviewed": {
+                    "@type": "Product",
+                    "name": "TStudios — Услуги для Minecraft"
                 }
             }
         ]
@@ -276,12 +443,12 @@
 
             <div class="pricing-grid">
                 <!-- Карточка: Скины -->
-                <div class="pricing-card glass featured" id="skinCard" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                <div class="pricing-card glass featured" id="skinCard">
                     <div class="pricing-badge">Популярное</div>
                     <div class="pricing-icon">
                         <i class="fas fa-paint-brush" aria-hidden="true"></i>
                     </div>
-                    <h3 itemprop="name">Скины</h3>
+                    <h3>Скины</h3>
                     
                     <div class="gender-switcher" id="genderSwitcher" role="group" aria-label="Выбор пола скина">
                         <button class="gender-btn active" data-gender="male" id="maleBtn" aria-pressed="true">
@@ -293,60 +460,57 @@
                     </div>
 
                     <div class="pricing-price">
-                        <span class="price-amount" id="skinPrice" itemprop="price">99</span>
-                        <span class="price-currency" itemprop="priceCurrency">₽</span>
+                        <span class="price-amount" id="skinPrice">99</span>
+                        <span class="price-currency">₽</span>
                     </div>
                     <p class="price-note" id="skinNote">Индивидуальный дизайн</p>
-                    <ul class="pricing-features" itemprop="description">
+                    <ul class="pricing-features">
                         <li><i class="fas fa-check" aria-hidden="true"></i> Уникальный дизайн</li>
                         <li><i class="fas fa-check" aria-hidden="true"></i> 3D-рендер в подарок</li>
                         <li><i class="fas fa-check" aria-hidden="true"></i> Правки до 3-х раз</li>
                         <li><i class="fas fa-check" aria-hidden="true"></i> Срок: 1-2 дня</li>
                     </ul>
                     <button type="button" class="btn btn-primary btn-pricing" data-service="Скин" aria-label="Заказать скин">Заказать</button>
-                    <meta itemprop="availability" content="https://schema.org/InStock">
                 </div>
 
                 <!-- Карточка: Рендеры -->
-                <div class="pricing-card glass" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                <div class="pricing-card glass">
                     <div class="pricing-icon">
                         <i class="fas fa-cube" aria-hidden="true"></i>
                     </div>
-                    <h3 itemprop="name">Рендеры</h3>
+                    <h3>Рендеры</h3>
                     <div class="pricing-price">
-                        <span class="price-amount" itemprop="price">49</span>
-                        <span class="price-currency" itemprop="priceCurrency">₽</span>
+                        <span class="price-amount">49</span>
+                        <span class="price-currency">₽</span>
                     </div>
                     <p class="price-note">За 1 рендер</p>
-                    <ul class="pricing-features" itemprop="description">
+                    <ul class="pricing-features">
                         <li><i class="fas fa-check" aria-hidden="true"></i> HD качество</li>
                         <li><i class="fas fa-check" aria-hidden="true"></i> На выбор фон</li>
                         <li><i class="fas fa-check" aria-hidden="true"></i> Правки до 2-х раз</li>
                         <li><i class="fas fa-check" aria-hidden="true"></i> Срок: до 24 часов</li>
                     </ul>
                     <button type="button" class="btn btn-secondary btn-pricing" data-service="Рендер" aria-label="Заказать рендер">Заказать</button>
-                    <meta itemprop="availability" content="https://schema.org/InStock">
                 </div>
 
                 <!-- Карточка: Клипы -->
-                <div class="pricing-card glass" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                <div class="pricing-card glass">
                     <div class="pricing-icon">
                         <i class="fas fa-music" aria-hidden="true"></i>
                     </div>
-                    <h3 itemprop="name">Клипы</h3>
+                    <h3>Клипы</h3>
                     <div class="pricing-price">
-                        <span class="price-amount" itemprop="price">499</span>
-                        <span class="price-currency" itemprop="priceCurrency">₽</span>
+                        <span class="price-amount">499</span>
+                        <span class="price-currency">₽</span>
                     </div>
                     <p class="price-note">Цена договорная</p>
-                    <ul class="pricing-features" itemprop="description">
+                    <ul class="pricing-features">
                         <li><i class="fas fa-check" aria-hidden="true"></i> Полноценный клип</li>
                         <li><i class="fas fa-check" aria-hidden="true"></i> Монтаж и эффекты</li>
                         <li><i class="fas fa-check" aria-hidden="true"></i> Звуковое сопровождение</li>
                         <li><i class="fas fa-check" aria-hidden="true"></i> Срок: от 3 дней</li>
                     </ul>
                     <button type="button" class="btn btn-secondary btn-pricing" data-service="Клип" aria-label="Обсудить клип">Обсудить</button>
-                    <meta itemprop="availability" content="https://schema.org/InStock">
                 </div>
             </div>
         </div>
@@ -370,9 +534,10 @@
         </div>
     </section>
 
-    <section class="reviews" id="reviews" itemscope itemtype="https://schema.org/Review">
+    <!-- ====== ОТЗЫВЫ (БЕЗ микроразметки в HTML — она в JSON-LD) ====== -->
+    <section class="reviews" id="reviews">
         <div class="container">
-            <h2 class="section-title glass-title" itemprop="name">Отзывы клиентов</h2>
+            <h2 class="section-title glass-title">Отзывы клиентов</h2>
             <div class="reviews-slider" id="reviewsSlider"></div>
             <div class="slider-controls">
                 <button class="slider-btn" id="prevReview" aria-label="Предыдущий отзыв"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
@@ -395,10 +560,9 @@
                         <li><a href="https://discord.com/users/1146355058880040970" target="_blank" rel="noopener" id="discordLink" aria-label="Discord Тимошки"><i class="fab fa-discord" aria-hidden="true"></i> Discord: timosha_moscow</a></li>
                     </ul>
                 </div>
-                <div class="contact-cta" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                    <p itemprop="description">Готов начать свой проект?</p>
+                <div class="contact-cta">
+                    <p>Готов начать свой проект?</p>
                     <a href="https://discord.com/users/1146355058880040970" target="_blank" rel="noopener" class="btn btn-primary btn-large" aria-label="Написать в Discord для заказа"><i class="fab fa-discord" aria-hidden="true"></i> Написать в Discord</a>
-                    <meta itemprop="availability" content="https://schema.org/InStock">
                 </div>
             </div>
         </div>
@@ -418,7 +582,6 @@
                 <i class="fas fa-times"></i>
             </button>
 
-            <!-- Шаг 1: Форма -->
             <div class="modal-step" id="modalStepForm">
                 <div class="modal-header">
                     <h3 id="modalTitle">Оформление заказа</h3>
@@ -426,13 +589,11 @@
                 </div>
 
                 <form id="orderForm" class="order-form" novalidate>
-                    <!-- Общее поле: Имя (для всех услуг) -->
                     <div class="form-group">
                         <label for="orderName">Ваше имя / никнейм *</label>
                         <input type="text" id="orderName" name="name" placeholder="Например: Steve" required maxlength="50">
                     </div>
 
-                    <!-- === УНИКАЛЬНЫЕ ПОЛЯ ДЛЯ СКИНА === -->
                     <div class="service-fields" id="fieldsSkin" hidden>
                         <div class="form-group">
                             <label>Пол скина</label>
@@ -447,24 +608,20 @@
                                 </label>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label for="skinTheme">Тема / стиль скина *</label>
                             <input type="text" id="skinTheme" name="theme" placeholder="Например: рыцарь, киберпанк, аниме-персонаж..." maxlength="80" required>
                         </div>
-
                         <div class="form-group">
                             <label for="skinColors">Цветовая гамма</label>
                             <input type="text" id="skinColors" name="colors" placeholder="Например: синий + чёрный, красный акцент..." maxlength="80">
                         </div>
-
                         <div class="form-group">
                             <label for="skinRefs">Референсы (ссылки)</label>
                             <input type="text" id="skinRefs" name="refs" placeholder="Ссылки на картинки, если есть" maxlength="200">
                         </div>
                     </div>
 
-                    <!-- === УНИКАЛЬНЫЕ ПОЛЯ ДЛЯ РЕНДЕРА === -->
                     <div class="service-fields" id="fieldsRender" hidden>
                         <div class="form-group">
                             <label>Тип рендера</label>
@@ -483,7 +640,6 @@
                                 </label>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label for="renderPose">Поза / ракурс *</label>
                             <select id="renderPose" name="pose" required>
@@ -496,19 +652,16 @@
                                 <option value="Другая (опишу ниже)">Другая (опишу ниже)</option>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label for="renderBg">Фон</label>
                             <input type="text" id="renderBg" name="background" placeholder="Например: замок, космос, градиент, абстракция..." maxlength="100">
                         </div>
-
                         <div class="form-group">
                             <label for="renderMood">Настроение / атмосфера</label>
                             <input type="text" id="renderMood" name="mood" placeholder="Например: эпичное, мрачное, весёлое..." maxlength="80">
                         </div>
                     </div>
 
-                    <!-- === УНИКАЛЬНЫЕ ПОЛЯ ДЛЯ КЛИПА === -->
                     <div class="service-fields" id="fieldsClip" hidden>
                         <div class="form-group">
                             <label for="clipGenre">Жанр музыки *</label>
@@ -522,7 +675,6 @@
                                 <option value="Другое (опишу ниже)">Другое (опишу ниже)</option>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label for="clipDuration">Длительность *</label>
                             <select id="clipDuration" name="duration" required>
@@ -533,17 +685,14 @@
                                 <option value="Более 2 минут">Более 2 минут</option>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label for="clipTrack">Трек / ссылка на музыку</label>
                             <input type="text" id="clipTrack" name="track" placeholder="Название трека или ссылка на YouTube" maxlength="200">
                         </div>
-
                         <div class="form-group">
                             <label for="clipRefs">Референсы клипов</label>
                             <input type="text" id="clipRefs" name="clipRefs" placeholder="Ссылки на клипы, которые нравятся" maxlength="200">
                         </div>
-
                         <div class="form-group">
                             <label>Дополнительные услуги</label>
                             <div class="checkbox-group">
@@ -563,14 +712,12 @@
                         </div>
                     </div>
 
-                    <!-- === ОБЩЕЕ ПОЛЕ: ОПИСАНИЕ === -->
                     <div class="form-group">
                         <label for="orderDesc">Подробное описание заказа *</label>
                         <textarea id="orderDesc" name="description" placeholder="Опишите все детали, которые важны для вас..." required maxlength="500" rows="4"></textarea>
                         <span class="form-counter" id="descCounter">0 / 500</span>
                     </div>
 
-                    <!-- === ОБЩЕЕ ПОЛЕ: ДОП. ПОЖЕЛАНИЯ === -->
                     <div class="form-group">
                         <label for="orderExtra">Дополнительные пожелания</label>
                         <textarea id="orderExtra" name="extra" placeholder="Что-то ещё, что важно упомянуть?" maxlength="300" rows="3"></textarea>
@@ -586,7 +733,6 @@
                 </form>
             </div>
 
-            <!-- Шаг 2: Готовый текст -->
             <div class="modal-step" id="modalStepResult" hidden>
                 <div class="modal-header">
                     <div class="success-icon">
