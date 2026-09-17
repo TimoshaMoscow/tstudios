@@ -21,6 +21,8 @@
     --pink-glow: rgba(255, 107, 157, 0.4);
     --featured-glow: rgba(100, 181, 246, 0.3);
     --success: #4caf50;
+    --warning: #ffc107;
+    --danger: #ff4757;
 }
 
 body {
@@ -295,7 +297,7 @@ body {
 }
 
 .hero-badge i {
-    color: #ffc107;
+    color: var(--warning);
     animation: pulse 2s infinite;
 }
 
@@ -435,9 +437,25 @@ body {
     color: #fff;
     box-shadow: 0 4px 20px rgba(30, 136, 229, 0.5);
 }
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
     transform: translateY(-3px);
     box-shadow: 0 8px 30px rgba(30, 136, 229, 0.7);
+}
+
+/* Заблокированная кнопка */
+.btn:disabled,
+.btn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed !important;
+    filter: grayscale(0.7);
+    box-shadow: none !important;
+    transform: none !important;
+    pointer-events: none;
+}
+
+.btn:disabled::before,
+.btn.disabled::before {
+    display: none;
 }
 
 .btn-secondary {
@@ -1114,7 +1132,7 @@ body {
 }
 
 .stars {
-    color: #ffc107;
+    color: var(--warning);
     letter-spacing: 4px;
     font-size: 1.1rem;
 }
@@ -1322,8 +1340,8 @@ body {
 }
 
 .modal-close:hover {
-    background: #ff4757;
-    border-color: #ff4757;
+    background: var(--danger);
+    border-color: var(--danger);
     transform: rotate(90deg);
 }
 
@@ -1436,7 +1454,6 @@ body {
     opacity: 0.6;
 }
 
-/* Сервисные поля */
 .service-fields {
     display: flex;
     flex-direction: column;
@@ -1457,7 +1474,6 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Радио-кнопки */
 .radio-group {
     display: flex;
     gap: 10px;
@@ -1502,7 +1518,6 @@ body {
     box-shadow: 0 0 15px rgba(100, 181, 246, 0.2);
 }
 
-/* Чекбоксы */
 .checkbox-group {
     display: flex;
     gap: 10px;
@@ -1557,7 +1572,6 @@ body {
     justify-content: center;
 }
 
-/* Результат */
 .result-text-wrapper {
     position: relative;
     margin-bottom: 20px;
@@ -1643,6 +1657,63 @@ body {
 
 body.modal-open {
     overflow: hidden;
+}
+
+/* ===== ПОДСКАЗКА О ПОЛЕ СКИНА ===== */
+.gender-hint {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px;
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.4);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    color: var(--warning);
+    line-height: 1.5;
+    margin-top: 4px;
+    animation: hintSlide 0.3s ease;
+}
+
+.gender-hint[hidden] {
+    display: none;
+}
+
+.gender-hint.danger {
+    background: rgba(255, 71, 87, 0.1);
+    border-color: rgba(255, 71, 87, 0.4);
+    color: var(--danger);
+}
+
+.gender-hint i {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+@keyframes hintSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-group textarea.conflict {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.15);
+    animation: conflictShake 0.4s ease;
+}
+
+@keyframes conflictShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
 }
 
 /* ===== АДАПТИВ ===== */
@@ -1843,5 +1914,9 @@ body.modal-open {
     .service-fields {
         padding: 12px;
         gap: 14px;
+    }
+    .gender-hint {
+        padding: 10px 12px;
+        font-size: 0.78rem;
     }
 }

@@ -49,29 +49,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // === Массив отзывов ===
     const reviewsData = [
-        {
-            name: 'FIREFOX',
-            rating: 5,
-            text: 'Очень хорошее качество и очень не плохое качество рук и буква моего канала.'
-        },
-        {
-            name: 'Beatlewind',
-            rating: 4,
-            text: 'Хорошо подобран стиль, но не хватает уникальности и изюминки в скине.'
-        },
-        {
-            name: 'Тимоша Музыка',
-            rating: 5,
-            text: 'Классный Скин!'
-        },
-        {
-            name: 'арсик',
-            rating: 5,
-            text: 'автор красава, все четко сделал:)'
-        }
+        { name: 'FIREFOX', rating: 5, text: 'Очень хорошее качество и очень не плохое качество рук и буква моего канала.' },
+        { name: 'Beatlewind', rating: 4, text: 'Хорошо подобран стиль, но не хватает уникальности и изюминки в скине.' },
+        { name: 'Тимоша Музыка', rating: 5, text: 'Классный Скин!' },
+        { name: 'арсик', rating: 5, text: 'автор красава, все четко сделал:)' }
     ];
 
-    // === Рендер отзывов ===
     const reviewsSlider = document.getElementById('reviewsSlider');
     const reviewDots = document.getElementById('reviewDots');
     let currentReview = 0;
@@ -82,19 +65,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
             const card = document.createElement('div');
             card.className = 'review-card glass' + (index === 0 ? ' active' : '');
-            card.setAttribute('itemprop', 'review');
-            card.setAttribute('itemscope', '');
-            card.setAttribute('itemtype', 'https://schema.org/Review');
             card.innerHTML = `
                 <div class="review-header">
-                    <span class="reviewer-name" itemprop="author">${review.name}</span>
-                    <div class="stars" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
-                        <meta itemprop="ratingValue" content="${review.rating}">
-                        <meta itemprop="bestRating" content="5">
-                        ${stars}
-                    </div>
+                    <span class="reviewer-name">${review.name}</span>
+                    <div class="stars">${stars}</div>
                 </div>
-                <p class="review-text" itemprop="reviewBody">"${review.text}"</p>
+                <p class="review-text">"${review.text}"</p>
             `;
             reviewsSlider.appendChild(card);
         });
@@ -115,17 +91,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function showReview(index) {
         const reviewCards = document.querySelectorAll('.review-card');
         const dots = document.querySelectorAll('.slider-dot');
-        reviewCards.forEach((el, i) => {
-            el.classList.toggle('active', i === index);
-        });
-        dots.forEach((el, i) => {
-            el.classList.toggle('active', i === index);
-        });
+        reviewCards.forEach((el, i) => el.classList.toggle('active', i === index));
+        dots.forEach((el, i) => el.classList.toggle('active', i === index));
     }
 
-    if (reviewsSlider) {
-        renderReviews();
-    }
+    if (reviewsSlider) renderReviews();
 
     const prevBtn = document.getElementById('prevReview');
     const nextBtn = document.getElementById('nextReview');
@@ -220,7 +190,6 @@ document.addEventListener('DOMContentLoaded', function() {
         pageItems.forEach(item => {
             const card = document.createElement('div');
             card.className = 'gallery-item glass';
-            card.setAttribute('data-price', item.price.replace(' ₽', ''));
             card.innerHTML = `
                 <img src="${item.image}" alt="Скин ${item.name} — пример рендера Minecraft" loading="lazy">
                 <div class="gallery-info">
@@ -234,7 +203,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         prevPageBtn.disabled = page === 0;
         nextPageBtn.disabled = end >= skinData.length;
-
         updateDots(page);
     }
 
@@ -284,7 +252,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     renderGallery(0);
 
-    // === МОДАЛЬНОЕ ОКНО ЗАКАЗА ===
+    // ============================================================
+    // === МОДАЛЬНОЕ ОКНО ЗАКАЗА + АВТОМАТИЗАЦИЯ ===
+    // ============================================================
+
     const orderModal = document.getElementById('orderModal');
     const modalClose = document.getElementById('modalClose');
     const modalServiceName = document.getElementById('modalServiceName');
@@ -298,14 +269,187 @@ document.addEventListener('DOMContentLoaded', function() {
     const descCounter = document.getElementById('descCounter');
     const extraCounter = document.getElementById('extraCounter');
 
-    // Группы полей услуг
     const fieldsSkin = document.getElementById('fieldsSkin');
     const fieldsRender = document.getElementById('fieldsRender');
     const fieldsClip = document.getElementById('fieldsClip');
 
+    const genderHint = document.getElementById('genderHint');
+    const genderHintText = document.getElementById('genderHintText');
+
+    const orderDesc = document.getElementById('orderDesc');
+    const orderExtra = document.getElementById('orderExtra');
+
+    // ⬇️ НОВОЕ: получаем кнопку "Создать обращение"
+    const submitOrderBtn = document.getElementById('submitOrder');
+
     let currentService = 'Скин';
 
-    // Открытие модального окна
+    // ============================================================
+    // === СПИСКИ ТРИГГЕРОВ ===
+    // ============================================================
+
+    const FEMALE_TRIGGERS = [
+        'женск', 'женщин', 'девушк', 'девочк', 'девчон', 'леди', 'дама',
+        'female', 'girl', 'woman', 'lady',
+        'платье', 'юбка', 'юбк', 'бант', 'косичк', 'макияж', 'губ',
+        'туфли', 'каблук', 'сумочк', 'маникюр', 'прическ',
+        'она ', ' её ', ' её', ' неё ', 'неё'
+    ];
+
+    const MALE_TRIGGERS = [
+        'мужск', 'мужчин', 'мужик', 'парн', 'парен', 'мальчик', 'пацан',
+        'male', 'boy', 'man',
+        'борода', 'усы', 'бород', 'качок', 'мускул', 'качалк',
+        'он ', ' его ', ' ему ', ' ним ', ' нём ', 'нем ',
+        'шорты', 'штаны мужск'
+    ];
+
+    function hasFemaleTriggers(text) {
+        const lower = text.toLowerCase();
+        return FEMALE_TRIGGERS.some(trigger => lower.includes(trigger));
+    }
+
+    function hasMaleTriggers(text) {
+        const lower = text.toLowerCase();
+        return MALE_TRIGGERS.some(trigger => lower.includes(trigger));
+    }
+
+    function isMaleSkinSelected() {
+        if (currentService !== 'Скин') return false;
+        const gender = document.querySelector('input[name="skinGender"]:checked');
+        return gender && gender.value === 'Мужской';
+    }
+
+    function isFemaleSkinSelected() {
+        if (currentService !== 'Скин') return false;
+        const gender = document.querySelector('input[name="skinGender"]:checked');
+        return gender && gender.value === 'Женский';
+    }
+
+    // ============================================================
+    // === ГЛАВНАЯ ФУНКЦИЯ: обновляет подсказки и блокировку кнопки ===
+    // ============================================================
+
+    function updateGenderHint() {
+        if (!genderHint || !genderHintText) return;
+
+        // Работает только для скинов
+        if (currentService !== 'Скин') {
+            genderHint.hidden = true;
+            if (orderDesc) orderDesc.classList.remove('conflict');
+            if (submitOrderBtn) {
+                submitOrderBtn.disabled = false;
+                submitOrderBtn.classList.remove('disabled');
+            }
+            return;
+        }
+
+        const desc = orderDesc ? orderDesc.value.trim() : '';
+        const extra = orderExtra ? orderExtra.value.trim() : '';
+        const allText = (desc + ' ' + extra).toLowerCase();
+
+        const maleSelected = isMaleSkinSelected();
+        const femaleSelected = isFemaleSkinSelected();
+        const hasFemale = hasFemaleTriggers(allText);
+        const hasMale = hasMaleTriggers(allText);
+
+        // === СЛУЧАЙ 1: МУЖСКОЙ скин + ЖЕНСКИЕ триггеры → БЛОКИРОВКА ===
+        if (maleSelected && hasFemale) {
+            genderHint.hidden = false;
+            genderHint.classList.add('danger');
+            genderHintText.innerHTML = '🚫 <strong>Кнопка заблокирована.</strong> Вы выбрали <strong>мужской скин</strong>, но в описании есть женские детали. Пожалуйста, переключите пол на <strong>«Женский»</strong> (149 ₽) или уберите женские детали.';
+            if (orderDesc) orderDesc.classList.add('conflict');
+
+            // Блокируем кнопку
+            if (submitOrderBtn) {
+                submitOrderBtn.disabled = true;
+                submitOrderBtn.classList.add('disabled');
+                submitOrderBtn.setAttribute('title', 'Уберите женские детали или переключите пол на «Женский»');
+            }
+            return;
+        }
+
+        // === СЛУЧАЙ 2: ЖЕНСКИЙ скин + МУЖСКИЕ триггеры → ПРЕДУПРЕЖДЕНИЕ ===
+        if (femaleSelected && hasMale) {
+            genderHint.hidden = false;
+            genderHint.classList.remove('danger');
+            // меняем стиль на предупреждение (жёлтый)
+            genderHint.style.background = 'rgba(255, 193, 7, 0.1)';
+            genderHint.style.borderColor = 'rgba(255, 193, 7, 0.4)';
+            genderHint.style.color = 'var(--warning)';
+            genderHintText.innerHTML = '⚠️ <strong>Внимание!</strong> Вы выбрали <strong>женский скин</strong>, но в описании есть мужские детали. Проверьте, пожалуйста, правильно ли выбран пол.';
+            if (orderDesc) orderDesc.classList.remove('conflict');
+
+            // НЕ блокируем кнопку — только предупреждаем
+            if (submitOrderBtn) {
+                submitOrderBtn.disabled = false;
+                submitOrderBtn.classList.remove('disabled');
+                submitOrderBtn.removeAttribute('title');
+            }
+            return;
+        }
+
+        // === СЛУЧАЙ 3: МУЖСКОЙ скин + нейтральный текст → мягкая подсказка ===
+        if (maleSelected && desc.length > 10 && !hasFemale) {
+            genderHint.hidden = false;
+            genderHint.classList.remove('danger');
+            genderHint.style.background = '';
+            genderHint.style.borderColor = '';
+            genderHint.style.color = '';
+            genderHintText.innerHTML = 'Если хотите дизайн с женскими особенностями — переключите пол на <strong>«Женский»</strong> (149 ₽).';
+            if (orderDesc) orderDesc.classList.remove('conflict');
+
+            if (submitOrderBtn) {
+                submitOrderBtn.disabled = false;
+                submitOrderBtn.classList.remove('disabled');
+                submitOrderBtn.removeAttribute('title');
+            }
+            return;
+        }
+
+        // === СЛУЧАЙ 4: Всё ок → скрываем ===
+        genderHint.hidden = true;
+        if (orderDesc) orderDesc.classList.remove('conflict');
+
+        if (submitOrderBtn) {
+            submitOrderBtn.disabled = false;
+            submitOrderBtn.classList.remove('disabled');
+            submitOrderBtn.removeAttribute('title');
+        }
+    }
+
+    // Следим за вводом в описание
+    if (orderDesc) {
+        orderDesc.addEventListener('input', function() {
+            descCounter.textContent = `${this.value.length} / 500`;
+            updateGenderHint();
+        });
+    }
+
+    if (orderExtra) {
+        orderExtra.addEventListener('input', function() {
+            extraCounter.textContent = `${this.value.length} / 300`;
+            updateGenderHint();
+        });
+    }
+
+    // Следим за сменой пола скина
+    document.querySelectorAll('input[name="skinGender"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            // Сброс стилей подсказки при смене пола
+            if (genderHint) {
+                genderHint.style.background = '';
+                genderHint.style.borderColor = '';
+                genderHint.style.color = '';
+            }
+            updateGenderHint();
+        });
+    });
+
+    // ============================================================
+    // === ОТКРЫТИЕ/ЗАКРЫТИЕ МОДАЛКИ ===
+    // ============================================================
+
     document.querySelectorAll('.btn-pricing').forEach(btn => {
         btn.addEventListener('click', function() {
             currentService = this.getAttribute('data-service') || 'Скин';
@@ -317,12 +461,10 @@ document.addEventListener('DOMContentLoaded', function() {
         currentService = service;
         modalServiceName.textContent = `Услуга: ${service}`;
 
-        // Скрываем все группы полей
         fieldsSkin.hidden = true;
         fieldsRender.hidden = true;
         fieldsClip.hidden = true;
 
-        // Показываем нужную группу
         if (service === 'Скин') {
             fieldsSkin.hidden = false;
         } else if (service === 'Рендер') {
@@ -331,19 +473,32 @@ document.addEventListener('DOMContentLoaded', function() {
             fieldsClip.hidden = false;
         }
 
-        // Сброс формы
         orderForm.reset();
         descCounter.textContent = '0 / 500';
         extraCounter.textContent = '0 / 300';
         modalStepForm.hidden = false;
         modalStepResult.hidden = true;
 
-        // Показываем модалку
+        if (genderHint) {
+            genderHint.hidden = true;
+            genderHint.classList.remove('danger');
+            genderHint.style.background = '';
+            genderHint.style.borderColor = '';
+            genderHint.style.color = '';
+        }
+        if (orderDesc) orderDesc.classList.remove('conflict');
+
+        // Разблокируем кнопку при открытии
+        if (submitOrderBtn) {
+            submitOrderBtn.disabled = false;
+            submitOrderBtn.classList.remove('disabled');
+            submitOrderBtn.removeAttribute('title');
+        }
+
         orderModal.classList.add('active');
         orderModal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('modal-open');
 
-        // Фокус на первое поле
         setTimeout(() => {
             const firstInput = orderForm.querySelector('input[type="text"]');
             if (firstInput) firstInput.focus();
@@ -356,12 +511,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.classList.remove('modal-open');
     }
 
-    if (modalClose) {
-        modalClose.addEventListener('click', closeModal);
-    }
-    if (cancelOrder) {
-        cancelOrder.addEventListener('click', closeModal);
-    }
+    if (modalClose) modalClose.addEventListener('click', closeModal);
+    if (cancelOrder) cancelOrder.addEventListener('click', closeModal);
     if (orderModal) {
         orderModal.addEventListener('click', function(e) {
             if (e.target === orderModal) closeModal();
@@ -373,22 +524,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Счётчики символов
-    const orderDesc = document.getElementById('orderDesc');
-    const orderExtra = document.getElementById('orderExtra');
-
-    if (orderDesc) {
-        orderDesc.addEventListener('input', function() {
-            descCounter.textContent = `${this.value.length} / 500`;
-        });
-    }
-    if (orderExtra) {
-        orderExtra.addEventListener('input', function() {
-            extraCounter.textContent = `${this.value.length} / 300`;
-        });
-    }
-
-    // === Генерация текста обращения ===
+    // ============================================================
+    // === ГЕНЕРАЦИЯ ТЕКСТА ОБРАЩЕНИЯ ===
+    // ============================================================
     function generateOrderText() {
         const name = document.getElementById('orderName').value.trim();
         const desc = orderDesc.value.trim();
@@ -400,7 +538,6 @@ document.addEventListener('DOMContentLoaded', function() {
         text += `📌 Услуга: ${currentService}\n`;
         text += `👤 Имя: ${name}\n`;
 
-        // Уникальные поля для каждой услуги
         if (currentService === 'Скин') {
             const gender = document.querySelector('input[name="skinGender"]:checked');
             const theme = document.getElementById('skinTheme').value.trim();
@@ -447,7 +584,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return text;
     }
 
-    // === Валидация ===
+    // ============================================================
+    // === ВАЛИДАЦИЯ (без проверки конфликта — она уже в блокировке кнопки) ===
+    // ============================================================
     function validateForm() {
         const name = document.getElementById('orderName').value.trim();
         const desc = orderDesc.value.trim();
@@ -464,7 +603,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
 
-        // Проверка уникальных полей
         if (currentService === 'Скин') {
             const theme = document.getElementById('skinTheme').value.trim();
             if (!theme) {
@@ -497,21 +635,21 @@ document.addEventListener('DOMContentLoaded', function() {
         return true;
     }
 
-    // Отправка формы
     if (orderForm) {
         orderForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
+            // Дополнительная защита: если кнопка заблокирована — не отправляем
+            if (submitOrderBtn && submitOrderBtn.disabled) return;
+
             if (!validateForm()) return;
 
             resultText.value = generateOrderText();
-
             modalStepForm.hidden = true;
             modalStepResult.hidden = false;
         });
     }
 
-    // Копирование текста
     if (copyBtn && resultText) {
         copyBtn.addEventListener('click', function() {
             resultText.select();
@@ -540,7 +678,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Кнопка "Изменить" — назад к форме
     if (backToForm) {
         backToForm.addEventListener('click', function() {
             modalStepForm.hidden = false;

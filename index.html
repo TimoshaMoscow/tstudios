@@ -159,7 +159,7 @@
     }
     </script>
 
-    <!-- ====== СТРУКТУРИРОВАННЫЕ ДАННЫЕ: Товары (Product + Offer с корректными полями) ====== -->
+    <!-- ====== СТРУКТУРИРОВАННЫЕ ДАННЫЕ: Товары ====== -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -189,10 +189,7 @@
                 "availability": "https://schema.org/InStock",
                 "url": "https://timoshamoscow.github.io/tstudios/#pricing",
                 "image": "https://timoshamoscow.github.io/tstudios/logo.png",
-                "seller": {
-                    "@type": "Organization",
-                    "name": "TStudios"
-                }
+                "seller": { "@type": "Organization", "name": "TStudios" }
             },
             {
                 "@type": "Offer",
@@ -203,10 +200,7 @@
                 "availability": "https://schema.org/InStock",
                 "url": "https://timoshamoscow.github.io/tstudios/#pricing",
                 "image": "https://timoshamoscow.github.io/tstudios/logo.png",
-                "seller": {
-                    "@type": "Organization",
-                    "name": "TStudios"
-                }
+                "seller": { "@type": "Organization", "name": "TStudios" }
             },
             {
                 "@type": "Offer",
@@ -217,16 +211,13 @@
                 "availability": "https://schema.org/InStock",
                 "url": "https://timoshamoscow.github.io/tstudios/#pricing",
                 "image": "https://timoshamoscow.github.io/tstudios/logo.png",
-                "seller": {
-                    "@type": "Organization",
-                    "name": "TStudios"
-                }
+                "seller": { "@type": "Organization", "name": "TStudios" }
             }
         ]
     }
     </script>
 
-    <!-- ====== СТРУКТУРИРОВАННЫЕ ДАННЫЕ: Отзывы (правильная структура) ====== -->
+    <!-- ====== СТРУКТУРИРОВАННЫЕ ДАННЫЕ: Отзывы ====== -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -234,10 +225,7 @@
         "name": "TStudios — Услуги для Minecraft",
         "image": "https://timoshamoscow.github.io/tstudios/logo.png",
         "description": "Скины, рендеры и клипы Minecraft на заказ от студии TStudios",
-        "brand": {
-            "@type": "Brand",
-            "name": "TStudios"
-        },
+        "brand": { "@type": "Brand", "name": "TStudios" },
         "aggregateRating": {
             "@type": "AggregateRating",
             "ratingValue": "4.8",
@@ -249,75 +237,31 @@
         "review": [
             {
                 "@type": "Review",
-                "author": {
-                    "@type": "Person",
-                    "name": "FIREFOX"
-                },
-                "reviewRating": {
-                    "@type": "Rating",
-                    "ratingValue": "5",
-                    "bestRating": "5",
-                    "worstRating": "1"
-                },
+                "author": { "@type": "Person", "name": "FIREFOX" },
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1" },
                 "reviewBody": "Очень хорошее качество и очень не плохое качество рук и буква моего канала.",
-                "itemReviewed": {
-                    "@type": "Product",
-                    "name": "TStudios — Услуги для Minecraft"
-                }
+                "itemReviewed": { "@type": "Product", "name": "TStudios — Услуги для Minecraft" }
             },
             {
                 "@type": "Review",
-                "author": {
-                    "@type": "Person",
-                    "name": "Beatlewind"
-                },
-                "reviewRating": {
-                    "@type": "Rating",
-                    "ratingValue": "4",
-                    "bestRating": "5",
-                    "worstRating": "1"
-                },
+                "author": { "@type": "Person", "name": "Beatlewind" },
+                "reviewRating": { "@type": "Rating", "ratingValue": "4", "bestRating": "5", "worstRating": "1" },
                 "reviewBody": "Хорошо подобран стиль, но не хватает уникальности и изюминки в скине.",
-                "itemReviewed": {
-                    "@type": "Product",
-                    "name": "TStudios — Услуги для Minecraft"
-                }
+                "itemReviewed": { "@type": "Product", "name": "TStudios — Услуги для Minecraft" }
             },
             {
                 "@type": "Review",
-                "author": {
-                    "@type": "Person",
-                    "name": "Тимоша Музыка"
-                },
-                "reviewRating": {
-                    "@type": "Rating",
-                    "ratingValue": "5",
-                    "bestRating": "5",
-                    "worstRating": "1"
-                },
+                "author": { "@type": "Person", "name": "Тимоша Музыка" },
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1" },
                 "reviewBody": "Классный Скин!",
-                "itemReviewed": {
-                    "@type": "Product",
-                    "name": "TStudios — Услуги для Minecraft"
-                }
+                "itemReviewed": { "@type": "Product", "name": "TStudios — Услуги для Minecraft" }
             },
             {
                 "@type": "Review",
-                "author": {
-                    "@type": "Person",
-                    "name": "арсик"
-                },
-                "reviewRating": {
-                    "@type": "Rating",
-                    "ratingValue": "5",
-                    "bestRating": "5",
-                    "worstRating": "1"
-                },
+                "author": { "@type": "Person", "name": "арсик" },
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1" },
                 "reviewBody": "автор красава, все четко сделал:)",
-                "itemReviewed": {
-                    "@type": "Product",
-                    "name": "TStudios — Услуги для Minecraft"
-                }
+                "itemReviewed": { "@type": "Product", "name": "TStudios — Услуги для Minecraft" }
             }
         ]
     }
@@ -534,7 +478,6 @@
         </div>
     </section>
 
-    <!-- ====== ОТЗЫВЫ (БЕЗ микроразметки в HTML — она в JSON-LD) ====== -->
     <section class="reviews" id="reviews">
         <div class="container">
             <h2 class="section-title glass-title">Отзывы клиентов</h2>
@@ -716,6 +659,12 @@
                         <label for="orderDesc">Подробное описание заказа *</label>
                         <textarea id="orderDesc" name="description" placeholder="Опишите все детали, которые важны для вас..." required maxlength="500" rows="4"></textarea>
                         <span class="form-counter" id="descCounter">0 / 500</span>
+                        
+                        <!-- Динамическая подсказка о поле скина -->
+                        <div class="gender-hint" id="genderHint" hidden>
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span id="genderHintText"></span>
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -726,7 +675,7 @@
 
                     <div class="form-actions">
                         <button type="button" class="btn btn-secondary" id="cancelOrder">Отмена</button>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" id="submitOrder">
                             <i class="fas fa-paper-plane"></i> Создать обращение
                         </button>
                     </div>
