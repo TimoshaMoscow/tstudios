@@ -23,6 +23,8 @@
     --success: #4caf50;
     --warning: #ffc107;
     --danger: #ff4757;
+    --purple: #a855f7;
+    --purple-glow: rgba(168, 85, 247, 0.4);
 }
 
 body {
@@ -140,6 +142,7 @@ body {
     z-index: 1;
 }
 
+/* ===== ХЕДЕР ===== */
 .header {
     position: fixed;
     top: 20px;
@@ -201,7 +204,7 @@ body {
 
 .main-nav ul {
     display: flex;
-    gap: 30px;
+    gap: 26px;
     list-style: none;
 }
 
@@ -212,6 +215,7 @@ body {
     transition: color 0.3s;
     position: relative;
     padding: 4px 0;
+    font-size: 0.95rem;
 }
 
 .main-nav a::after {
@@ -246,6 +250,7 @@ body {
     transform: rotate(90deg);
 }
 
+/* ===== ГЕРО ===== */
 .hero {
     min-height: 85vh;
     display: flex;
@@ -272,14 +277,8 @@ body {
 }
 
 @keyframes heroFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .hero-badge {
@@ -442,7 +441,6 @@ body {
     box-shadow: 0 8px 30px rgba(30, 136, 229, 0.7);
 }
 
-/* Заблокированная кнопка */
 .btn:disabled,
 .btn.disabled {
     opacity: 0.4;
@@ -527,6 +525,7 @@ body {
     50% { transform: translateX(-50%) translateY(-10px); }
 }
 
+/* ===== ЗАГОЛОВКИ СЕКЦИЙ ===== */
 .section-title {
     text-align: center;
     font-size: 2.8rem;
@@ -553,6 +552,7 @@ body {
 
 .services .section-title,
 .pricing .section-title,
+.about .section-title,
 .gallery .section-title,
 .reviews .section-title {
     display: block;
@@ -561,12 +561,13 @@ body {
     margin-right: auto;
 }
 
+/* ===== УСЛУГИ ===== */
 .services {
     padding: 80px 0;
 }
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 30px;
 }
 
@@ -680,20 +681,21 @@ body {
     transform: translateX(6px);
 }
 
+/* ===== ТАРИФЫ ===== */
 .pricing {
     padding: 80px 0;
 }
 
 .pricing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
     align-items: stretch;
     padding-top: 15px;
 }
 
 .pricing-card {
-    padding: 45px 32px;
+    padding: 40px 26px;
     text-align: center;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
@@ -767,7 +769,7 @@ body {
     color: #fff;
     padding: 6px 18px;
     border-radius: 30px;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -779,14 +781,14 @@ body {
 }
 
 .pricing-icon {
-    font-size: 3rem;
+    font-size: 2.8rem;
     color: var(--accent);
     margin-bottom: 16px;
     transition: all 0.4s;
 }
 
 .pricing-card h3 {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     margin-bottom: 12px;
 }
 
@@ -798,20 +800,20 @@ body {
     border: 1px solid var(--glass-border);
     margin: 8px 0 16px 0;
     width: 100%;
-    max-width: 260px;
+    max-width: 240px;
     position: relative;
     z-index: 2;
 }
 
 .gender-btn {
     flex: 1;
-    padding: 8px 16px;
+    padding: 8px 14px;
     border: none;
     background: transparent;
     color: var(--text-secondary);
     border-radius: 50px;
     cursor: pointer;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 500;
     transition: all 0.3s ease;
     display: flex;
@@ -822,7 +824,7 @@ body {
 }
 
 .gender-btn i {
-    font-size: 1rem;
+    font-size: 0.95rem;
 }
 
 .gender-btn.active {
@@ -846,14 +848,14 @@ body {
 }
 
 .price-amount {
-    font-size: 3rem;
+    font-size: 2.8rem;
     font-weight: 800;
     color: #fff;
     transition: all 0.4s ease;
 }
 
 .price-currency {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 600;
     color: var(--accent);
     margin-left: 2px;
@@ -862,7 +864,7 @@ body {
 
 .price-note {
     color: var(--text-secondary);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     margin-bottom: 20px;
     min-height: 24px;
 }
@@ -876,12 +878,13 @@ body {
 }
 
 .pricing-features li {
-    padding: 8px 0;
+    padding: 7px 0;
     color: var(--text-secondary);
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    font-size: 0.9rem;
 }
 
 .pricing-features li:last-child {
@@ -890,8 +893,8 @@ body {
 
 .pricing-features i {
     color: var(--accent);
-    width: 20px;
-    font-size: 0.9rem;
+    width: 18px;
+    font-size: 0.85rem;
     transition: color 0.4s;
 }
 
@@ -909,6 +912,121 @@ body {
     box-shadow: 0 8px 30px rgba(255, 107, 157, 0.6);
 }
 
+/* ===== О НАС ===== */
+.about {
+    padding: 80px 0;
+}
+
+.about-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 50px;
+    align-items: center;
+}
+
+.about-photo {
+    flex-shrink: 0;
+    width: 260px;
+    height: 340px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(100, 181, 246, 0.15), rgba(255, 107, 157, 0.1));
+    border: 1px solid rgba(100, 181, 246, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.about-photo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 30%, rgba(100, 181, 246, 0.2), transparent 70%);
+    pointer-events: none;
+}
+
+.about-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center bottom;
+    filter: drop-shadow(0 10px 30px rgba(100, 181, 246, 0.4));
+    transition: transform 0.4s;
+    position: relative;
+    z-index: 1;
+}
+
+.about-photo:hover img {
+    transform: scale(1.05) translateY(-6px);
+}
+
+.about-info {
+    flex: 1;
+    min-width: 280px;
+}
+
+.about-info h3 {
+    font-size: 2rem;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #64b5f6, #4ecdc4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.about-role {
+    color: var(--accent);
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+    opacity: 0.85;
+}
+
+.about-text {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.about-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(100, 181, 246, 0.12);
+    border: 1px solid rgba(100, 181, 246, 0.25);
+    border-radius: 30px;
+    font-size: 0.85rem;
+    color: var(--accent);
+    transition: all 0.3s;
+}
+
+.about-tag:hover {
+    background: rgba(100, 181, 246, 0.2);
+    transform: translateY(-2px);
+}
+
+.about-tag i {
+    font-size: 0.85rem;
+}
+
+.about-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* ===== ГАЛЕРЕЯ ===== */
 .gallery {
     padding: 80px 0;
 }
@@ -1001,14 +1119,8 @@ body {
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .pagination-wrapper {
@@ -1077,6 +1189,7 @@ body {
     background: rgba(255, 255, 255, 0.3);
 }
 
+/* ===== ОТЗЫВЫ ===== */
 .reviews {
     padding: 80px 0;
 }
@@ -1199,6 +1312,7 @@ body {
     border-radius: 10px;
 }
 
+/* ===== КОНТАКТЫ ===== */
 .contact {
     padding: 80px 0;
 }
@@ -1263,8 +1377,9 @@ body {
     font-size: 1.2rem;
 }
 
+/* ===== ФУТЕР ===== */
 .footer {
-    padding: 30px 0;
+    padding: 30px 0 25px;
     margin-top: 40px;
     text-align: center;
     border-radius: 24px 24px 0 0;
@@ -1277,6 +1392,27 @@ body {
 }
 .footer-credit {
     color: var(--text-secondary);
+}
+
+.footer-team {
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    justify-content: center;
+}
+
+.btn-team {
+    background: linear-gradient(135deg, var(--purple), #7c3aed);
+    color: #fff;
+    box-shadow: 0 4px 20px var(--purple-glow);
+    padding: 14px 36px;
+    font-size: 1rem;
+}
+
+.btn-team:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(168, 85, 247, 0.6);
 }
 
 /* ===== МОДАЛЬНОЕ ОКНО ===== */
@@ -1318,6 +1454,10 @@ body {
 
 .modal-overlay.active .modal-content {
     transform: translateY(0) scale(1);
+}
+
+.team-modal-content {
+    max-width: 640px;
 }
 
 .modal-close {
@@ -1401,6 +1541,7 @@ body {
 }
 
 .form-group input[type="text"],
+.form-group input[type="number"],
 .form-group textarea,
 .form-group select {
     background: rgba(255, 255, 255, 0.05);
@@ -1414,6 +1555,16 @@ body {
     resize: vertical;
     min-height: 44px;
     width: 100%;
+}
+
+.form-group input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.form-group input[type="number"]::-webkit-outer-spin-button,
+.form-group input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .form-group select {
@@ -1433,7 +1584,7 @@ body {
     padding: 10px;
 }
 
-.form-group input[type="text"]:focus,
+.form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
     outline: none;
@@ -1482,18 +1633,18 @@ body {
 
 .radio-item {
     flex: 1;
-    min-width: 90px;
+    min-width: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 10px 16px;
+    padding: 10px 14px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--glass-border);
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     user-select: none;
     text-align: center;
 }
@@ -1572,6 +1723,29 @@ body {
     justify-content: center;
 }
 
+/* Заметка в форме заявки */
+.team-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 14px;
+    background: rgba(168, 85, 247, 0.08);
+    border: 1px solid rgba(168, 85, 247, 0.25);
+    border-radius: 10px;
+    font-size: 0.8rem;
+    color: #c4b5fd;
+    line-height: 1.5;
+    margin-top: 6px;
+}
+
+.team-note i {
+    color: var(--purple);
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+/* Результат */
 .result-text-wrapper {
     position: relative;
     margin-bottom: 20px;
@@ -1692,14 +1866,8 @@ body.modal-open {
 }
 
 @keyframes hintSlide {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .form-group textarea.conflict {
@@ -1718,9 +1886,7 @@ body.modal-open {
 
 /* ===== АДАПТИВ ===== */
 @media (max-width: 992px) {
-    .hero-text h1 {
-        font-size: 3.5rem;
-    }
+    .hero-text h1 { font-size: 3.5rem; }
     .hero-stats {
         flex-direction: row;
         flex-wrap: wrap;
@@ -1733,7 +1899,11 @@ body.modal-open {
         min-width: 100px;
     }
     .pricing-grid {
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .about-photo {
+        width: 220px;
+        height: 290px;
     }
 }
 
@@ -1763,160 +1933,71 @@ body.modal-open {
         gap: 16px;
         align-items: center;
     }
-    .hamburger {
-        display: block;
-    }
-    .hero-text {
-        padding: 35px 25px;
-    }
-    .hero-text h1 {
-        font-size: 2.8rem;
-    }
-    .hero-stats {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
+    .main-nav a { font-size: 1rem; }
+    .hamburger { display: block; }
+    .hero-text { padding: 35px 25px; }
+    .hero-text h1 { font-size: 2.8rem; }
+    .hero-stats { flex-direction: row; flex-wrap: wrap; justify-content: center; }
     .contact-wrapper {
         padding: 35px 25px;
         flex-direction: column;
         text-align: center;
     }
-    .social-list a {
-        justify-content: center;
-    }
-    .section-title {
-        font-size: 2rem;
-        padding: 10px 28px;
-    }
-    .gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-    .pricing-grid {
-        grid-template-columns: 1fr;
-        max-width: 420px;
-        margin: 0 auto;
-    }
-    .pricing-card.featured {
-        order: -1;
-    }
-    .gender-switcher {
-        max-width: 100%;
-    }
-    .pagination-btn {
-        width: 38px;
-        height: 38px;
-        font-size: 1rem;
-    }
-    .pagination-dot {
-        width: 8px;
-        height: 8px;
-    }
-    .pagination-dot.active {
-        width: 24px;
-    }
-    .modal-content {
-        padding: 30px 20px;
-    }
-    .modal-header h3 {
-        font-size: 1.5rem;
-    }
-    .result-actions,
-    .form-actions {
+    .social-list a { justify-content: center; }
+    .section-title { font-size: 2rem; padding: 10px 28px; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+    .pricing-card.featured { order: -1; }
+    .gender-switcher { max-width: 100%; }
+    .pagination-btn { width: 38px; height: 38px; font-size: 1rem; }
+    .pagination-dot { width: 8px; height: 8px; }
+    .pagination-dot.active { width: 24px; }
+    .modal-content { padding: 30px 20px; }
+    .modal-header h3 { font-size: 1.5rem; }
+    .result-actions, .form-actions { flex-direction: column; }
+    .service-fields { padding: 14px; }
+    .about-wrapper {
+        padding: 35px 25px;
         flex-direction: column;
+        text-align: center;
     }
-    .service-fields {
-        padding: 14px;
+    .about-photo {
+        width: 200px;
+        height: 260px;
     }
+    .about-tags { justify-content: center; }
+    .about-buttons { justify-content: center; }
 }
 
 @media (max-width: 480px) {
-    .header {
-        width: 95%;
-        padding: 10px 16px;
-    }
-    .logo-text {
-        font-size: 1.2rem;
-    }
-    .hero-text h1 {
-        font-size: 2.2rem;
-    }
-    .subtitle {
-        font-size: 1.1rem;
-    }
-    .hero-description {
-        font-size: 0.9rem;
-    }
-    .btn {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
-    .gallery-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-    }
-    .review-card {
-        padding: 25px;
-    }
-    .price-amount {
-        font-size: 2.4rem;
-    }
-    .gender-btn {
-        padding: 6px 12px;
-        font-size: 0.8rem;
-    }
-    .gender-btn i {
-        font-size: 0.85rem;
-    }
-    .pagination-wrapper {
-        gap: 12px;
-    }
-    .pagination-btn {
-        width: 34px;
-        height: 34px;
-        font-size: 0.9rem;
-    }
-    .service-icon-wrapper {
-        width: 65px;
-        height: 65px;
-    }
-    .service-icon {
-        font-size: 1.8rem;
-    }
-    .modal-overlay {
-        padding: 10px;
-    }
-    .modal-content {
-        padding: 25px 18px;
-        border-radius: 18px;
-    }
-    .modal-header h3 {
-        font-size: 1.3rem;
-    }
-    .radio-item {
-        padding: 8px 10px;
-        font-size: 0.75rem;
-        min-width: 70px;
-    }
-    .checkbox-item {
-        padding: 8px 10px;
-        font-size: 0.75rem;
-        min-width: 80px;
-    }
-    .copy-btn {
-        padding: 6px 10px;
-        font-size: 0.75rem;
-    }
-    .copy-btn span {
-        display: none;
-    }
-    .service-fields {
-        padding: 12px;
-        gap: 14px;
-    }
-    .gender-hint {
-        padding: 10px 12px;
-        font-size: 0.78rem;
-    }
+    .header { width: 95%; padding: 10px 16px; }
+    .logo-text { font-size: 1.2rem; }
+    .hero-text h1 { font-size: 2.2rem; }
+    .subtitle { font-size: 1.1rem; }
+    .hero-description { font-size: 0.9rem; }
+    .btn { padding: 10px 20px; font-size: 0.9rem; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .review-card { padding: 25px; }
+    .price-amount { font-size: 2.4rem; }
+    .gender-btn { padding: 6px 10px; font-size: 0.75rem; }
+    .gender-btn i { font-size: 0.85rem; }
+    .pagination-wrapper { gap: 12px; }
+    .pagination-btn { width: 34px; height: 34px; font-size: 0.9rem; }
+    .service-icon-wrapper { width: 65px; height: 65px; }
+    .service-icon { font-size: 1.8rem; }
+    .modal-overlay { padding: 10px; }
+    .modal-content { padding: 25px 18px; border-radius: 18px; }
+    .modal-header h3 { font-size: 1.3rem; }
+    .radio-item { padding: 8px 10px; font-size: 0.75rem; min-width: 60px; }
+    .checkbox-item { padding: 8px 10px; font-size: 0.75rem; min-width: 80px; }
+    .copy-btn { padding: 6px 10px; font-size: 0.75rem; }
+    .copy-btn span { display: none; }
+    .service-fields { padding: 12px; gap: 14px; }
+    .gender-hint { padding: 10px 12px; font-size: 0.78rem; }
+    .about-photo { width: 170px; height: 220px; }
+    .about-info h3 { font-size: 1.6rem; }
+    .about-text { font-size: 0.9rem; }
+    .about-tag { font-size: 0.75rem; padding: 5px 12px; }
+    .btn-team { padding: 12px 24px; font-size: 0.9rem; }
+    .team-note { font-size: 0.75rem; }
 }
