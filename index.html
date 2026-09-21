@@ -95,7 +95,7 @@
         "@type": "BreadcrumbList",
         "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://timoshamoscow.github.io/tstudios/" },
-            { "@type": "ListItem", "position": 2, "name": "Скины", "item": "https://timoshamoscow.github.io/tstudios/#gallery" },
+            { "@type": "ListItem", "position": 2, "name": "Портфолио", "item": "https://timoshamoscow.github.io/tstudios/#gallery" },
             { "@type": "ListItem", "position": 3, "name": "Тарифы", "item": "https://timoshamoscow.github.io/tstudios/#pricing" }
         ]
     }
@@ -184,7 +184,7 @@
             {
                 "@type": "Offer",
                 "name": "Превью для видео Minecraft",
-                "description": "HD-превью для YouTube, правки до 2-х раз. Срок изготовления: до 24 часов.",
+                "description": "HD-превью для YouTube, правки до 2-х раз. Срок изготовления: 2-3 дня.",
                 "price": "99",
                 "priceCurrency": "RUB",
                 "availability": "https://schema.org/InStock",
@@ -514,10 +514,33 @@
         </div>
     </section>
 
+    <!-- ====== ПОРТФОЛИО ====== -->
     <section class="gallery" id="gallery" itemscope itemtype="https://schema.org/ImageGallery">
         <div class="container">
-            <h2 class="section-title glass-title" itemprop="name">Портфолио скинов</h2>
-            
+            <h2 class="section-title glass-title" itemprop="name">Портфолио</h2>
+
+            <!-- Фильтр по автору -->
+            <div class="gallery-filter" id="authorFilter" role="tablist" aria-label="Фильтр по автору">
+                <span class="filter-label">Автор:</span>
+                <div class="author-tabs" id="authorTabs">
+                    <button type="button" class="author-tab active" data-author="Тимошка из Москвы" aria-pressed="true">
+                        <i class="fas fa-user" aria-hidden="true"></i> Тимошка из Москвы
+                    </button>
+                    <!-- При появлении других авторов — кнопки будут добавлены автоматически -->
+                </div>
+                <span class="filter-note" id="authorNote" hidden>Пока что в студии только один автор</span>
+            </div>
+
+            <!-- Переключатель типов работ -->
+            <div class="gallery-types" id="galleryTypes" role="tablist" aria-label="Тип работ">
+                <button type="button" class="type-tab active" data-type="skins" aria-pressed="true">
+                    <i class="fas fa-paint-brush" aria-hidden="true"></i> Скины
+                </button>
+                <button type="button" class="type-tab" data-type="previews" aria-pressed="false">
+                    <i class="fas fa-image" aria-hidden="true"></i> Превью
+                </button>
+            </div>
+
             <div class="gallery-grid" id="galleryGrid" itemprop="image"></div>
 
             <div class="pagination-wrapper" id="paginationWrapper" role="navigation" aria-label="Навигация по страницам портфолио">

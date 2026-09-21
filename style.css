@@ -2001,3 +2001,192 @@ body.modal-open {
     .btn-team { padding: 12px 24px; font-size: 0.9rem; }
     .team-note { font-size: 0.75rem; }
 }
+
+/* ===== ФИЛЬТРЫ ПОРТФОЛИО ===== */
+.gallery-filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 14px 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.filter-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.author-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.author-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.author-tab i {
+    font-size: 0.85rem;
+    color: var(--accent);
+}
+
+.author-tab:hover:not(:disabled):not(.active) {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(100, 181, 246, 0.4);
+}
+
+.author-tab.active {
+    background: linear-gradient(135deg, rgba(100, 181, 246, 0.25), rgba(78, 205, 196, 0.25));
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(100, 181, 246, 0.25);
+}
+
+.author-tab.active i {
+    color: #4ecdc4;
+}
+
+.author-tab:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.filter-note {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    opacity: 0.6;
+    font-style: italic;
+}
+
+/* ===== ВКЛАДКИ ТИПОВ РАБОТ ===== */
+.gallery-types {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.type-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.type-tab i {
+    font-size: 0.9rem;
+}
+
+.type-tab:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(100, 181, 246, 0.4);
+    transform: translateY(-2px);
+}
+
+.type-tab.active {
+    background: linear-gradient(135deg, #1e88e5, #1565c0);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 20px rgba(30, 136, 229, 0.4);
+}
+
+.type-tab.active i {
+    color: #fff;
+}
+
+/* ===== АВТОР НА КАРТОЧКЕ ===== */
+.gallery-author {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    font-size: 0.78rem;
+    color: rgba(176, 196, 222, 0.65);
+    transition: color 0.3s;
+}
+
+.gallery-author i {
+    font-size: 0.7rem;
+    color: var(--accent);
+    opacity: 0.8;
+}
+
+.gallery-item:hover .gallery-author {
+    color: rgba(176, 196, 222, 0.95);
+}
+
+/* ===== ПРЕВЬЮ КАРТОЧКИ ===== */
+.gallery-item.preview-item img {
+    /* Превью — это не 1:1, а широкая картинка 16:9 */
+    max-width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    padding: 0;
+}
+
+/* ===== АДАПТИВ ДЛЯ ФИЛЬТРОВ ===== */
+@media (max-width: 768px) {
+    .gallery-filter {
+        flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+    }
+    .author-tabs {
+        justify-content: center;
+    }
+    .gallery-types {
+        gap: 8px;
+    }
+    .type-tab {
+        padding: 8px 18px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .author-tab {
+        padding: 6px 14px;
+        font-size: 0.8rem;
+    }
+    .type-tab {
+        padding: 8px 14px;
+        font-size: 0.8rem;
+    }
+    .type-tab i {
+        font-size: 0.8rem;
+    }
+}

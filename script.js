@@ -163,51 +163,165 @@ document.addEventListener('DOMContentLoaded', function() {
         femaleBtn.addEventListener('click', () => updateSkinPrice('female'));
     }
 
-    // === Пагинация галереи скинов ===
-    const skinData = [
-        { name: 'Тимоша Музыка', price: '0 ₽', image: 'skins/tmusic.png' },
-        { name: 'beatlewind', price: '0 ₽', image: 'skins/beatlewind.png' },
-        { name: 'FIREFOX', price: '0 ₽', image: 'skins/firefox.png' },
-        { name: 'Рыцарь', price: '0 ₽', image: 'skins/knight.png' },
-        { name: 'Toxinator', price: '50 ₽', image: 'skins/toxinator.png' },
-        { name: 'арсик', price: '0 ₽', image: 'skins/zakazMAJORrender.png' }
+    // ============================================================
+    // === ПОРТФОЛИО: скины + превью, фильтр по автору и типу ===
+    // ============================================================
+
+    // --- ДАННЫЕ ---
+    // Скины (авторы указаны для каждого элемента)
+    const skinsData = [
+        { name: 'Тимоша Музыка', price: '0 ₽', image: 'skins/tmusic.png', author: 'Тимошка из Москвы' },
+        { name: 'beatlewind', price: '0 ₽', image: 'skins/beatlewind.png', author: 'Тимошка из Москвы' },
+        { name: 'FIREFOX', price: '0 ₽', image: 'skins/firefox.png', author: 'Тимошка из Москвы' },
+        { name: 'Рыцарь', price: '0 ₽', image: 'skins/knight.png', author: 'Тимошка из Москвы' },
+        { name: 'Toxinator', price: '50 ₽', image: 'skins/toxinator.png', author: 'Тимошка из Москвы' },
+        { name: 'арсик', price: '0 ₽', image: 'skins/zakazMAJORrender.png', author: 'Тимошка из Москвы' }
     ];
 
+    // Превью (пока что все от Тимошки)
+    const previewsData = [
+        { name: 'Мусор дроп', price: '0 ₽', image: 'previews/upgrader.png', author: 'Тимошка из Москвы' },
+        { name: 'Marlow не читер', price: '0 ₽', image: 'previews/marlow.png', author: 'Тимошка из Москвы' },
+        { name: 'Лесорубы', price: '0 ₽', image: 'previews/lecoruby.png', author: 'Тимошка из Москвы' },
+        { name: 'Шахтеры', price: '0 ₽', image: 'previews/miners.png', author: 'Тимошка из Москвы' },
+        { name: 'Майнкрафт без прыжка', price: '0 ₽', image: 'previews/nojump.png', author: 'Тимошка из Москвы' }
+    ];
+
+    // --- СОСТОЯНИЕ ---
+    let currentAuthor = 'Тимошка из Москвы';
+    let currentType = 'skins';
     const itemsPerPage = 4;
     let currentPage = 0;
+
     const galleryGrid = document.getElementById('galleryGrid');
     const prevPageBtn = document.getElementById('prevPage');
     const nextPageBtn = document.getElementById('nextPage');
     const paginationDots = document.getElementById('paginationDots');
+    const authorTabs = document.getElementById('authorTabs');
+    const authorNote = document.getElementById('authorNote');
+    const typeTabs = document.querySelectorAll('.type-tab');
 
-    function renderGallery(page) {
-        const start = page * itemsPerPage;
+    // Собираем всех уникальных авторов
+    function getAllAuthors() {
+        const all = [...skinsData, ...previewsData].map(i => i.author);
+        return [...new Set(all)];
+    }
+
+    // Инициализация вкладок авторов
+    function initAuthorTabs() {
+        const authors = getAllAuthors();
+
+        // Если автор только один — блокируем переключатель и показываем заметку
+        if (authors.length <= 1) {
+            authorTabs.querySelectorAll('.author-tab').forEach(btn => {
+                btn.disabled = true;
+                btn.style.cursor = 'default';
+            });
+            if (authorNote) authorNote.hidden = false;
+            return;
+        }
+
+        // Если авторов несколько — генерируем кнопки
+        authorTabs.innerHTML = '';
+        authors.forEach((author, index) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'author-tab' + (index === 0 ? ' active' : '');
+            btn.dataset.author = author;
+            btn.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
+            btn.innerHTML = `<i class="fas fa-user" aria-hidden="true"></i> ${author}`;
+            btn.addEventListener('click', function() {
+                if (this.disabled) return;
+                currentAuthor = this.dataset.author;
+                currentPage = 0;
+                authorTabs.querySelectorAll('.author-tab').forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-pressed', 'false');
+                });
+                this.classList.add('active');
+                this.setAttribute('aria-pressed', 'true');
+                renderGallery();
+            });
+            authorTabs.appendChild(btn);
+        });
+    }
+
+    // Переключение типа работ
+    typeTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            currentType = this.dataset.type;
+            currentPage = 0;
+            typeTabs.forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-pressed', 'false');
+            });
+            this.classList.add('active');
+            this.setAttribute('aria-pressed', 'true');
+            renderGallery();
+        });
+    });
+
+    // Получаем список работ по фильтрам
+    function getFilteredData() {
+        const source = currentType === 'skins' ? skinsData : previewsData;
+        return source.filter(item => item.author === currentAuthor);
+    }
+
+    // Рендер галереи
+    function renderGallery() {
+        const filtered = getFilteredData();
+        const start = currentPage * itemsPerPage;
         const end = start + itemsPerPage;
-        const pageItems = skinData.slice(start, end);
+        const pageItems = filtered.slice(start, end);
 
         galleryGrid.innerHTML = '';
 
+        if (pageItems.length === 0) {
+            galleryGrid.innerHTML = `
+                <div class="gallery-empty" style="grid-column: 1/-1; text-align:center; padding: 60px 20px; color: var(--text-secondary);">
+                    <i class="fas fa-inbox" style="font-size: 3rem; opacity: 0.4; margin-bottom: 16px; display:block;"></i>
+                    <p>Пока что здесь пусто</p>
+                </div>
+            `;
+            if (prevPageBtn) prevPageBtn.disabled = true;
+            if (nextPageBtn) nextPageBtn.disabled = true;
+            updateDots(0, 0);
+            return;
+        }
+
         pageItems.forEach(item => {
             const card = document.createElement('div');
-            card.className = 'gallery-item glass';
+            card.className = 'gallery-item glass' + (currentType === 'previews' ? ' preview-item' : '');
+
+            // Сноска только для скинов
+            const renderNote = currentType === 'skins'
+                ? '<p class="render-note">Также является примером рендера</p>'
+                : '';
+
             card.innerHTML = `
-                <img src="${item.image}" alt="Скин ${item.name} — пример рендера Minecraft" loading="lazy">
+                <img src="${item.image}" alt="${currentType === 'skins' ? 'Скин' : 'Превью'} ${item.name}" loading="lazy">
                 <div class="gallery-info">
                     <h4>${item.name}</h4>
                     <span class="price">${item.price}</span>
                 </div>
-                <p class="render-note">Также является примером рендера</p>
+                ${renderNote}
+                <p class="gallery-author">
+                    <i class="fas fa-user" aria-hidden="true"></i> Автор: ${item.author}
+                </p>
             `;
             galleryGrid.appendChild(card);
         });
 
-        prevPageBtn.disabled = page === 0;
-        nextPageBtn.disabled = end >= skinData.length;
-        updateDots(page);
+        const totalPages = Math.ceil(filtered.length / itemsPerPage);
+        if (prevPageBtn) prevPageBtn.disabled = currentPage === 0;
+        if (nextPageBtn) nextPageBtn.disabled = currentPage >= totalPages - 1;
+
+        updateDots(currentPage, totalPages);
     }
 
-    function updateDots(activeIndex) {
-        const totalPages = Math.ceil(skinData.length / itemsPerPage);
+    // Обновление точек пагинации
+    function updateDots(activeIndex, totalPages) {
+        if (!paginationDots) return;
         paginationDots.innerHTML = '';
 
         if (totalPages <= 1) {
@@ -224,33 +338,38 @@ document.addEventListener('DOMContentLoaded', function() {
             dot.setAttribute('aria-label', `Страница ${i + 1}`);
             dot.addEventListener('click', function() {
                 currentPage = parseInt(this.getAttribute('data-page'));
-                renderGallery(currentPage);
+                renderGallery();
                 document.getElementById('gallery').scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
             paginationDots.appendChild(dot);
         }
     }
 
-    if (prevPageBtn && nextPageBtn) {
+    if (prevPageBtn) {
         prevPageBtn.addEventListener('click', function() {
             if (currentPage > 0) {
                 currentPage--;
-                renderGallery(currentPage);
-                document.getElementById('gallery').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-
-        nextPageBtn.addEventListener('click', function() {
-            const totalPages = Math.ceil(skinData.length / itemsPerPage);
-            if (currentPage < totalPages - 1) {
-                currentPage++;
-                renderGallery(currentPage);
+                renderGallery();
                 document.getElementById('gallery').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     }
 
-    renderGallery(0);
+    if (nextPageBtn) {
+        nextPageBtn.addEventListener('click', function() {
+            const filtered = getFilteredData();
+            const totalPages = Math.ceil(filtered.length / itemsPerPage);
+            if (currentPage < totalPages - 1) {
+                currentPage++;
+                renderGallery();
+                document.getElementById('gallery').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+
+    // Инициализация портфолио
+    initAuthorTabs();
+    renderGallery();
 
     // ============================================================
     // === МОДАЛЬНОЕ ОКНО ЗАКАЗА ===
