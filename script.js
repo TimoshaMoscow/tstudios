@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // === СКИНЫ ===
     // isRender: true  → сноска "Также является примером рендера" + скин дублируется во вкладке "Рендеры"
-    // isRender: false → сноски нет, скин только во вкладке "Скины"
+    // isRender: false →  сноски нет, скин только во вкладке "Скины"
     const skinsData = [
         { name: 'Тимоша Музыка', price: '0 ₽', image: 'skins/tmusic.png', author: 'Тимошка из Москвы', isRender: true },
         { name: 'beatlewind', price: '0 ₽', image: 'skins/beatlewind.png', author: 'Тимошка из Москвы', isRender: true },
