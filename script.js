@@ -183,22 +183,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // === ПОРТФОЛИО: скины + рендеры + превью ===
     // ============================================================
 
+    // === СКИНЫ ===
+    // isRender: true  → сноска "Также является примером рендера" + скин дублируется во вкладке "Рендеры"
+    // isRender: false → сноски нет, скин только во вкладке "Скины"
     const skinsData = [
-        { name: 'Тимоша Музыка', price: '0 ₽', image: 'skins/tmusic.png', author: 'Тимошка из Москвы' },
-        { name: 'beatlewind', price: '0 ₽', image: 'skins/beatlewind.png', author: 'Тимошка из Москвы' },
-        { name: 'FIREFOX', price: '0 ₽', image: 'skins/firefox.png', author: 'Тимошка из Москвы' },
-        { name: 'Рыцарь', price: '0 ₽', image: 'skins/knight.png', author: 'Тимошка из Москвы' },
-        { name: 'Toxinator', price: '50 ₽', image: 'skins/toxinator.png', author: 'Тимошка из Москвы' },
-        { name: 'арсик', price: '0 ₽', image: 'skins/zakazMAJORrender.png', author: 'Тимошка из Москвы' }
+        { name: 'Тимоша Музыка', price: '0 ₽', image: 'skins/tmusic.png', author: 'Тимошка из Москвы', isRender: true },
+        { name: 'beatlewind', price: '0 ₽', image: 'skins/beatlewind.png', author: 'Тимошка из Москвы', isRender: true },
+        { name: 'FIREFOX', price: '0 ₽', image: 'skins/firefox.png', author: 'Тимошка из Москвы', isRender: true },
+        { name: 'Рыцарь', price: '0 ₽', image: 'skins/knight.png', author: 'Тимошка из Москвы', isRender: true },
+        { name: 'Toxinator', price: '50 ₽', image: 'skins/toxinator.png', author: 'Тимошка из Москвы', isRender: true },
+        { name: 'арсик', price: '0 ₽', image: 'skins/zakazMAJORrender.png', author: 'Тимошка из Москвы', isRender: true }
     ];
 
-    // ⚠️ ЗАМЕНИ preview-example-*.png на реальные файлы из папки renders
+    // === РЕНДЕРЫ ===
     const rendersData = [
         { name: 'Иконка - Разбан', price: '50 ₽', image: 'renders/unban.png', author: 'Тимошка из Москвы' },
         { name: 'Иконка - Донат Вип', price: '50 ₽', image: 'renders/vip.png', author: 'Тимошка из Москвы' },
         { name: 'Иконка - Размут', price: '50 ₽', image: 'renders/unmute.png', author: 'Тимошка из Москвы' }
     ];
 
+    // === ПРЕВЬЮ ===
     const previewsData = [
         { name: 'Мусор дроп', price: '0 ₽', image: 'previews/upgrader.png', author: 'Тимошка из Москвы' },
         { name: 'Marlow не читер', price: '0 ₽', image: 'previews/marlow.png', author: 'Тимошка из Москвы' },
@@ -275,9 +279,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Собираем массив для вкладки "Рендеры":
+    // - rendersData (все элементы)
+    // - скины, у которых isRender === true
+    // При этом у скинов во вкладке рендеров убираем сноску (пометим флагом isSkin: true)
+    function getRendersForTab() {
+        const skinsAsRenders = skinsData
+            .filter(item => item.isRender === true)
+            .map(item => ({
+                ...item,
+                fromSkin: true  // помечаем, что пришло из скинов
+            }));
+        return [...rendersData, ...skinsAsRenders];
+    }
+
     function getSourceByType() {
         if (currentType === 'skins') return skinsData;
-        if (currentType === 'renders') return rendersData;
+        if (currentType === 'renders') return getRendersForTab();
         return previewsData;
     }
 
@@ -323,7 +341,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const card = document.createElement('div');
             card.className = 'gallery-item glass' + getItemClass();
 
-            const renderNote = currentType === 'skins'
+            // Сноска "Также является примером рендера":
+            // - Только во вкладке "Скины"
+            // - Только если isRender === true
+            const showRenderNote =
+                currentType === 'skins' &&
+                item.isRender === true;
+
+            const renderNote = showRenderNote
                 ? '<p class="render-note">Также является примером рендера</p>'
                 : '';
 
