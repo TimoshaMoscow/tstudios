@@ -47,13 +47,23 @@ document.addEventListener('DOMContentLoaded', function() {
         statNumbers.forEach(el => observer.observe(el));
     }
 
-    // === Массив отзывов ===
+    // ============================================================
+    // === ОТЗЫВЫ (с указанием услуги) ===
+    // ============================================================
     const reviewsData = [
-        { name: 'FIREFOX', rating: 5, text: 'Очень хорошее качество и очень не плохое качество рук и буква моего канала.' },
-        { name: 'Beatlewind', rating: 4, text: 'Хорошо подобран стиль, но не хватает уникальности и изюминки в скине.' },
-        { name: 'Тимоша Музыка', rating: 5, text: 'Классный Скин!' },
-        { name: 'арсик', rating: 5, text: 'автор красава, все четко сделал:)' }
+        { name: 'FIREFOX', rating: 5, text: 'Очень хорошее качество и очень не плохое качество рук и буква моего канала.', service: 'Скин' },
+        { name: 'Beatlewind', rating: 4, text: 'Хорошо подобран стиль, но не хватает уникальности и изюминки в скине.', service: 'Скин' },
+        { name: 'Тимоша Музыка', rating: 5, text: 'Классный Скин!', service: 'Скин' },
+        { name: 'арсик', rating: 5, text: 'автор красава, все четко сделал:)', service: 'Скин' },
+        { name: 'Спящий бизнесмен', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
     ];
+
+    const serviceIcons = {
+        'Скин': 'fa-paint-brush',
+        'Рендер': 'fa-cube',
+        'Превью': 'fa-image',
+        'Клип': 'fa-music'
+    };
 
     const reviewsSlider = document.getElementById('reviewsSlider');
     const reviewDots = document.getElementById('reviewDots');
@@ -63,11 +73,17 @@ document.addEventListener('DOMContentLoaded', function() {
         reviewsSlider.innerHTML = '';
         reviewsData.forEach((review, index) => {
             const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+            const icon = serviceIcons[review.service] || 'fa-tag';
             const card = document.createElement('div');
             card.className = 'review-card glass' + (index === 0 ? ' active' : '');
             card.innerHTML = `
                 <div class="review-header">
-                    <span class="reviewer-name">${review.name}</span>
+                    <div class="review-header-left">
+                        <span class="reviewer-name">${review.name}</span>
+                        <span class="review-service" data-service="${review.service}">
+                            <i class="fas ${icon}" aria-hidden="true"></i> ${review.service}
+                        </span>
+                    </div>
                     <div class="stars">${stars}</div>
                 </div>
                 <p class="review-text">"${review.text}"</p>
@@ -164,11 +180,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================================
-    // === ПОРТФОЛИО: скины + превью, фильтр по автору и типу ===
+    // === ПОРТФОЛИО: скины + рендеры + превью ===
     // ============================================================
 
-    // --- ДАННЫЕ ---
-    // Скины (авторы указаны для каждого элемента)
     const skinsData = [
         { name: 'Тимоша Музыка', price: '0 ₽', image: 'skins/tmusic.png', author: 'Тимошка из Москвы' },
         { name: 'beatlewind', price: '0 ₽', image: 'skins/beatlewind.png', author: 'Тимошка из Москвы' },
@@ -178,7 +192,13 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'арсик', price: '0 ₽', image: 'skins/zakazMAJORrender.png', author: 'Тимошка из Москвы' }
     ];
 
-    // Превью (пока что все от Тимошки)
+    // ⚠️ ЗАМЕНИ preview-example-*.png на реальные файлы из папки renders
+    const rendersData = [
+        { name: 'Иконка - Разбан', price: '50 ₽', image: 'renders/unban.png', author: 'Тимошка из Москвы' },
+        { name: 'Иконка - Донат Вип', price: '50 ₽', image: 'renders/vip.png', author: 'Тимошка из Москвы' },
+        { name: 'Иконка - Размут', price: '50 ₽', image: 'renders/unmute.png', author: 'Тимошка из Москвы' }
+    ];
+
     const previewsData = [
         { name: 'Мусор дроп', price: '0 ₽', image: 'previews/upgrader.png', author: 'Тимошка из Москвы' },
         { name: 'Marlow не читер', price: '0 ₽', image: 'previews/marlow.png', author: 'Тимошка из Москвы' },
@@ -187,7 +207,6 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'Майнкрафт без прыжка', price: '0 ₽', image: 'previews/nojump.png', author: 'Тимошка из Москвы' }
     ];
 
-    // --- СОСТОЯНИЕ ---
     let currentAuthor = 'Тимошка из Москвы';
     let currentType = 'skins';
     const itemsPerPage = 4;
@@ -201,17 +220,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const authorNote = document.getElementById('authorNote');
     const typeTabs = document.querySelectorAll('.type-tab');
 
-    // Собираем всех уникальных авторов
     function getAllAuthors() {
-        const all = [...skinsData, ...previewsData].map(i => i.author);
+        const all = [...skinsData, ...rendersData, ...previewsData].map(i => i.author);
         return [...new Set(all)];
     }
 
-    // Инициализация вкладок авторов
     function initAuthorTabs() {
         const authors = getAllAuthors();
 
-        // Если автор только один — блокируем переключатель и показываем заметку
         if (authors.length <= 1) {
             authorTabs.querySelectorAll('.author-tab').forEach(btn => {
                 btn.disabled = true;
@@ -221,7 +237,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Если авторов несколько — генерируем кнопки
         authorTabs.innerHTML = '';
         authors.forEach((author, index) => {
             const btn = document.createElement('button');
@@ -246,7 +261,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Переключение типа работ
     typeTabs.forEach(tab => {
         tab.addEventListener('click', function() {
             currentType = this.dataset.type;
@@ -261,13 +275,29 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Получаем список работ по фильтрам
+    function getSourceByType() {
+        if (currentType === 'skins') return skinsData;
+        if (currentType === 'renders') return rendersData;
+        return previewsData;
+    }
+
     function getFilteredData() {
-        const source = currentType === 'skins' ? skinsData : previewsData;
+        const source = getSourceByType();
         return source.filter(item => item.author === currentAuthor);
     }
 
-    // Рендер галереи
+    function getItemClass() {
+        if (currentType === 'previews') return ' preview-item';
+        if (currentType === 'renders') return ' render-item';
+        return '';
+    }
+
+    function getTypeLabel() {
+        if (currentType === 'skins') return 'Скин';
+        if (currentType === 'renders') return 'Рендер';
+        return 'Превью';
+    }
+
     function renderGallery() {
         const filtered = getFilteredData();
         const start = currentPage * itemsPerPage;
@@ -291,15 +321,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         pageItems.forEach(item => {
             const card = document.createElement('div');
-            card.className = 'gallery-item glass' + (currentType === 'previews' ? ' preview-item' : '');
+            card.className = 'gallery-item glass' + getItemClass();
 
-            // Сноска только для скинов
             const renderNote = currentType === 'skins'
                 ? '<p class="render-note">Также является примером рендера</p>'
                 : '';
 
             card.innerHTML = `
-                <img src="${item.image}" alt="${currentType === 'skins' ? 'Скин' : 'Превью'} ${item.name}" loading="lazy">
+                <img src="${item.image}" alt="${getTypeLabel()} ${item.name}" loading="lazy">
                 <div class="gallery-info">
                     <h4>${item.name}</h4>
                     <span class="price">${item.price}</span>
@@ -319,7 +348,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateDots(currentPage, totalPages);
     }
 
-    // Обновление точек пагинации
     function updateDots(activeIndex, totalPages) {
         if (!paginationDots) return;
         paginationDots.innerHTML = '';
@@ -367,7 +395,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Инициализация портфолио
     initAuthorTabs();
     renderGallery();
 
@@ -481,8 +508,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (femaleSelected && hasMale) {
             genderHint.hidden = false;
             genderHint.classList.remove('danger');
-            genderHint.style.background = 'rgba(255, 193, 7, 0.1)';
-            genderHint.style.borderColor = 'rgba(255, 193, 7, 0.4)';
+            genderHint.style.background = 'rgba(245, 158, 11, 0.1)';
+            genderHint.style.borderColor = 'rgba(245, 158, 11, 0.4)';
             genderHint.style.color = 'var(--warning)';
             genderHintText.innerHTML = '⚠️ <strong>Внимание!</strong> Вы выбрали <strong>женский скин</strong>, но в описании есть мужские детали. Проверьте, пожалуйста, правильно ли выбран пол.';
             if (orderDesc) orderDesc.classList.remove('conflict');
