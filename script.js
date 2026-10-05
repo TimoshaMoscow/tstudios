@@ -197,9 +197,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // === РЕНДЕРЫ ===
     const rendersData = [
-        { name: 'Иконка - Разбан', price: '50 ₽', image: 'renders/unban.png', author: 'Тимошка из Москвы' },
-        { name: 'Иконка - Донат Вип', price: '50 ₽', image: 'renders/vip.png', author: 'Тимошка из Москвы' },
-        { name: 'Иконка - Размут', price: '50 ₽', image: 'renders/unmute.png', author: 'Тимошка из Москвы' }
+        { name: 'NPOT', price: '50 ₽', image: 'renders/npot.png', author: 'Тимошка из Москвы' },
+        { name: 'Sword', price: '50 ₽', image: 'renders/sword.png', author: 'Тимошка из Москвы' },
+        { name: 'OP', price: '50 ₽', image: 'renders/OP.png', author: 'Тимошка из Москвы' }
     ];
 
     // === ПРЕВЬЮ ===
