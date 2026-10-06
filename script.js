@@ -221,7 +221,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const rendersData = [
         { name: 'NPOT', price: '50 ₽', image: 'renders/npot.png', author: 'Тимошка из Москвы' },
         { name: 'Sword', price: '50 ₽', image: 'renders/sword.png', author: 'Тимошка из Москвы' },
-        { name: 'OP', price: '50 ₽', image: 'renders/OP.png', author: 'Тимошка из Москвы' }
+        { name: 'OP', price: '50 ₽', image: 'renders/OP.png', author: 'Тимошка из Москвы' },
+        { name: 'Наблюдение', price: '50 ₽', image: 'renders/peeks.png', author: 'Тимошка из Москвы' },
+        { name: 'Думает', price: '50 ₽', image: 'renders/question.png', author: 'Тимошка из Москвы' }
     ];
 
     const previewsData = [
