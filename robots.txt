@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://timoshamoscow.github.io/tstudios/sitemap.xml
