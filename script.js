@@ -1,6 +1,26 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     /* ============================================================
+       0. ГЛОБАЛЬНЫЕ ЦЕНЫ (меняй тут — обновится везде)
+    ============================================================ */
+    const PRICES = {
+        skin: 100,
+        skinFemale: 150,
+        render: 50,
+        preview: 100,
+        clip: 500,
+        revision: 30
+    };
+
+    // Применяем цены ко всем элементам с data-price
+    document.querySelectorAll('[data-price]').forEach(el => {
+        const key = el.getAttribute('data-price');
+        if (PRICES[key] !== undefined) {
+            el.textContent = PRICES[key];
+        }
+    });
+
+    /* ============================================================
        1. БУРГЕР-МЕНЮ
     ============================================================ */
     const hamburger = document.getElementById('hamburger');
@@ -24,8 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* ============================================================
        3. АНИМИРОВАННЫЕ СЧЁТЧИКИ
-       (теперь работает только для элементов с data-count,
-       у «10+ работ» его нет — там статичный текст)
     ============================================================ */
     const statNumbers = document.querySelectorAll('.stat-number[data-count]');
     if (statNumbers.length) {
@@ -73,7 +91,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }, { passive: true });
 
-    // Генерация звёзд
     const bgStars = document.getElementById('bgStars');
     if (bgStars) {
         const starCount = 60;
@@ -141,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     /* ============================================================
-       8. TOAST-УВЕДОМЛЕНИЯ
+       8. TOAST
     ============================================================ */
     const toastContainer = document.getElementById('toastContainer');
     function showToast(message, type = 'info') {
@@ -168,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (maleBtn && femaleBtn && skinPrice && skinCard) {
         function updateSkinPrice(gender) {
             if (gender === 'male') {
-                skinPrice.textContent = '99';
+                skinPrice.textContent = PRICES.skin;
                 skinNote.textContent = 'Индивидуальный дизайн';
                 maleBtn.classList.add('active');
                 maleBtn.setAttribute('aria-pressed', 'true');
@@ -176,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 femaleBtn.setAttribute('aria-pressed', 'false');
                 skinCard.classList.remove('female-theme');
             } else {
-                skinPrice.textContent = '149';
+                skinPrice.textContent = PRICES.skinFemale;
                 skinNote.textContent = 'С учётом женских особенностей';
                 femaleBtn.classList.add('active');
                 femaleBtn.setAttribute('aria-pressed', 'true');
@@ -208,31 +225,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* ============================================================
        11. ДАННЫЕ ПОРТФОЛИО
+       price: 0 → покажет «Подарок»
     ============================================================ */
     const skinsData = [
-        { name: 'Тимоша Музыка', price: '0 ₽', image: 'skins/tmusic.png', author: 'Тимошка из Москвы', isRender: true },
-        { name: 'beatlewind', price: '0 ₽', image: 'skins/beatlewind.png', author: 'Тимошка из Москвы', isRender: true },
-        { name: 'FIREFOX', price: '0 ₽', image: 'skins/firefox.png', author: 'Тимошка из Москвы', isRender: true },
-        { name: 'Рыцарь', price: '0 ₽', image: 'skins/knight.png', author: 'Тимошка из Москвы', isRender: true },
-        { name: 'Toxinator', price: '50 ₽', image: 'skins/toxinator.png', author: 'Тимошка из Москвы', isRender: true },
-        { name: 'арсик', price: '0 ₽', image: 'skins/zakazMAJORrender.png', author: 'Тимошка из Москвы', isRender: true }
+        { name: 'Тимоша Музыка', price: 0, image: 'skins/tmusic.png', author: 'Тимошка из Москвы', isRender: true },
+        { name: 'beatlewind', price: 0, image: 'skins/beatlewind.png', author: 'Тимошка из Москвы', isRender: true },
+        { name: 'FIREFOX', price: 0, image: 'skins/firefox.png', author: 'Тимошка из Москвы', isRender: true },
+        { name: 'Рыцарь', price: 0, image: 'skins/knight.png', author: 'Тимошка из Москвы', isRender: true },
+        { name: 'Toxinator', price: 50, image: 'skins/toxinator.png', author: 'Тимошка из Москвы', isRender: true },
+        { name: 'арсик', price: 0, image: 'skins/zakazMAJORrender.png', author: 'Тимошка из Москвы', isRender: true }
     ];
 
     const rendersData = [
-        { name: 'NPOT', price: '50 ₽', image: 'renders/npot.png', author: 'Тимошка из Москвы' },
-        { name: 'Sword', price: '50 ₽', image: 'renders/sword.png', author: 'Тимошка из Москвы' },
-        { name: 'OP', price: '50 ₽', image: 'renders/OP.png', author: 'Тимошка из Москвы' },
-        { name: 'Наблюдение', price: '50 ₽', image: 'renders/peeks.png', author: 'Тимошка из Москвы' },
-        { name: 'Думает', price: '50 ₽', image: 'renders/question.png', author: 'Тимошка из Москвы' }
+        { name: 'NPOT', price: 50, image: 'renders/npot.png', author: 'Тимошка из Москвы' },
+        { name: 'Sword', price: 50, image: 'renders/sword.png', author: 'Тимошка из Москвы' },
+        { name: 'OP', price: 50, image: 'renders/OP.png', author: 'Тимошка из Москвы' },
+        { name: 'Наблюдение', price: 50, image: 'renders/peeks.png', author: 'Тимошка из Москвы' },
+        { name: 'Думает', price: 50, image: 'renders/question.png', author: 'Тимошка из Москвы' }
     ];
 
     const previewsData = [
-        { name: 'Мусор дроп', price: '0 ₽', image: 'previews/upgrader.png', author: 'Тимошка из Москвы' },
-        { name: 'Marlow не читер', price: '0 ₽', image: 'previews/marlow.png', author: 'Тимошка из Москвы' },
-        { name: 'Лесорубы', price: '0 ₽', image: 'previews/lecoruby.png', author: 'Тимошка из Москвы' },
-        { name: 'Шахтеры', price: '0 ₽', image: 'previews/miners.png', author: 'Тимошка из Москвы' },
-        { name: 'Майнкрафт без прыжка', price: '0 ₽', image: 'previews/nojump.png', author: 'Тимошка из Москвы' }
+        { name: 'Мусор дроп', price: 0, image: 'previews/upgrader.png', author: 'Тимошка из Москвы' },
+        { name: 'Marlow не читер', price: 0, image: 'previews/marlow.png', author: 'Тимошка из Москвы' },
+        { name: 'Лесорубы', price: 0, image: 'previews/lecoruby.png', author: 'Тимошка из Москвы' },
+        { name: 'Шахтеры', price: 0, image: 'previews/miners.png', author: 'Тимошка из Москвы' },
+        { name: 'Майнкрафт без прыжка', price: 0, image: 'previews/nojump.png', author: 'Тимошка из Москвы' }
     ];
+
+    // Форматирование цены: 0 → «Подарок»
+    function formatPrice(price) {
+        if (price === 0 || price === '0' || price === '0 ₽') {
+            return '<i class="fas fa-gift"></i> Подарок';
+        }
+        return `${price} ₽`;
+    }
 
     let currentAuthor = authors[0].name;
     let currentType = 'skins';
@@ -376,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div class="gallery-info">
                     <h4>${item.name}</h4>
-                    <span class="price">${item.price}</span>
+                    <span class="price">${formatPrice(item.price)}</span>
                 </div>
                 ${renderNote}
                 <div class="gallery-author" onclick="event.stopPropagation()">
@@ -491,7 +517,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         lightboxType.textContent = getTypeLabel();
         lightboxTitle.textContent = item.name;
-        lightboxPrice.textContent = item.price;
+        lightboxPrice.innerHTML = formatPrice(item.price);
         lightboxAuthor.innerHTML = `<img src="${author.avatar}" alt="${author.name}" onerror="this.style.display='none'"> <span>Автор: ${author.name}</span>`;
 
         lightboxImg.classList.remove('loaded');
@@ -563,7 +589,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       16. КНОПКА «ПОДЕЛИТЬСЯ»
+       16. ПОДЕЛИТЬСЯ
     ============================================================ */
     async function shareItem(item) {
         const url = window.location.origin + window.location.pathname + `#gallery`;
@@ -686,7 +712,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <img src="${item.image}" alt="${item.name}">
                     </div>
                     <h4>${item.name}</h4>
-                    <span class="price">${item.price}</span>
+                    <span class="price">${formatPrice(item.price)}</span>
                     <p class="compare-card-author">
                         <i class="fas fa-user"></i> ${author.name}
                     </p>
@@ -746,6 +772,14 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             q: 'Можно ли заказать срочно?',
             a: 'Да! Есть срочный режим (×1.5 от цены) и экспресс (×2 от цены). Срочные заказы берём по возможности — уточняйте в Discord.'
+        },
+        {
+            q: 'Как заказать рендер Minecraft?',
+            a: 'Нажмите «Заказать рендер» в тарифе «Рендеры» — откроется форма. Заполните детали (поза, фон, атмосфера) и отправьте заявку в Discord. Цена от 50₽.'
+        },
+        {
+            q: 'Как заказать скин Minecraft?',
+            a: 'Выберите пол скина (мужской/женский), укажите тему и цвета — мы сделаем индивидуальный дизайн. От 100₽, срок 1-2 дня.'
         }
     ];
 
@@ -879,10 +913,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let calcState = {
         service: 'Скин',
-        basePrice: 99,
+        basePrice: PRICES.skin,
         genderExtra: 0,
         revisions: 0,
-        revisionsPrice: 30,
+        revisionsPrice: PRICES.revision,
         urgencyMult: 1
     };
 
@@ -926,7 +960,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (calcRevisions) {
         calcRevisions.addEventListener('input', function () {
             calcState.revisions = parseInt(this.value);
-            calcRevisionsValue.textContent = `${calcState.revisions} правок × ${calcState.revisionsPrice} ₽`;
+            calcRevisionsValue.innerHTML = `${calcState.revisions} правок × <span data-price="revision">${PRICES.revision}</span> ₽`;
             updateCalcTotal();
         });
     }
@@ -944,7 +978,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (calcOrderBtn) {
         calcOrderBtn.addEventListener('click', () => {
-            // Передаём состояние калькулятора в модалку
             openModal(calcState.service, {
                 revisions: calcState.revisions,
                 urgencyMult: calcState.urgencyMult,
@@ -992,20 +1025,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let currentService = 'Скин';
     let orderState = {
-        basePrice: 99,
+        basePrice: PRICES.skin,
         genderExtra: 0,
         revisions: 0,
-        revisionsPrice: 30,
+        revisionsPrice: PRICES.revision,
         urgencyMult: 1,
         urgencyLabel: 'Обычная'
     };
 
-    // Базовые цены по услугам
     const BASE_PRICES = {
-        'Скин': 99,
-        'Рендер': 49,
-        'Превью': 99,
-        'Клип': 499
+        'Скин': PRICES.skin,
+        'Рендер': PRICES.render,
+        'Превью': PRICES.preview,
+        'Клип': PRICES.clip
     };
 
     function updateOrderTotal() {
@@ -1074,7 +1106,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (maleSelected && hasFemale) {
             genderHint.hidden = false;
             genderHint.classList.add('danger');
-            genderHintText.innerHTML = '🚫 <strong>Кнопка заблокирована.</strong> Вы выбрали <strong>мужской скин</strong>, но в описании есть женские детали. Переключите пол на <strong>«Женский»</strong> (149 ₽) или уберите женские детали.';
+            genderHintText.innerHTML = '<strong>Кнопка заблокирована.</strong> Вы выбрали <strong>мужской скин</strong>, но в описании есть женские детали. Переключите пол на <strong>«Женский»</strong> (' + PRICES.skinFemale + ' ₽) или уберите женские детали.';
             if (orderDesc) orderDesc.classList.add('conflict');
             if (submitOrderBtn) {
                 submitOrderBtn.disabled = true;
@@ -1089,7 +1121,7 @@ document.addEventListener('DOMContentLoaded', function () {
             genderHint.style.background = 'rgba(245, 158, 11, 0.1)';
             genderHint.style.borderColor = 'rgba(245, 158, 11, 0.4)';
             genderHint.style.color = 'var(--warning)';
-            genderHintText.innerHTML = '⚠️ <strong>Внимание!</strong> Вы выбрали <strong>женский скин</strong>, но в описании есть мужские детали. Проверьте, пожалуйста, пол.';
+            genderHintText.innerHTML = '<strong>Внимание!</strong> Вы выбрали <strong>женский скин</strong>, но в описании есть мужские детали. Проверьте, пожалуйста, пол.';
             if (orderDesc) orderDesc.classList.remove('conflict');
             if (submitOrderBtn) {
                 submitOrderBtn.disabled = false;
@@ -1120,7 +1152,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // При смене пола скина в модалке — пересчитываем цену + переключаем подсказку
     document.querySelectorAll('input[name="skinGender"]').forEach(radio => {
         radio.addEventListener('change', function () {
             if (currentService === 'Скин') {
@@ -1131,16 +1162,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Слайдер правок в модалке
     if (orderRevisions) {
         orderRevisions.addEventListener('input', function () {
             orderState.revisions = parseInt(this.value);
-            orderRevisionsValue.textContent = `${orderState.revisions} правок × ${orderState.revisionsPrice} ₽`;
+            orderRevisionsValue.innerHTML = `${orderState.revisions} правок × <span data-price="revision">${PRICES.revision}</span> ₽`;
             updateOrderTotal();
         });
     }
 
-    // Срочность в модалке
     if (orderUrgency) {
         orderUrgency.querySelectorAll('.calc-opt').forEach(btn => {
             btn.addEventListener('click', function () {
@@ -1156,7 +1185,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.btn-pricing').forEach(btn => {
         btn.addEventListener('click', function () {
             const service = this.getAttribute('data-service') || 'Скин';
-            // Если открывают карточку скина — учитываем выбранный пол
             let genderExtra = 0;
             if (service === 'Скин' && femaleBtn && femaleBtn.classList.contains('active')) {
                 genderExtra = 50;
@@ -1179,25 +1207,21 @@ document.addEventListener('DOMContentLoaded', function () {
         else if (service === 'Превью') fieldsPreview.hidden = false;
         else if (service === 'Клип') fieldsClip.hidden = false;
 
-        // Сброс состояния заказа
-        orderState.basePrice = BASE_PRICES[service] || 99;
+        orderState.basePrice = BASE_PRICES[service] || PRICES.skin;
         orderState.genderExtra = prefill.genderExtra || 0;
         orderState.revisions = prefill.revisions || 0;
         orderState.urgencyMult = prefill.urgencyMult || 1;
         orderState.urgencyLabel = prefill.urgencyLabel || 'Обычная';
 
-        // Сброс полей формы
         orderForm.reset();
         descCounter.textContent = '0 / 500';
         extraCounter.textContent = '0 / 300';
 
-        // Сброс слайдера правок
         if (orderRevisions) {
             orderRevisions.value = orderState.revisions;
-            orderRevisionsValue.textContent = `${orderState.revisions} правок × ${orderState.revisionsPrice} ₽`;
+            orderRevisionsValue.innerHTML = `${orderState.revisions} правок × <span data-price="revision">${PRICES.revision}</span> ₽`;
         }
 
-        // Сброс срочности
         if (orderUrgency) {
             orderUrgency.querySelectorAll('.calc-opt').forEach(b => b.classList.remove('active'));
             const target = Array.from(orderUrgency.querySelectorAll('.calc-opt'))
@@ -1205,13 +1229,11 @@ document.addEventListener('DOMContentLoaded', function () {
             if (target) target.classList.add('active');
         }
 
-        // Установить пол скина, если пришло из карточки "Женский"
         if (service === 'Скин' && orderState.genderExtra === 50) {
             const femaleRadio = document.querySelector('input[name="skinGender"][value="Женский"]');
             if (femaleRadio) femaleRadio.checked = true;
         }
 
-        // Пересчёт итоговой цены
         updateOrderTotal();
 
         modalStepForm.hidden = false;
@@ -1259,61 +1281,59 @@ document.addEventListener('DOMContentLoaded', function () {
         const extra = orderExtra.value.trim();
 
         let text = '';
-        text += `🎨 Заказ в TStudios\n`;
+        text += `Заказ в TStudios\n`;
         text += `━━━━━━━━━━━━━━━━━━━━\n\n`;
-        text += `📌 Услуга: ${currentService}\n`;
-        text += `👤 Имя: ${name}\n`;
+        text += `Услуга: ${currentService}\n`;
+        text += `Имя: ${name}\n`;
 
         if (currentService === 'Скин') {
             const gender = document.querySelector('input[name="skinGender"]:checked');
             const theme = document.getElementById('skinTheme').value.trim();
             const colors = document.getElementById('skinColors').value.trim();
             const refs = document.getElementById('skinRefs').value.trim();
-            if (gender) text += `⚧ Пол скина: ${gender.value}\n`;
-            if (theme) text += `🎭 Тема / стиль: ${theme}\n`;
-            if (colors) text += `🎨 Цвета: ${colors}\n`;
-            if (refs) text += `🔗 Референсы: ${refs}\n`;
+            if (gender) text += `Пол скина: ${gender.value}\n`;
+            if (theme) text += `Тема / стиль: ${theme}\n`;
+            if (colors) text += `Цвета: ${colors}\n`;
+            if (refs) text += `Референсы: ${refs}\n`;
         } else if (currentService === 'Рендер') {
             const renderType = document.querySelector('input[name="renderType"]:checked');
             const pose = document.getElementById('renderPose').value;
             const bg = document.getElementById('renderBg').value.trim();
             const mood = document.getElementById('renderMood').value.trim();
-            if (renderType) text += `🖼️ Тип рендера: ${renderType.value}\n`;
-            if (pose) text += `🧍 Поза / ракурс: ${pose}\n`;
-            if (bg) text += `🌄 Фон: ${bg}\n`;
-            if (mood) text += `✨ Атмосфера: ${mood}\n`;
+            if (renderType) text += `Тип рендера: ${renderType.value}\n`;
+            if (pose) text += `Поза / ракурс: ${pose}\n`;
+            if (bg) text += `Фон: ${bg}\n`;
+            if (mood) text += `Атмосфера: ${mood}\n`;
         } else if (currentService === 'Превью') {
             const title = document.getElementById('previewTitle').value.trim();
             const style = document.querySelector('input[name="previewStyle"]:checked');
             const refs = document.getElementById('previewRefs').value.trim();
-            if (title) text += `📺 Тема видео: ${title}\n`;
-            if (style) text += `🎨 Стиль превью: ${style.value}\n`;
-            if (refs) text += `🔗 Референсы: ${refs}\n`;
+            if (title) text += `Тема видео: ${title}\n`;
+            if (style) text += `Стиль превью: ${style.value}\n`;
+            if (refs) text += `Референсы: ${refs}\n`;
         } else if (currentService === 'Клип') {
             const genre = document.getElementById('clipGenre').value;
             const duration = document.getElementById('clipDuration').value;
             const track = document.getElementById('clipTrack').value.trim();
-            if (genre) text += `🎵 Жанр: ${genre}\n`;
-            if (duration) text += `⏱️ Длительность: ${duration}\n`;
-            if (track) text += `🎧 Трек: ${track}\n`;
+            if (genre) text += `Жанр: ${genre}\n`;
+            if (duration) text += `Длительность: ${duration}\n`;
+            if (track) text += `Трек: ${track}\n`;
         }
 
-        // Доп. правки и срочность
         if (orderState.revisions > 0) {
-            text += `✏️ Доп. правки: ${orderState.revisions} × ${orderState.revisionsPrice} ₽\n`;
+            text += `Доп. правки: ${orderState.revisions} × ${orderState.revisionsPrice} ₽\n`;
         }
-        text += `⚡ Срочность: ${orderState.urgencyLabel}\n`;
+        text += `Срочность: ${orderState.urgencyLabel}\n`;
 
-        // Итоговая цена
         const total = Math.round(
             (orderState.basePrice + orderState.genderExtra + orderState.revisions * orderState.revisionsPrice) * orderState.urgencyMult
         );
-        text += `💰 Предварительная стоимость: ${total} ₽\n`;
+        text += `Предварительная стоимость: ${total} ₽\n`;
 
-        text += `\n📝 Описание:\n${desc}\n`;
-        if (extra) text += `\n💬 Дополнительно:\n${extra}\n`;
+        text += `\nОписание:\n${desc}\n`;
+        if (extra) text += `\nДополнительно:\n${extra}\n`;
         text += `\n━━━━━━━━━━━━━━━━━━━━\n`;
-        text += `✅ Отправлено через сайт TStudios`;
+        text += `Отправлено через сайт TStudios`;
         return text;
     }
 
@@ -1483,36 +1503,40 @@ document.addEventListener('DOMContentLoaded', function () {
         const literacy = document.getElementById('teamLiteracy').value;
         const role = document.getElementById('teamRole').value;
         const channel = document.getElementById('teamChannel').value.trim();
+        const passport = document.querySelector('input[name="teamPassport"]:checked');
+        const bankCard = document.querySelector('input[name="teamBankCard"]:checked');
 
         let text = '';
-        text += `👥 Заявка в команду TStudios\n`;
+        text += `Заявка в команду TStudios\n`;
         text += `━━━━━━━━━━━━━━━━━━━━\n\n`;
-        text += `👤 Имя / ник: ${name}\n`;
-        text += `🎂 Возраст: ${age} лет\n`;
-        text += `🧠 Адекватность: ${adequacy} / 10\n`;
-        text += `📚 Грамотность: ${literacy} / 10\n`;
-        text += `🎯 Роль: ${role}\n`;
+        text += `Имя / ник: ${name}\n`;
+        text += `Возраст: ${age} лет\n`;
+        text += `Адекватность: ${adequacy} / 10\n`;
+        text += `Грамотность: ${literacy} / 10\n`;
+        if (passport) text += `Паспорт: ${passport.value}\n`;
+        if (bankCard) text += `Банк. карта РФ: ${bankCard.value}\n`;
+        text += `Роль: ${role}\n`;
 
         if (role === 'Художник скинов') {
             const skills = document.getElementById('teamSkinSkills').value.trim();
-            if (skills) text += `\n🎨 Навыки:\n${skills}\n`;
+            if (skills) text += `\nНавыки:\n${skills}\n`;
         } else if (role === '3D моделлер') {
             const skills = document.getElementById('team3DSkills').value.trim();
-            if (skills) text += `\n🧊 Навыки:\n${skills}\n`;
+            if (skills) text += `\nНавыки:\n${skills}\n`;
         } else if (role === 'Монтажер') {
             const skills = document.getElementById('teamMontageSkills').value.trim();
-            if (skills) text += `\n🎬 Навыки:\n${skills}\n`;
+            if (skills) text += `\nНавыки:\n${skills}\n`;
         } else if (role === 'Художник превью') {
             const skills = document.getElementById('teamPreviewSkills').value.trim();
-            if (skills) text += `\n🖼️ Навыки:\n${skills}\n`;
+            if (skills) text += `\nНавыки:\n${skills}\n`;
         } else if (role === 'Строитель') {
             const skills = document.getElementById('teamBuilderSkills').value.trim();
-            if (skills) text += `\n🏗️ Навыки:\n${skills}\n`;
+            if (skills) text += `\nНавыки:\n${skills}\n`;
         }
 
-        text += `\n📺 YouTube канал: ${channel}\n`;
+        text += `\nYouTube канал: ${channel}\n`;
         text += `\n━━━━━━━━━━━━━━━━━━━━\n`;
-        text += `✅ Отправлено через сайт TStudios`;
+        text += `Отправлено через сайт TStudios`;
         return text;
     }
 
@@ -1523,11 +1547,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const literacy = document.getElementById('teamLiteracy').value;
         const role = document.getElementById('teamRole').value;
         const channel = document.getElementById('teamChannel').value.trim();
+        const passport = document.querySelector('input[name="teamPassport"]:checked');
+        const bankCard = document.querySelector('input[name="teamBankCard"]:checked');
 
         if (!name) { showToast('Укажите имя', 'error'); return false; }
-        if (!age || age < 12) { showToast('Возраст от 12 лет', 'error'); return false; }
+        if (!age || age < 14) { showToast('Возраст от 14 лет', 'error'); return false; }
         if (!adequacy) { showToast('Выберите адекватность', 'error'); return false; }
         if (!literacy) { showToast('Выберите грамотность', 'error'); return false; }
+        if (!passport) { showToast('Укажите наличие паспорта', 'error'); return false; }
+        if (!bankCard) { showToast('Укажите наличие карты РФ', 'error'); return false; }
         if (!role) { showToast('Выберите роль', 'error'); return false; }
         if (!channel) { showToast('Укажите YouTube канал', 'error'); return false; }
 
@@ -1568,7 +1596,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       23. ESCAPE ЗАКРЫВАЕТ ВСЁ
+       23. ESCAPE
     ============================================================ */
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {

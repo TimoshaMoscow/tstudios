@@ -1,9 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+    <!-- ============================================================
+         ГЛАВНАЯ СТРАНИЦА + ЛОГОТИП + ФОТО ОСНОВАТЕЛЯ
+    ============================================================ -->
     <url>
         <loc>https://timoshamoscow.github.io/tstudios/</loc>
-        <lastmod>2026-01-15</lastmod>
+        <lastmod>2026-10-06</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
+
+        <!-- Логотип студии -->
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/logo.png</image:loc>
+            <image:title>TStudios — логотип студии Minecraft</image:title>
+            <image:caption>Логотип студии TStudios по созданию скинов, рендеров и превью Minecraft на заказ</image:caption>
+        </image:image>
+
+        <!-- Фото основателя -->
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/tim.png</image:loc>
+            <image:title>Тимошка из Москвы — основатель TStudios</image:title>
+            <image:caption>Тимошка из Москвы — основатель и главный разработчик студии TStudios, ютубер по Minecraft с аудиторией 23 000+ подписчиков</image:caption>
+        </image:image>
+
+        <!-- ============================================================
+             СКИНЫ MINECRAFT (портфолио)
+        ============================================================ -->
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/skins/tmusic.png</image:loc>
+            <image:title>Скин Тимоша Музыка — Minecraft</image:title>
+            <image:caption>Индивидуальный скин Minecraft для YouTube-канала Тимоша Музыка от студии TStudios</image:caption>
+        </image:image>
+
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/skins/beatlewind.png</image:loc>
+            <image:title>Скин beatlewind — Minecraft</image:title>
+            <image:caption>Уникальный скин Minecraft для ютубера beatlewind от TStudios</image:caption>
+        </image:image>
+
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/skins/firefox.png</image:loc>
+            <image:title>Скин FIREFOX — Minecraft</image:title>
+            <image:caption>Индивидуальный скин Minecraft для FIREFOX от студии TStudios</image:caption>
+        </image:image>
+
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/skins/knight.png</image:loc>
+            <image:title>Скин Рыцарь — Minecraft</image:title>
+            <image:caption>Скин Minecraft в стиле рыцаря — индивидуальный дизайн от TStudios</image:caption>
+        </image:image>
+
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/skins/toxinator.png</image:loc>
+            <image:title>Скин Toxinator — Minecraft</image:title>
+            <image:caption>Скин Minecraft Toxinator на заказ от студии TStudios</image:caption>
+        </image:image>
+
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/skins/zakazMAJORrender.png</image:loc>
+            <image:title>Скин арсик — Minecraft</image:title>
+            <image:caption>Индивидуальный скин Minecraft для арсик от TStudios</image:caption>
+        </image:image>
+
+        <!-- ============================================================
+             РЕНДЕРЫ MINECRAFT (портфолио)
+        ============================================================ -->
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/renders/npot.png</image:loc>
+            <image:title>3D-рендер NPOT — Minecraft</image:title>
+            <image:caption>3D-рендер скина Minecraft NPOT в HD-качестве от студии TStudios</image:caption>
+        </image:image>
+
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/renders/sword.png</image:loc>
+            <image:title>3D-рендер Sword — Minecraft</image:title>
+            <image:caption>3D-рендер скина Minecraft с мечом Sword от TStudios</image:caption>
+        </image:image>
+
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/renders/OP.png</image:loc>
+            <image:title>3D-рендер OP — Minecraft</image:title>
+            <image:caption>Эпичный 3D-рендер Minecraft OP от студии TStudios</image:caption>
+        </image:image>
+
+        <!-- ============================================================
+             ПРЕВЬЮ ДЛЯ YOUTUBE (портфолио)
+        ============================================================ -->
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/previews/upgrader.png</image:loc>
+            <image:title>Превью «Мусор дроп» — Minecraft YouTube</image:title>
+            <image:caption>Яркое превью для YouTube-видео по Minecraft «Мусор дроп» от TStudios</image:caption>
+        </image:image>
+
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/previews/marlow.png</image:loc>
+            <image:title>Превью «Marlow не читер» — Minecraft YouTube</image:title>
+            <image:caption>Превью для YouTube-видео по Minecraft «Marlow не читер» от студии TStudios</image:caption>
+        </image:image>
+
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/previews/lecoruby.png</image:loc>
+            <image:title>Превью «Лесорубы» — Minecraft YouTube</image:title>
+            <image:caption>Превью для YouTube-видео по Minecraft «Лесорубы» от TStudios</image:caption>
+        </image:image>
+
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/previews/miners.png</image:loc>
+            <image:title>Превью «Шахтеры» — Minecraft YouTube</image:title>
+            <image:caption>Превью для YouTube-видео по Minecraft «Шахтеры» от студии TStudios</image:caption>
+        </image:image>
+
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/previews/nojump.png</image:loc>
+            <image:title>Превью «Майнкрафт без прыжка» — Minecraft YouTube</image:title>
+            <image:caption>Превью для YouTube-видео по Minecraft «Майнкрафт без прыжка» от TStudios</image:caption>
+        </image:image>
+
+        <!-- ============================================================
+             ШАГИ «КАК МЫ РАБОТАЕМ»
+        ============================================================ -->
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/steps/step1.png</image:loc>
+            <image:title>Шаг 1 — Пишешь в Discord | TStudios</image:title>
+            <image:caption>Как заказать скин Minecraft: шаг 1 — написать в Discord студии TStudios</image:caption>
+        </image:image>
+
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/steps/step2.png</image:loc>
+            <image:title>Шаг 2 — Обсуждаем детали | TStudios</image:title>
+            <image:caption>Как заказать скин Minecraft: шаг 2 — обсуждение стиля, референсов и сроков</image:caption>
+        </image:image>
+
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/steps/step3.png</image:loc>
+            <image:title>Шаг 3 — Я делаю работу | TStudios</image:title>
+            <image:caption>Как заказать скин Minecraft: шаг 3 — создание дизайна и промежуточный результат</image:caption>
+        </image:image>
+
+        <image:image>
+            <image:loc>https://timoshamoscow.github.io/tstudios/steps/step4.png</image:loc>
+            <image:title>Шаг 4 — Вносим правки и отдаём финал | TStudios</image:title>
+            <image:caption>Как заказать скин Minecraft: шаг 4 — правки и финальный файл в HD</image:caption>
+        </image:image>
+
     </url>
+
 </urlset>
