@@ -9,7 +9,7 @@
     // ============================================================
     
     // Название нашего сайта — используется как реферальная метка в ссылках
-    const REFERRAL_TAG = 'creativetools';
+    const REFERRAL_TAG = 'tstudios';
     
     const ADS_CONFIG = {
         // Показывать ли рекламу (true/false)
