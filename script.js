@@ -1,18 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     /* ============================================================
-       0. ГЛОБАЛЬНЫЕ ЦЕНЫ (меняй тут — обновится везде)
+       0. ГЛОБАЛЬНЫЕ ЦЕНЫ
     ============================================================ */
     const PRICES = {
         skin: 100,
         skinFemale: 150,
         render: 50,
         preview: 100,
-        clip: 500,
         revision: 30
     };
 
-    // Применяем цены ко всем элементам с data-price
     document.querySelectorAll('[data-price]').forEach(el => {
         const key = el.getAttribute('data-price');
         if (PRICES[key] !== undefined) {
@@ -34,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       2. ЭФФЕКТ СКРОЛЛА ХЕДЕРА
+       2. СКРОЛЛ ХЕДЕРА
     ============================================================ */
     const header = document.querySelector('.header');
     window.addEventListener('scroll', () => {
@@ -43,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     /* ============================================================
-       3. АНИМИРОВАННЫЕ СЧЁТЧИКИ
+       3. СЧЁТЧИКИ
     ============================================================ */
     const statNumbers = document.querySelectorAll('.stat-number[data-count]');
     if (statNumbers.length) {
@@ -70,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       4. ПАРАЛЛАКС ФОНА + ЗВЁЗДЫ
+       4. ПАРАЛЛАКС + ЗВЁЗДЫ
     ============================================================ */
     const parallaxLayers = document.querySelectorAll('.parallax-layer');
     let ticking = false;
@@ -107,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       5. SPOTLIGHT-КУРСОР
+       5. SPOTLIGHT
     ============================================================ */
     const spotlight = document.getElementById('cursorSpotlight');
     if (spotlight && window.matchMedia('(hover: hover)').matches) {
@@ -130,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       6. ПРОГРЕСС-БАР ЧТЕНИЯ
+       6. ПРОГРЕСС-БАР
     ============================================================ */
     const readingProgress = document.getElementById('readingProgress');
     function updateReadingProgress() {
@@ -208,15 +206,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* ============================================================
        10. МАССИВ АВТОРОВ
+       ВАЖНО: services НЕ указываем — система сама их определит
+       по работам в портфолио (см. getAuthorServices)
     ============================================================ */
     const authors = [
         {
             name: 'Тимошка из Москвы',
-            avatar: 'tim.png',
+            avatar: 'autors/tim.png',
             youtube: 'https://www.youtube.com/@Timosha_MoscowOF',
             discord: 'https://discord.com/users/1146355058880040970',
             telegram: 'https://t.me/MinecraftWithTimosha'
         }
+        // Чтобы добавить нового автора — просто добавь объект сюда.
+        // Услуги система определит сама по его работам в skinsData / rendersData / previewsData.
     ];
 
     function getAuthorByName(name) {
@@ -225,15 +227,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* ============================================================
        11. ДАННЫЕ ПОРТФОЛИО
-       price: 0 → покажет «Подарок»
     ============================================================ */
     const skinsData = [
-        { name: 'Тимоша Музыка', price: 0, image: 'skins/tmusic.png', author: 'Тимошка из Москвы', isRender: true },
-        { name: 'beatlewind', price: 0, image: 'skins/beatlewind.png', author: 'Тимошка из Москвы', isRender: true },
-        { name: 'FIREFOX', price: 0, image: 'skins/firefox.png', author: 'Тимошка из Москвы', isRender: true },
-        { name: 'Рыцарь', price: 0, image: 'skins/knight.png', author: 'Тимошка из Москвы', isRender: true },
-        { name: 'Toxinator', price: 50, image: 'skins/toxinator.png', author: 'Тимошка из Москвы', isRender: true },
-        { name: 'арсик', price: 0, image: 'skins/zakazMAJORrender.png', author: 'Тимошка из Москвы', isRender: true }
+        { name: 'Тимоша Музыка', price: 0, image: 'skins/tmusic.png', author: 'Тимошка из Москвы' },
+        { name: 'beatlewind', price: 0, image: 'skins/beatlewind.png', author: 'Тимошка из Москвы' },
+        { name: 'FIREFOX', price: 0, image: 'skins/firefox.png', author: 'Тимошка из Москвы' },
+        { name: 'Рыцарь', price: 0, image: 'skins/knight.png', author: 'Тимошка из Москвы' },
+        { name: 'Toxinator', price: 50, image: 'skins/toxinator.png', author: 'Тимошка из Москвы' },
+        { name: 'арсик', price: 0, image: 'skins/zakazMAJORrender.png', author: 'Тимошка из Москвы' }
     ];
 
     const rendersData = [
@@ -252,7 +253,6 @@ document.addEventListener('DOMContentLoaded', function () {
         { name: 'Майнкрафт без прыжка', price: 0, image: 'previews/nojump.png', author: 'Тимошка из Москвы' }
     ];
 
-    // Форматирование цены: 0 → «Подарок»
     function formatPrice(price) {
         if (price === 0 || price === '0' || price === '0 ₽') {
             return '<i class="fas fa-gift"></i> Подарок';
@@ -260,242 +260,221 @@ document.addEventListener('DOMContentLoaded', function () {
         return `${price} ₽`;
     }
 
-    let currentAuthor = authors[0].name;
-    let currentType = 'skins';
-    const itemsPerPage = 4;
-    let currentPage = 0;
-    let currentGalleryItems = [];
+    /* ============================================================
+       ★ Определение услуг автора по его работам
+       Возвращает массив сервис-ключей: ['skins', 'renders', 'previews']
+    ============================================================ */
+    function getAuthorServices(authorName) {
+        const services = [];
+        if (skinsData.some(item => item.author === authorName)) services.push('skins');
+        if (rendersData.some(item => item.author === authorName)) services.push('renders');
+        if (previewsData.some(item => item.author === authorName)) services.push('previews');
+        return services;
+    }
 
-    const galleryGrid = document.getElementById('galleryGrid');
-    const prevPageBtn = document.getElementById('prevPage');
-    const nextPageBtn = document.getElementById('nextPage');
-    const paginationDots = document.getElementById('paginationDots');
-    const authorTabs = document.getElementById('authorTabs');
-    const typeTabs = document.querySelectorAll('.type-tab');
+    // Сопоставление: ключ сервиса → название услуги в модалке
+    const SERVICE_TO_KEY = {
+        'Скин': 'skins',
+        'Рендер': 'renders',
+        'Превью': 'previews'
+    };
 
     /* ============================================================
-       12. АВТОРСКИЕ ТАБЫ
+       12. КАРУСЕЛИ
     ============================================================ */
-    function initAuthorTabs() {
-        if (!authorTabs) return;
-        authorTabs.innerHTML = '';
+    const CAROUSEL_SPEED = 0.6; // px per frame
 
-        if (authors.length <= 1) {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'author-tab active';
-            btn.disabled = true;
-            btn.style.cursor = 'default';
-            btn.innerHTML = `<i class="fas fa-user"></i> ${authors[0].name}`;
-            authorTabs.appendChild(btn);
-            return;
+    const carousels = {
+        skins: {
+            viewport: document.getElementById('carouselSkins'),
+            track: document.getElementById('carouselSkinsTrack'),
+            data: skinsData,
+            direction: 'left',
+            offset: 0,
+            paused: false,
+            dragging: false,
+            dragStartX: 0,
+            dragStartOffset: 0
+        },
+        renders: {
+            viewport: document.getElementById('carouselRenders'),
+            track: document.getElementById('carouselRendersTrack'),
+            data: rendersData,
+            direction: 'right',
+            offset: 0,
+            paused: false,
+            dragging: false,
+            dragStartX: 0,
+            dragStartOffset: 0
         }
+    };
 
-        authors.forEach((author, index) => {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'author-tab' + (index === 0 ? ' active' : '');
-            btn.dataset.author = author.name;
-            btn.innerHTML = `<i class="fas fa-user"></i> ${author.name}`;
-            btn.addEventListener('click', function () {
-                currentAuthor = this.dataset.author;
-                currentPage = 0;
-                authorTabs.querySelectorAll('.author-tab').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                renderGallery();
-            });
-            authorTabs.appendChild(btn);
+    function createCarouselCard(item, index, carouselKey) {
+        const author = getAuthorByName(item.author);
+
+        const card = document.createElement('div');
+        card.className = 'carousel-card';
+        card.dataset.index = index;
+        card.dataset.carousel = carouselKey;
+
+        card.innerHTML = `
+            <div class="carousel-img-wrapper">
+                <div class="skeleton"></div>
+                <img src="${item.image}" alt="${item.name}" loading="lazy">
+            </div>
+            <div class="carousel-info">
+                <h4>${item.name}</h4>
+                <span class="price">${formatPrice(item.price)}</span>
+            </div>
+            <div class="carousel-author">
+                <img src="${author.avatar}" alt="${author.name}" onerror="this.style.display='none'">
+                <span>${author.name}</span>
+            </div>
+        `;
+
+        const img = card.querySelector('img');
+        const skeleton = card.querySelector('.skeleton');
+        img.addEventListener('load', () => {
+            img.classList.add('loaded');
+            skeleton.classList.add('hidden');
+        });
+        img.addEventListener('error', () => {
+            skeleton.classList.add('hidden');
+            img.classList.add('loaded');
+            img.style.opacity = '0.3';
+        });
+
+        card.addEventListener('click', (e) => {
+            // Не открывать лайтбокс, если это было перетаскивание
+            if (carouselDragMoved[carouselKey]) return;
+            openLightbox(carouselKey, parseInt(card.dataset.index));
+        });
+
+        return card;
+    }
+
+    const carouselDragMoved = { skins: false, renders: false };
+
+    function initCarousel(key) {
+        const c = carousels[key];
+        if (!c.viewport || !c.track) return;
+
+        c.track.innerHTML = '';
+
+        // Дублируем элементы 3 раза для бесконечности
+        const items = [...c.data, ...c.data, ...c.data];
+
+        items.forEach((item, i) => {
+            // Для каждой копии передаём индекс из оригинального массива
+            const originalIndex = i % c.data.length;
+            const card = createCarouselCard(item, originalIndex, key);
+            c.track.appendChild(card);
+        });
+
+        // Стартовый offset: одна треть (начало второй копии)
+        requestAnimationFrame(() => {
+            const singleSetWidth = c.track.scrollWidth / 3;
+            c.offset = c.direction === 'left' ? 0 : singleSetWidth;
+        });
+
+        // Пауза при наведении
+        c.viewport.addEventListener('mouseenter', () => { c.paused = true; });
+        c.viewport.addEventListener('mouseleave', () => { c.paused = false; });
+
+        // Drag-скролл
+        c.viewport.addEventListener('mousedown', (e) => {
+            c.dragging = true;
+            c.dragStartX = e.clientX;
+            c.dragStartOffset = c.offset;
+            carouselDragMoved[key] = false;
+            c.viewport.style.cursor = 'grabbing';
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!c.dragging) return;
+            const dx = e.clientX - c.dragStartX;
+            if (Math.abs(dx) > 3) carouselDragMoved[key] = true;
+            c.offset = c.dragStartOffset - dx;
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (c.dragging) {
+                c.dragging = false;
+                c.viewport.style.cursor = 'grab';
+                setTimeout(() => { carouselDragMoved[key] = false; }, 50);
+            }
+        });
+
+        // Touch
+        c.viewport.addEventListener('touchstart', (e) => {
+            c.dragging = true;
+            c.dragStartX = e.touches[0].clientX;
+            c.dragStartOffset = c.offset;
+            carouselDragMoved[key] = false;
+        }, { passive: true });
+
+        c.viewport.addEventListener('touchmove', (e) => {
+            if (!c.dragging) return;
+            const dx = e.touches[0].clientX - c.dragStartX;
+            if (Math.abs(dx) > 3) carouselDragMoved[key] = true;
+            c.offset = c.dragStartOffset - dx;
+        }, { passive: true });
+
+        c.viewport.addEventListener('touchend', () => {
+            c.dragging = false;
+            setTimeout(() => { carouselDragMoved[key] = false; }, 50);
         });
     }
 
-    /* ============================================================
-       13. ФИЛЬТР ТИПА
-    ============================================================ */
-    typeTabs.forEach(tab => {
-        tab.addEventListener('click', function () {
-            currentType = this.dataset.type;
-            currentPage = 0;
-            typeTabs.forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
-            renderGallery();
+    function animateCarousels() {
+        Object.keys(carousels).forEach(key => {
+            const c = carousels[key];
+            if (!c.track) return;
+
+            const singleSetWidth = c.track.scrollWidth / 3;
+            if (singleSetWidth <= 0) return;
+
+            if (!c.paused && !c.dragging) {
+                if (c.direction === 'left') {
+                    c.offset += CAROUSEL_SPEED;
+                    if (c.offset >= singleSetWidth) c.offset -= singleSetWidth;
+                } else {
+                    c.offset -= CAROUSEL_SPEED;
+                    if (c.offset <= 0) c.offset += singleSetWidth;
+                }
+            }
+
+            // Плавно возвращаем в диапазон
+            if (c.offset < 0) c.offset += singleSetWidth;
+            if (c.offset >= singleSetWidth * 2) c.offset -= singleSetWidth;
+
+            c.track.style.transform = `translate3d(${-c.offset}px, 0, 0)`;
+        });
+        requestAnimationFrame(animateCarousels);
+    }
+
+    // Кнопки-стрелки
+    document.querySelectorAll('.carousel-arrow').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const key = this.dataset.carousel;
+            const dir = parseInt(this.dataset.dir);
+            const c = carousels[key];
+            if (!c) return;
+            c.offset -= dir * 260;
         });
     });
 
-    function getRendersForTab() {
-        const skinsAsRenders = skinsData
-            .filter(item => item.isRender === true)
-            .map(item => ({ ...item, fromSkin: true }));
-        return [...rendersData, ...skinsAsRenders];
-    }
-
-    function getSourceByType() {
-        if (currentType === 'skins') return skinsData;
-        if (currentType === 'renders') return getRendersForTab();
-        return previewsData;
-    }
-
-    function getFilteredData() {
-        return getSourceByType().filter(item => item.author === currentAuthor);
-    }
-
-    function getItemClass() {
-        if (currentType === 'previews') return ' preview-item';
-        if (currentType === 'renders') return ' render-item';
-        return '';
-    }
-
-    function getTypeLabel() {
-        if (currentType === 'skins') return 'Скин';
-        if (currentType === 'renders') return 'Рендер';
-        return 'Превью';
-    }
+    initCarousel('skins');
+    initCarousel('renders');
+    requestAnimationFrame(animateCarousels);
 
     /* ============================================================
-       14. РЕНДЕР ГАЛЕРЕИ
-    ============================================================ */
-    function renderGallery() {
-        const filtered = getFilteredData();
-        currentGalleryItems = filtered;
-
-        const start = currentPage * itemsPerPage;
-        const end = start + itemsPerPage;
-        const pageItems = filtered.slice(start, end);
-
-        galleryGrid.innerHTML = '';
-
-        if (pageItems.length === 0) {
-            galleryGrid.innerHTML = `
-                <div class="gallery-empty">
-                    <i class="fas fa-inbox"></i>
-                    <p>Пока что здесь пусто</p>
-                </div>`;
-            prevPageBtn.disabled = true;
-            nextPageBtn.disabled = true;
-            updateDots(0, 0);
-            return;
-        }
-
-        pageItems.forEach((item, localIndex) => {
-            const globalIndex = start + localIndex;
-            const author = getAuthorByName(item.author);
-            const showRenderNote = currentType === 'skins' && item.isRender === true;
-
-            const card = document.createElement('div');
-            card.className = 'gallery-item glass' + getItemClass();
-            card.dataset.index = globalIndex;
-
-            const renderNote = showRenderNote
-                ? '<p class="render-note">Также пример рендера</p>'
-                : '';
-
-            const socialsHtml = `
-                <div class="author-socials">
-                    ${author.youtube ? `<a class="author-social-link yt" href="${author.youtube}" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube"><i class="fab fa-youtube"></i></a>` : ''}
-                    ${author.discord ? `<a class="author-social-link ds" href="${author.discord}" target="_blank" rel="noopener" aria-label="Discord" title="Discord"><i class="fab fa-discord"></i></a>` : ''}
-                    ${author.telegram ? `<a class="author-social-link tg" href="${author.telegram}" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram"><i class="fab fa-telegram"></i></a>` : ''}
-                </div>`;
-
-            card.innerHTML = `
-                <div class="gallery-img-wrapper">
-                    <div class="skeleton"></div>
-                    <img src="${item.image}" alt="${getTypeLabel()} ${item.name}" loading="lazy">
-                </div>
-                <div class="gallery-info">
-                    <h4>${item.name}</h4>
-                    <span class="price">${formatPrice(item.price)}</span>
-                </div>
-                ${renderNote}
-                <div class="gallery-author" onclick="event.stopPropagation()">
-                    <div class="author-info">
-                        <img src="${author.avatar}" alt="${author.name}" onerror="this.style.display='none'">
-                        <span>${author.name}</span>
-                    </div>
-                    ${socialsHtml}
-                </div>
-            `;
-
-            const img = card.querySelector('img');
-            const skeleton = card.querySelector('.skeleton');
-            img.addEventListener('load', () => {
-                img.classList.add('loaded');
-                skeleton.classList.add('hidden');
-            });
-            img.addEventListener('error', () => {
-                skeleton.classList.add('hidden');
-                img.classList.add('loaded');
-                img.style.opacity = '0.3';
-            });
-
-            card.addEventListener('click', () => openLightbox(globalIndex));
-
-            const compareKey = item.image;
-            if (compareSelected.some(c => c.image === compareKey)) {
-                card.classList.add('selected-for-compare');
-            }
-
-            galleryGrid.appendChild(card);
-        });
-
-        const totalPages = Math.ceil(filtered.length / itemsPerPage);
-        prevPageBtn.disabled = currentPage === 0;
-        nextPageBtn.disabled = currentPage >= totalPages - 1;
-        updateDots(currentPage, totalPages);
-    }
-
-    function updateDots(activeIndex, totalPages) {
-        if (!paginationDots) return;
-        paginationDots.innerHTML = '';
-
-        if (totalPages <= 1) {
-            paginationDots.style.display = 'none';
-            return;
-        }
-        paginationDots.style.display = 'flex';
-
-        for (let i = 0; i < totalPages; i++) {
-            const dot = document.createElement('button');
-            dot.className = 'pagination-dot' + (i === activeIndex ? ' active' : '');
-            dot.setAttribute('data-page', i);
-            dot.setAttribute('aria-label', `Страница ${i + 1}`);
-            dot.addEventListener('click', function () {
-                currentPage = parseInt(this.getAttribute('data-page'));
-                renderGallery();
-                document.getElementById('gallery').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-            paginationDots.appendChild(dot);
-        }
-    }
-
-    if (prevPageBtn) {
-        prevPageBtn.addEventListener('click', () => {
-            if (currentPage > 0) {
-                currentPage--;
-                renderGallery();
-                document.getElementById('gallery').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    }
-
-    if (nextPageBtn) {
-        nextPageBtn.addEventListener('click', () => {
-            const filtered = getFilteredData();
-            const totalPages = Math.ceil(filtered.length / itemsPerPage);
-            if (currentPage < totalPages - 1) {
-                currentPage++;
-                renderGallery();
-                document.getElementById('gallery').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    }
-
-    /* ============================================================
-       15. LIGHTBOX
+       13. LIGHTBOX
     ============================================================ */
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const lightboxTitle = document.getElementById('lightboxTitle');
     const lightboxPrice = document.getElementById('lightboxPrice');
-    const lightboxAuthor = document.getElementById('lightboxAuthor');
     const lightboxType = document.getElementById('lightboxType');
     const lightboxSkeleton = document.getElementById('lightboxSkeleton');
     const lightboxClose = document.getElementById('lightboxClose');
@@ -503,22 +482,43 @@ document.addEventListener('DOMContentLoaded', function () {
     const lightboxNext = document.getElementById('lightboxNext');
     const lightboxOrderBtn = document.getElementById('lightboxOrderBtn');
     const lightboxShareBtn = document.getElementById('lightboxShareBtn');
-    const lightboxCompareBtn = document.getElementById('lightboxCompareBtn');
+    const lightboxAuthorAvatar = document.getElementById('lightboxAuthorAvatar');
+    const lightboxAuthorName = document.getElementById('lightboxAuthorName');
+    const lightboxAuthorSocials = document.getElementById('lightboxAuthorSocials');
 
+    let lightboxItems = [];
     let lightboxIndex = 0;
+    let lightboxCurrentType = 'skins';
 
-    function openLightbox(index) {
-        if (!currentGalleryItems.length) return;
+    function openLightbox(type, index) {
+        lightboxCurrentType = type;
+        lightboxItems = carousels[type].data;
         lightboxIndex = index;
-        const item = currentGalleryItems[index];
+
+        const item = lightboxItems[index];
         if (!item) return;
 
         const author = getAuthorByName(item.author);
 
-        lightboxType.textContent = getTypeLabel();
+        lightboxType.textContent = type === 'skins' ? 'Скин' : (type === 'renders' ? 'Рендер' : 'Превью');
         lightboxTitle.textContent = item.name;
         lightboxPrice.innerHTML = formatPrice(item.price);
-        lightboxAuthor.innerHTML = `<img src="${author.avatar}" alt="${author.name}" onerror="this.style.display='none'"> <span>Автор: ${author.name}</span>`;
+
+        lightboxAuthorAvatar.src = author.avatar;
+        lightboxAuthorAvatar.alt = author.name;
+        lightboxAuthorName.textContent = author.name;
+
+        // Соцсети автора
+        lightboxAuthorSocials.innerHTML = '';
+        if (author.youtube) {
+            lightboxAuthorSocials.innerHTML += `<a href="${author.youtube}" target="_blank" rel="noopener" class="yt"><i class="fab fa-youtube"></i> YouTube</a>`;
+        }
+        if (author.discord) {
+            lightboxAuthorSocials.innerHTML += `<a href="${author.discord}" target="_blank" rel="noopener" class="ds"><i class="fab fa-discord"></i> Discord</a>`;
+        }
+        if (author.telegram) {
+            lightboxAuthorSocials.innerHTML += `<a href="${author.telegram}" target="_blank" rel="noopener" class="tg"><i class="fab fa-telegram"></i> Telegram</a>`;
+        }
 
         lightboxImg.classList.remove('loaded');
         lightboxSkeleton.classList.remove('hidden');
@@ -542,15 +542,18 @@ document.addEventListener('DOMContentLoaded', function () {
     function closeLightbox() {
         lightbox.classList.remove('active');
         lightbox.setAttribute('aria-hidden', 'true');
-        if (!orderModal.classList.contains('active') && !teamModal.classList.contains('active') && !compareModal.classList.contains('active')) {
+        if (!orderModal.classList.contains('active')
+            && !teamModal.classList.contains('active')
+            && (!privacyModal || !privacyModal.classList.contains('active'))
+            && (!termsModal || !termsModal.classList.contains('active'))) {
             document.body.classList.remove('modal-open');
         }
     }
 
     function navigateLightbox(dir) {
-        if (!currentGalleryItems.length) return;
-        lightboxIndex = (lightboxIndex + dir + currentGalleryItems.length) % currentGalleryItems.length;
-        openLightbox(lightboxIndex);
+        if (!lightboxItems.length) return;
+        lightboxIndex = (lightboxIndex + dir + lightboxItems.length) % lightboxItems.length;
+        openLightbox(lightboxCurrentType, lightboxIndex);
     }
 
     if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
@@ -565,41 +568,36 @@ document.addEventListener('DOMContentLoaded', function () {
     if (lightboxOrderBtn) {
         lightboxOrderBtn.addEventListener('click', () => {
             let service = 'Скин';
-            if (currentType === 'renders') service = 'Рендер';
-            else if (currentType === 'previews') service = 'Превью';
+            if (lightboxCurrentType === 'renders') service = 'Рендер';
+            else if (lightboxCurrentType === 'previews') service = 'Превью';
+
+            // Автоматически подставляем автора этой работы как исполнителя
+            const item = lightboxItems[lightboxIndex];
+            const authorName = item ? item.author : null;
 
             closeLightbox();
-            openModal(service);
+            openModal(service, { prefillExecutor: authorName });
         });
     }
 
     if (lightboxShareBtn) {
         lightboxShareBtn.addEventListener('click', () => {
-            const item = currentGalleryItems[lightboxIndex];
-            shareItem(item);
-        });
-    }
-
-    if (lightboxCompareBtn) {
-        lightboxCompareBtn.addEventListener('click', () => {
-            const item = currentGalleryItems[lightboxIndex];
-            addToCompare(item);
-            closeLightbox();
+            const item = lightboxItems[lightboxIndex];
+            if (item) shareItem(item);
         });
     }
 
     /* ============================================================
-       16. ПОДЕЛИТЬСЯ
+       14. ПОДЕЛИТЬСЯ
     ============================================================ */
     async function shareItem(item) {
         const url = window.location.origin + window.location.pathname + `#gallery`;
         const text = `${item.name} — работа в TStudios Minecraft`;
-
         if (navigator.share) {
             try {
                 await navigator.share({ title: 'TStudios', text, url });
                 return;
-            } catch (err) { /* отменено */ }
+            } catch (err) {}
         }
         copyToClipboard(url, 'Ссылка скопирована!');
     }
@@ -613,7 +611,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 try {
                     await navigator.share({ title: 'TStudios', text, url });
                     return;
-                } catch (err) { /* отменено */ }
+                } catch (err) {}
             }
             copyToClipboard(url, 'Ссылка на сайт скопирована!');
         });
@@ -646,120 +644,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       17. СРАВНЕНИЕ РАБОТ
-    ============================================================ */
-    const compareBar = document.getElementById('compareBar');
-    const compareCount = document.getElementById('compareCount');
-    const compareClear = document.getElementById('compareClear');
-    const compareOpen = document.getElementById('compareOpen');
-    const compareModal = document.getElementById('compareModal');
-    const compareModalClose = document.getElementById('compareModalClose');
-    const compareView = document.getElementById('compareView');
-
-    let compareSelected = [];
-
-    function addToCompare(item) {
-        const existingIdx = compareSelected.findIndex(c => c.image === item.image);
-        if (existingIdx !== -1) {
-            compareSelected.splice(existingIdx, 1);
-            showToast('Убрано из сравнения', 'info');
-        } else {
-            if (compareSelected.length >= 2) {
-                compareSelected.shift();
-            }
-            compareSelected.push(item);
-            showToast('Добавлено в сравнение', 'success');
-        }
-        updateCompareBar();
-        renderGallery();
-    }
-
-    function updateCompareBar() {
-        if (!compareBar) return;
-        if (compareSelected.length > 0) {
-            compareBar.hidden = false;
-            compareCount.textContent = compareSelected.length;
-            compareOpen.disabled = compareSelected.length < 2;
-        } else {
-            compareBar.hidden = true;
-        }
-    }
-
-    if (compareClear) {
-        compareClear.addEventListener('click', () => {
-            compareSelected = [];
-            updateCompareBar();
-            renderGallery();
-            showToast('Сравнение сброшено', 'info');
-        });
-    }
-
-    if (compareOpen) {
-        compareOpen.addEventListener('click', () => {
-            if (compareSelected.length < 2) return;
-            openCompareModal();
-        });
-    }
-
-    function openCompareModal() {
-        if (compareSelected.length < 2) return;
-
-        compareView.innerHTML = compareSelected.map(item => {
-            const author = getAuthorByName(item.author);
-            return `
-                <div class="compare-card">
-                    <div class="compare-card-img">
-                        <img src="${item.image}" alt="${item.name}">
-                    </div>
-                    <h4>${item.name}</h4>
-                    <span class="price">${formatPrice(item.price)}</span>
-                    <p class="compare-card-author">
-                        <i class="fas fa-user"></i> ${author.name}
-                    </p>
-                    <button type="button" class="btn btn-primary compare-order-btn" data-name="${item.name}">
-                        <i class="fas fa-paper-plane"></i> Заказать
-                    </button>
-                </div>
-            `;
-        }).join('');
-
-        compareView.querySelectorAll('.compare-order-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                closeCompareModal();
-                let service = 'Скин';
-                if (currentType === 'renders') service = 'Рендер';
-                else if (currentType === 'previews') service = 'Превью';
-                openModal(service);
-            });
-        });
-
-        compareModal.classList.add('active');
-        compareModal.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('modal-open');
-    }
-
-    function closeCompareModal() {
-        compareModal.classList.remove('active');
-        compareModal.setAttribute('aria-hidden', 'true');
-        if (!orderModal.classList.contains('active') && !teamModal.classList.contains('active') && !lightbox.classList.contains('active')) {
-            document.body.classList.remove('modal-open');
-        }
-    }
-
-    if (compareModalClose) compareModalClose.addEventListener('click', closeCompareModal);
-    if (compareModal) {
-        compareModal.addEventListener('click', (e) => {
-            if (e.target === compareModal) closeCompareModal();
-        });
-    }
-
-    /* ============================================================
-       18. FAQ
+       15. FAQ
     ============================================================ */
     const faqData = [
         {
             q: 'Сколько ждать заказ?',
-            a: 'Скин — 1-2 дня, рендер — до 24 часов, превью — 2-3 дня, клип — от 3 дней. Есть срочный режим (×1.5 от цены, срок ~12 часов) и экспресс (×2 от цены, срок ~4-6 часов).'
+            a: 'Скин — 1-2 дня, рендер — до 24 часов, превью — 2-3 дня. Есть срочный режим (×1.5 от цены, срок ~12 часов) и экспресс (×2 от цены, срок ~4-6 часов).'
         },
         {
             q: 'Какие способы оплаты?',
@@ -785,7 +675,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const faqList = document.getElementById('faqList');
     if (faqList) {
-        faqData.forEach((item, i) => {
+        faqData.forEach((item) => {
             const el = document.createElement('div');
             el.className = 'faq-item glass';
             el.innerHTML = `
@@ -813,7 +703,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       19. ОТЗЫВЫ
+       16. ОТЗЫВЫ
     ============================================================ */
     const reviewsData = [
         { name: 'FIREFOX', rating: 5, text: 'Очень хорошее качество и очень не плохое качество рук и буква моего канала.', service: 'Скин' },
@@ -826,8 +716,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const serviceIcons = {
         'Скин': 'fa-paint-brush',
         'Рендер': 'fa-cube',
-        'Превью': 'fa-image',
-        'Клип': 'fa-music'
+        'Превью': 'fa-image'
     };
 
     const reviewsSlider = document.getElementById('reviewsSlider');
@@ -900,7 +789,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       20. КАЛЬКУЛЯТОР
+       17. КАЛЬКУЛЯТОР
     ============================================================ */
     const calcService = document.getElementById('calcService');
     const calcGenderRow = document.getElementById('calcGenderRow');
@@ -990,7 +879,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       21. МОДАЛКА ЗАКАЗА
+       18. МОДАЛКА ЗАКАЗА
     ============================================================ */
     const orderModal = document.getElementById('orderModal');
     const modalClose = document.getElementById('modalClose');
@@ -1004,11 +893,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const backToForm = document.getElementById('backToForm');
     const descCounter = document.getElementById('descCounter');
     const extraCounter = document.getElementById('extraCounter');
+    const resultDiscordLink = document.getElementById('resultDiscordLink');
+
+    const orderExecutor = document.getElementById('orderExecutor');
+    const executorNote = document.getElementById('executorNote');
 
     const fieldsSkin = document.getElementById('fieldsSkin');
     const fieldsRender = document.getElementById('fieldsRender');
     const fieldsPreview = document.getElementById('fieldsPreview');
-    const fieldsClip = document.getElementById('fieldsClip');
     const fieldsExtras = document.getElementById('fieldsExtras');
 
     const orderRevisions = document.getElementById('orderRevisions');
@@ -1030,14 +922,15 @@ document.addEventListener('DOMContentLoaded', function () {
         revisions: 0,
         revisionsPrice: PRICES.revision,
         urgencyMult: 1,
-        urgencyLabel: 'Обычная'
+        urgencyLabel: 'Обычная',
+        executorName: null,
+        executorDiscord: null
     };
 
     const BASE_PRICES = {
         'Скин': PRICES.skin,
         'Рендер': PRICES.render,
-        'Превью': PRICES.preview,
-        'Клип': PRICES.clip
+        'Превью': PRICES.preview
     };
 
     function updateOrderTotal() {
@@ -1046,6 +939,41 @@ document.addEventListener('DOMContentLoaded', function () {
         total = Math.round(total);
         orderTotal.textContent = `${total} ₽`;
         return total;
+    }
+
+    /* Заполнить селект исполнителей для конкретной услуги */
+    function populateExecutors(service, prefillName) {
+        if (!orderExecutor) return;
+
+        const serviceKey = SERVICE_TO_KEY[service];
+        orderExecutor.innerHTML = '<option value="">— Выберите исполнителя —</option>';
+
+        let count = 0;
+        authors.forEach(author => {
+            const services = getAuthorServices(author.name);
+            if (services.includes(serviceKey)) {
+                const opt = document.createElement('option');
+                opt.value = author.name;
+                opt.textContent = author.name;
+                orderExecutor.appendChild(opt);
+                count++;
+            }
+        });
+
+        // Если был prefill (например, из lightbox) — выбрать его
+        if (prefillName) {
+            const exists = Array.from(orderExecutor.options).some(o => o.value === prefillName);
+            if (exists) orderExecutor.value = prefillName;
+        }
+
+        // Подсказка
+        if (executorNote) {
+            if (count === 0) {
+                executorNote.innerHTML = '<i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i> <span>Пока нет исполнителей по этой услуге</span>';
+            } else {
+                executorNote.innerHTML = '<i class="fas fa-info-circle"></i> <span>Показаны только те мастера, которые выполняют выбранный тип услуги.</span>';
+            }
+        }
     }
 
     const FEMALE_TRIGGERS = [
@@ -1182,6 +1110,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    if (orderExecutor) {
+        orderExecutor.addEventListener('change', function () {
+            const author = getAuthorByName(this.value);
+            orderState.executorName = author ? author.name : null;
+            orderState.executorDiscord = author ? author.discord : null;
+        });
+    }
+
     document.querySelectorAll('.btn-pricing').forEach(btn => {
         btn.addEventListener('click', function () {
             const service = this.getAttribute('data-service') || 'Скин';
@@ -1200,18 +1136,18 @@ document.addEventListener('DOMContentLoaded', function () {
         fieldsSkin.hidden = true;
         fieldsRender.hidden = true;
         fieldsPreview.hidden = true;
-        fieldsClip.hidden = true;
 
         if (service === 'Скин') fieldsSkin.hidden = false;
         else if (service === 'Рендер') fieldsRender.hidden = false;
         else if (service === 'Превью') fieldsPreview.hidden = false;
-        else if (service === 'Клип') fieldsClip.hidden = false;
 
         orderState.basePrice = BASE_PRICES[service] || PRICES.skin;
         orderState.genderExtra = prefill.genderExtra || 0;
         orderState.revisions = prefill.revisions || 0;
         orderState.urgencyMult = prefill.urgencyMult || 1;
         orderState.urgencyLabel = prefill.urgencyLabel || 'Обычная';
+        orderState.executorName = null;
+        orderState.executorDiscord = null;
 
         orderForm.reset();
         descCounter.textContent = '0 / 500';
@@ -1227,6 +1163,16 @@ document.addEventListener('DOMContentLoaded', function () {
             const target = Array.from(orderUrgency.querySelectorAll('.calc-opt'))
                 .find(b => parseFloat(b.dataset.mult) === orderState.urgencyMult);
             if (target) target.classList.add('active');
+        }
+
+        // Заполняем исполнителей для этой услуги
+        populateExecutors(service, prefill.prefillExecutor);
+
+        // Если prefill по имени есть — проставим и state
+        if (prefill.prefillExecutor && orderExecutor.value === prefill.prefillExecutor) {
+            const author = getAuthorByName(prefill.prefillExecutor);
+            orderState.executorName = author.name;
+            orderState.executorDiscord = author.discord;
         }
 
         if (service === 'Скин' && orderState.genderExtra === 50) {
@@ -1262,7 +1208,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function closeModal() {
         orderModal.classList.remove('active');
         orderModal.setAttribute('aria-hidden', 'true');
-        if (!teamModal.classList.contains('active') && !compareModal.classList.contains('active') && !lightbox.classList.contains('active')) {
+        if (!teamModal.classList.contains('active')
+            && (!privacyModal || !privacyModal.classList.contains('active'))
+            && (!termsModal || !termsModal.classList.contains('active'))) {
             document.body.classList.remove('modal-open');
         }
     }
@@ -1285,6 +1233,9 @@ document.addEventListener('DOMContentLoaded', function () {
         text += `━━━━━━━━━━━━━━━━━━━━\n\n`;
         text += `Услуга: ${currentService}\n`;
         text += `Имя: ${name}\n`;
+        if (orderState.executorName) {
+            text += `Исполнитель: ${orderState.executorName}\n`;
+        }
 
         if (currentService === 'Скин') {
             const gender = document.querySelector('input[name="skinGender"]:checked');
@@ -1311,13 +1262,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (title) text += `Тема видео: ${title}\n`;
             if (style) text += `Стиль превью: ${style.value}\n`;
             if (refs) text += `Референсы: ${refs}\n`;
-        } else if (currentService === 'Клип') {
-            const genre = document.getElementById('clipGenre').value;
-            const duration = document.getElementById('clipDuration').value;
-            const track = document.getElementById('clipTrack').value.trim();
-            if (genre) text += `Жанр: ${genre}\n`;
-            if (duration) text += `Длительность: ${duration}\n`;
-            if (track) text += `Трек: ${track}\n`;
         }
 
         if (orderState.revisions > 0) {
@@ -1340,9 +1284,15 @@ document.addEventListener('DOMContentLoaded', function () {
     function validateForm() {
         const name = document.getElementById('orderName').value.trim();
         const desc = orderDesc.value.trim();
+
         if (!name) {
             showToast('Укажите имя или ник', 'error');
             document.getElementById('orderName').focus();
+            return false;
+        }
+        if (!orderExecutor.value) {
+            showToast('Выберите исполнителя', 'error');
+            orderExecutor.focus();
             return false;
         }
         if (!desc) {
@@ -1371,19 +1321,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('previewTitle').focus();
                 return false;
             }
-        } else if (currentService === 'Клип') {
-            const genre = document.getElementById('clipGenre').value;
-            const duration = document.getElementById('clipDuration').value;
-            if (!genre) {
-                showToast('Выберите жанр', 'error');
-                document.getElementById('clipGenre').focus();
-                return false;
-            }
-            if (!duration) {
-                showToast('Выберите длительность', 'error');
-                document.getElementById('clipDuration').focus();
-                return false;
-            }
         }
         return true;
     }
@@ -1393,6 +1330,11 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             if (submitOrderBtn && submitOrderBtn.disabled) return;
             if (!validateForm()) return;
+
+            // Ссылка на Discord исполнителя
+            if (resultDiscordLink) {
+                resultDiscordLink.href = orderState.executorDiscord || 'https://discord.com/users/1146355058880040970';
+            }
 
             resultText.value = generateOrderText();
             modalStepForm.hidden = true;
@@ -1424,7 +1366,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       22. МОДАЛКА ЗАЯВКИ В КОМАНДУ
+       19. МОДАЛКА ЗАЯВКИ В КОМАНДУ
     ============================================================ */
     const teamModal = document.getElementById('teamModal');
     const teamModalClose = document.getElementById('teamModalClose');
@@ -1483,7 +1425,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function closeTeamModal() {
         teamModal.classList.remove('active');
         teamModal.setAttribute('aria-hidden', 'true');
-        if (!orderModal.classList.contains('active') && !compareModal.classList.contains('active') && !lightbox.classList.contains('active')) {
+        if (!orderModal.classList.contains('active')
+            && (!privacyModal || !privacyModal.classList.contains('active'))
+            && (!termsModal || !termsModal.classList.contains('active'))) {
             document.body.classList.remove('modal-open');
         }
     }
@@ -1543,19 +1487,21 @@ document.addEventListener('DOMContentLoaded', function () {
     function validateTeamForm() {
         const name = document.getElementById('teamName').value.trim();
         const age = parseInt(document.getElementById('teamAge').value);
-        const adequacy = document.getElementById('teamAdequacy').value;
-        const literacy = document.getElementById('teamLiteracy').value;
+        const adequacy = parseInt(document.getElementById('teamAdequacy').value);
+        const literacy = parseInt(document.getElementById('teamLiteracy').value);
         const role = document.getElementById('teamRole').value;
         const channel = document.getElementById('teamChannel').value.trim();
         const passport = document.querySelector('input[name="teamPassport"]:checked');
         const bankCard = document.querySelector('input[name="teamBankCard"]:checked');
 
         if (!name) { showToast('Укажите имя', 'error'); return false; }
-        if (!age || age < 14) { showToast('Возраст от 14 лет', 'error'); return false; }
-        if (!adequacy) { showToast('Выберите адекватность', 'error'); return false; }
-        if (!literacy) { showToast('Выберите грамотность', 'error'); return false; }
+        if (!age || age < 14) { showToast('Возраст должен быть от 14 лет', 'error'); return false; }
+        if (!adequacy || adequacy < 5) { showToast('Адекватность должна быть не ниже 5', 'error'); return false; }
+        if (!literacy || literacy < 6) { showToast('Грамотность должна быть не ниже 6', 'error'); return false; }
         if (!passport) { showToast('Укажите наличие паспорта', 'error'); return false; }
+        if (passport.value === 'Нет паспорта') { showToast('Без паспорта заявка не принимается', 'error'); return false; }
         if (!bankCard) { showToast('Укажите наличие карты РФ', 'error'); return false; }
+        if (bankCard.value === 'Нет карты российского банка') { showToast('Без карты российского банка заявка не принимается', 'error'); return false; }
         if (!role) { showToast('Выберите роль', 'error'); return false; }
         if (!channel) { showToast('Укажите YouTube канал', 'error'); return false; }
 
@@ -1596,14 +1542,71 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       23. ESCAPE
+       20. ЮРИДИЧЕСКИЕ МОДАЛКИ
+    ============================================================ */
+    const privacyModal = document.getElementById('privacyModal');
+    const privacyModalClose = document.getElementById('privacyModalClose');
+    const openPrivacyModalBtn = document.getElementById('openPrivacyModal');
+
+    const termsModal = document.getElementById('termsModal');
+    const termsModalClose = document.getElementById('termsModalClose');
+    const openTermsModalBtn = document.getElementById('openTermsModal');
+
+    function openLegalModal(modal) {
+        if (!modal) return;
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        const content = modal.querySelector('.legal-modal-content');
+        if (content) content.scrollTop = 0;
+    }
+
+    function closeLegalModal(modal) {
+        if (!modal) return;
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        if (!orderModal.classList.contains('active')
+            && !teamModal.classList.contains('active')
+            && (!privacyModal || !privacyModal.classList.contains('active'))
+            && (!termsModal || !termsModal.classList.contains('active'))) {
+            document.body.classList.remove('modal-open');
+        }
+    }
+
+    if (openPrivacyModalBtn) {
+        openPrivacyModalBtn.addEventListener('click', () => openLegalModal(privacyModal));
+    }
+    if (privacyModalClose) {
+        privacyModalClose.addEventListener('click', () => closeLegalModal(privacyModal));
+    }
+    if (privacyModal) {
+        privacyModal.addEventListener('click', (e) => {
+            if (e.target === privacyModal) closeLegalModal(privacyModal);
+        });
+    }
+
+    if (openTermsModalBtn) {
+        openTermsModalBtn.addEventListener('click', () => openLegalModal(termsModal));
+    }
+    if (termsModalClose) {
+        termsModalClose.addEventListener('click', () => closeLegalModal(termsModal));
+    }
+    if (termsModal) {
+        termsModal.addEventListener('click', (e) => {
+            if (e.target === termsModal) closeLegalModal(termsModal);
+        });
+    }
+
+    /* ============================================================
+       21. ESCAPE
     ============================================================ */
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             if (lightbox && lightbox.classList.contains('active')) closeLightbox();
-            else if (compareModal && compareModal.classList.contains('active')) closeCompareModal();
             else if (orderModal && orderModal.classList.contains('active')) closeModal();
             else if (teamModal && teamModal.classList.contains('active')) closeTeamModal();
+            else if (privacyModal && privacyModal.classList.contains('active')) closeLegalModal(privacyModal);
+            else if (termsModal && termsModal.classList.contains('active')) closeLegalModal(termsModal);
         }
         if (lightbox && lightbox.classList.contains('active')) {
             if (e.key === 'ArrowLeft') navigateLightbox(-1);
@@ -1612,10 +1615,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     /* ============================================================
-       24. ИНИЦИАЛИЗАЦИЯ
+       22. ИНИЦИАЛИЗАЦИЯ
     ============================================================ */
-    initAuthorTabs();
-    renderGallery();
-    updateCompareBar();
+    // Осталось только переопределить openModal — уже сделано
 
 });
