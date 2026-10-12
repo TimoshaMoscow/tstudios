@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
         skin: 100,
         skinFemale: 150,
         render: 50,
-        preview: 100,
         revision: 30
     };
 
@@ -218,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function () {
             telegram: 'https://t.me/MinecraftWithTimosha'
         }
         // Чтобы добавить нового автора — просто добавь объект сюда.
-        // Услуги система определит сама по его работам в skinsData / rendersData / previewsData.
+        // Услуги система определит сама по его работам в skinsData / rendersData .
     ];
 
     function getAuthorByName(name) {
@@ -245,14 +244,6 @@ document.addEventListener('DOMContentLoaded', function () {
         { name: 'Думает', price: 50, image: 'renders/question.png', author: 'Тимошка из Москвы' }
     ];
 
-    const previewsData = [
-        { name: 'Мусор дроп', price: 0, image: 'previews/upgrader.png', author: 'Тимошка из Москвы' },
-        { name: 'Marlow не читер', price: 0, image: 'previews/marlow.png', author: 'Тимошка из Москвы' },
-        { name: 'Лесорубы', price: 0, image: 'previews/lecoruby.png', author: 'Тимошка из Москвы' },
-        { name: 'Шахтеры', price: 0, image: 'previews/miners.png', author: 'Тимошка из Москвы' },
-        { name: 'Майнкрафт без прыжка', price: 0, image: 'previews/nojump.png', author: 'Тимошка из Москвы' }
-    ];
-
     function formatPrice(price) {
         if (price === 0 || price === '0' || price === '0 ₽') {
             return '<i class="fas fa-gift"></i> Подарок';
@@ -262,21 +253,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* ============================================================
        ★ Определение услуг автора по его работам
-       Возвращает массив сервис-ключей: ['skins', 'renders', 'previews']
+       Возвращает массив сервис-ключей: ['skins', 'renders', ']
     ============================================================ */
     function getAuthorServices(authorName) {
         const services = [];
         if (skinsData.some(item => item.author === authorName)) services.push('skins');
         if (rendersData.some(item => item.author === authorName)) services.push('renders');
-        if (previewsData.some(item => item.author === authorName)) services.push('previews');
         return services;
     }
 
     // Сопоставление: ключ сервиса → название услуги в модалке
     const SERVICE_TO_KEY = {
         'Скин': 'skins',
-        'Рендер': 'renders',
-        'Превью': 'previews'
+        'Рендер': 'renders'
     };
 
     /* ============================================================
@@ -500,7 +489,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const author = getAuthorByName(item.author);
 
-        lightboxType.textContent = type === 'skins' ? 'Скин' : (type === 'renders' ? 'Рендер' : 'Превью');
+        lightboxType.textContent = type === 'skins' ? 'Скин' : 'Рендер';
         lightboxTitle.textContent = item.name;
         lightboxPrice.innerHTML = formatPrice(item.price);
 
@@ -569,8 +558,6 @@ document.addEventListener('DOMContentLoaded', function () {
         lightboxOrderBtn.addEventListener('click', () => {
             let service = 'Скин';
             if (lightboxCurrentType === 'renders') service = 'Рендер';
-            else if (lightboxCurrentType === 'previews') service = 'Превью';
-
             // Автоматически подставляем автора этой работы как исполнителя
             const item = lightboxItems[lightboxIndex];
             const authorName = item ? item.author : null;
@@ -606,7 +593,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (shareBtn) {
         shareBtn.addEventListener('click', async () => {
             const url = window.location.href;
-            const text = 'TStudios — Скины, рендеры и превью Minecraft на заказ!';
+            const text = 'TStudios — Скины, рендеры и многое другое по Minecraft на заказ!';
             if (navigator.share) {
                 try {
                     await navigator.share({ title: 'TStudios', text, url });
@@ -649,7 +636,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const faqData = [
         {
             q: 'Сколько ждать заказ?',
-            a: 'Скин — 1-2 дня, рендер — до 24 часов, превью — 2-3 дня. Есть срочный режим (×1.5 от цены, срок ~12 часов) и экспресс (×2 от цены, срок ~4-6 часов).'
+            a: 'Скин — 1-2 дня, рендер — до 24 часов. Есть срочный режим (×1.5 от цены, срок ~12 часов) и экспресс (×2 от цены, срок ~4-6 часов).'
         },
         {
             q: 'Какие способы оплаты?',
@@ -657,7 +644,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         {
             q: 'Что если не понравится?',
-            a: 'В цену входят правки (до 3-х для скинов, до 2-х для рендеров и превью). Если результат совсем не подошёл — вернём деньги до начала правок. Мы дорожим репутацией.'
+            a: 'В цену входят правки (до 3-х для скинов, до 2-х для рендеров). Если результат совсем не подошёл — вернём деньги до начала правок. Мы дорожим репутацией.'
         },
         {
             q: 'Можно ли заказать срочно?',
@@ -715,8 +702,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const serviceIcons = {
         'Скин': 'fa-paint-brush',
-        'Рендер': 'fa-cube',
-        'Превью': 'fa-image'
+        'Рендер': 'fa-cube'
     };
 
     const reviewsSlider = document.getElementById('reviewsSlider');
@@ -900,7 +886,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const fieldsSkin = document.getElementById('fieldsSkin');
     const fieldsRender = document.getElementById('fieldsRender');
-    const fieldsPreview = document.getElementById('fieldsPreview');
     const fieldsExtras = document.getElementById('fieldsExtras');
 
     const orderRevisions = document.getElementById('orderRevisions');
@@ -929,8 +914,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const BASE_PRICES = {
         'Скин': PRICES.skin,
-        'Рендер': PRICES.render,
-        'Превью': PRICES.preview
+        'Рендер': PRICES.render
     };
 
     function updateOrderTotal() {
@@ -1135,11 +1119,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         fieldsSkin.hidden = true;
         fieldsRender.hidden = true;
-        fieldsPreview.hidden = true;
 
         if (service === 'Скин') fieldsSkin.hidden = false;
         else if (service === 'Рендер') fieldsRender.hidden = false;
-        else if (service === 'Превью') fieldsPreview.hidden = false;
 
         orderState.basePrice = BASE_PRICES[service] || PRICES.skin;
         orderState.genderExtra = prefill.genderExtra || 0;
@@ -1255,13 +1237,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (pose) text += `Поза / ракурс: ${pose}\n`;
             if (bg) text += `Фон: ${bg}\n`;
             if (mood) text += `Атмосфера: ${mood}\n`;
-        } else if (currentService === 'Превью') {
-            const title = document.getElementById('previewTitle').value.trim();
-            const style = document.querySelector('input[name="previewStyle"]:checked');
-            const refs = document.getElementById('previewRefs').value.trim();
-            if (title) text += `Тема видео: ${title}\n`;
-            if (style) text += `Стиль превью: ${style.value}\n`;
-            if (refs) text += `Референсы: ${refs}\n`;
         }
 
         if (orderState.revisions > 0) {
@@ -1312,13 +1287,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!pose) {
                 showToast('Выберите позу', 'error');
                 document.getElementById('renderPose').focus();
-                return false;
-            }
-        } else if (currentService === 'Превью') {
-            const title = document.getElementById('previewTitle').value.trim();
-            if (!title) {
-                showToast('Укажите тему видео', 'error');
-                document.getElementById('previewTitle').focus();
                 return false;
             }
         }
@@ -1383,11 +1351,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const teamFieldsSkin = document.getElementById('teamFieldsSkin');
     const teamFields3D = document.getElementById('teamFields3D');
     const teamFieldsMontage = document.getElementById('teamFieldsMontage');
-    const teamFieldsPreview = document.getElementById('teamFieldsPreview');
     const teamFieldsBuilder = document.getElementById('teamFieldsBuilder');
 
     function hideAllTeamFields() {
-        [teamFieldsSkin, teamFields3D, teamFieldsMontage, teamFieldsPreview, teamFieldsBuilder]
+        [teamFieldsSkin, teamFields3D, teamFieldsMontage, teamFieldsBuilder]
             .forEach(f => { if (f) f.hidden = true; });
     }
 
@@ -1396,7 +1363,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (role === 'Художник скинов' && teamFieldsSkin) teamFieldsSkin.hidden = false;
         else if (role === '3D моделлер' && teamFields3D) teamFields3D.hidden = false;
         else if (role === 'Монтажер' && teamFieldsMontage) teamFieldsMontage.hidden = false;
-        else if (role === 'Художник превью' && teamFieldsPreview) teamFieldsPreview.hidden = false;
         else if (role === 'Строитель' && teamFieldsBuilder) teamFieldsBuilder.hidden = false;
     }
 
@@ -1469,9 +1435,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (skills) text += `\nНавыки:\n${skills}\n`;
         } else if (role === 'Монтажер') {
             const skills = document.getElementById('teamMontageSkills').value.trim();
-            if (skills) text += `\nНавыки:\n${skills}\n`;
-        } else if (role === 'Художник превью') {
-            const skills = document.getElementById('teamPreviewSkills').value.trim();
             if (skills) text += `\nНавыки:\n${skills}\n`;
         } else if (role === 'Строитель') {
             const skills = document.getElementById('teamBuilderSkills').value.trim();
