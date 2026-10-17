@@ -697,7 +697,7 @@ document.addEventListener('DOMContentLoaded', function () {
         { name: 'Beatlewind', rating: 4, text: 'Хорошо подобран стиль, но не хватает уникальности и изюминки в скине.', service: 'Скин' },
         { name: 'Тимоша Музыка', rating: 5, text: 'Классный Скин!', service: 'Скин' },
         { name: 'арсик', rating: 5, text: 'автор красава, все четко сделал:)', service: 'Скин' },
-        { name: 'Спящий бизнесмен', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
+        { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
     ];
 
     const serviceIcons = {
