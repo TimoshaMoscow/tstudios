@@ -233,7 +233,8 @@ document.addEventListener('DOMContentLoaded', function () {
         { name: 'FIREFOX', price: 0, image: 'skins/firefox.png', author: 'Тимошка из Москвы' },
         { name: 'Рыцарь', price: 0, image: 'skins/knight.png', author: 'Тимошка из Москвы' },
         { name: 'Toxinator', price: 50, image: 'skins/toxinator.png', author: 'Тимошка из Москвы' },
-        { name: 'арсик', price: 0, image: 'skins/zakazMAJORrender.png', author: 'Тимошка из Москвы' }
+        { name: 'арсик', price: 0, image: 'skins/zakazMAJORrender.png', author: 'Тимошка из Москвы' },
+        { name: 'Дашка', price: 0, image: 'skins/dasha.png', author: 'Тимошка из Москвы' }
     ];
 
     const rendersData = [
@@ -697,7 +698,8 @@ document.addEventListener('DOMContentLoaded', function () {
         { name: 'Beatlewind', rating: 4, text: 'Хорошо подобран стиль, но не хватает уникальности и изюминки в скине.', service: 'Скин' },
         { name: 'Тимоша Музыка', rating: 5, text: 'Классный Скин!', service: 'Скин' },
         { name: 'арсик', rating: 5, text: 'автор красава, все четко сделал:)', service: 'Скин' },
-        { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
+        { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' },
+        { name: 'Дашка', rating: 1, text: 'хороший.', service: 'Скин' }
     ];
 
     const serviceIcons = {
