@@ -1133,71 +1133,95 @@ body {
 }
 
 .how-step {
-    padding: 34px 26px 30px;
-    text-align: center;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    padding: 0;
+    aspect-ratio: 1 / 1;           /* квадратная карточка — картинка заполняет ровно */
+    display: flex;
+    align-items: flex-end;
+    border-radius: var(--radius-lg);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    isolation: isolate;
 }
 
 .how-step:hover {
     transform: translateY(-10px);
-    box-shadow: 0 30px 70px -15px rgba(59, 130, 246, 0.3), var(--glass-shadow-lg);
-    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 30px 70px -15px rgba(59, 130, 246, 0.4), var(--glass-shadow-lg);
+    border-color: rgba(59, 130, 246, 0.5);
 }
 
+/* Картинка заполняет всю карточку */
+.how-step-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.how-step:hover .how-step-bg {
+    transform: scale(1.08);
+}
+
+/* Затемнение снизу, чтобы читался заголовок */
+.how-step-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+        to top,
+        rgba(4, 7, 13, 0.95) 0%,
+        rgba(4, 7, 13, 0.7) 30%,
+        rgba(4, 7, 13, 0.15) 60%,
+        transparent 100%
+    );
+    pointer-events: none;
+}
+
+/* Номер шага в правом верхнем углу */
 .how-step-number {
     position: absolute;
-    top: 14px;
-    right: 20px;
-    font-size: 2.6rem;
+    top: 16px;
+    right: 22px;
+    font-size: 2.8rem;
     font-weight: 900;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.5), rgba(6, 182, 212, 0.3));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(247, 247, 255, 0.7));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     line-height: 1;
     letter-spacing: -0.05em;
-    z-index: 0;
+    z-index: 2;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
-.how-step-img-wrapper {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 22px;
-    border-radius: 24px;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(168, 85, 247, 0.1));
-    border: 1px solid rgba(59, 130, 246, 0.25);
+/* Заголовок внизу карточки */
+.how-step-content {
+    position: relative;
+    z-index: 2;
+    padding: 22px 24px;
+    width: 100%;
+}
+
+.how-step-content h3 {
+    font-size: 1.15rem;
+    margin: 0;
+    font-weight: 700;
+    color: #fff;
     display: flex;
     align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
+    gap: 10px;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+    line-height: 1.35;
 }
 
-.how-step-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s;
-}
-
-.how-step:hover .how-step-img { transform: scale(1.1); }
-
-.how-step h3 {
-    font-size: 1.15rem;
-    margin-bottom: 10px;
-    font-weight: 700;
-    position: relative;
-    z-index: 1;
-}
-
-.how-step p {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    position: relative;
-    z-index: 1;
+.how-step-content h3 i {
+    color: var(--accent-light);
+    font-size: 1rem;
+    flex-shrink: 0;
 }
 
 /* ===== PRICING ===== */
@@ -3151,6 +3175,8 @@ body.modal-open { overflow: hidden; }
     .footer-legal {
         justify-content: center;
     }
+    .how-step-content h3 { font-size: 1rem; }
+
 }
 
 @media (max-width: 480px) {
@@ -3208,6 +3234,9 @@ body.modal-open { overflow: hidden; }
     .join-rule-icon { width: 36px; height: 36px; font-size: 1rem; }
     .join-rule-text { font-size: 0.85rem; }
     .join-rules-title { font-size: 0.95rem; }
+    .how-step-number { font-size: 2.2rem; top: 12px; right: 16px; }
+    .how-step-content { padding: 18px; }
+    .how-step-content h3 { font-size: 0.95rem; gap: 8px; }
 
     .footer {
         padding: 40px 0 20px;
