@@ -507,7 +507,7 @@ document.addEventListener('DOMContentLoaded', function () {
             lightboxAuthorSocials.innerHTML += `<a href="${author.discord}" target="_blank" rel="noopener" class="ds"><i class="fab fa-discord"></i> Discord</a>`;
         }
         if (author.telegram) {
-            lightboxAuthorSocials.innerHTML += `<a href="${author.telegram}" target="_blank" rel="noopener" class="tg"><i class="fab fa-telegram"></i> Telegram</a>`;
+            lightboxAuthorSocials.innerHTML += `<a href="${author.telegram}" target="_blank" rel="noopener" class="tg"><i class="fab fa-telegram"></i> ТГК</a>`;
         }
 
         lightboxImg.classList.remove('loaded');
