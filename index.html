@@ -218,17 +218,21 @@
             <h2 class="section-title glass-title">Что мы делаем</h2>
             <p class="section-subtitle">Заказать скин, рендер или что-то ещё по Minecraft — от 50₽</p>
 <div class="services-grid">
-    <div class="service-card glass" data-service="Скин" role="button" tabindex="0">
-        <div class="service-icon-wrapper"><i class="fas fa-paint-brush service-icon"></i></div>
-        <h3>Заказать скин</h3>
-        <p>Разработка уникальных скинов Minecraft с нуля под ваш образ или бренд.</p>
-        <div class="service-price-tag">от <span data-price="skin">100</span> ₽</div>
+    <div class="service-card glass" data-service="Скин" role="button" tabindex="0" aria-label="Заказать скин">
+        <img class="service-bg" src="services/skin.png" alt="" loading="lazy">
+        <div class="service-overlay"></div>
+        <div class="service-content">
+            <h3>Скин</h3>
+            <p>Индивидуальный дизайн скина Minecraft с нуля — от 100 ₽</p>
+        </div>
     </div>
-    <div class="service-card glass" data-service="Рендер" role="button" tabindex="0">
-        <div class="service-icon-wrapper"><i class="fas fa-cube service-icon"></i></div>
-        <h3>Заказать рендер</h3>
-        <p>Профессиональные 3D-рендеры Minecraft для обложек и аватарок.</p>
-        <div class="service-price-tag">от <span data-price="render">50</span> ₽</div>
+    <div class="service-card glass" data-service="Рендер" role="button" tabindex="0" aria-label="Заказать рендер">
+        <img class="service-bg" src="services/render.png" alt="" loading="lazy">
+        <div class="service-overlay"></div>
+        <div class="service-content">
+            <h3>Рендер</h3>
+            <p>3D-рендеры Minecraft для обложек и аватарок — от 50 ₽</p>
+        </div>
     </div>
 </div>
         </div>
@@ -583,12 +587,8 @@
     </div>
 
     <form id="orderForm" class="order-form" novalidate>
-
-                <form id="orderForm" class="order-form" novalidate>
                     <div class="form-group">
                         <label for="orderName">Ваше имя / никнейм *</label>
-                        <input type="text" id="orderName" name="name" placeholder="Например: Steve" required maxlength="50">
-                    </div>
 
                     <!-- Выбор исполнителя -->
                     <div class="form-group" id="executorGroup">

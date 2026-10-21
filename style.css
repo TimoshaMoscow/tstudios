@@ -913,79 +913,134 @@ body {
     color: var(--warning) !important;
 }
 
-/* ===== SERVICES ===== */
+/* ===== SERVICES (карточки-услуги) ===== */
 .services { padding: 100px 0; }
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .service-card {
-    padding: 44px 30px;
-    text-align: center;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    aspect-ratio: 1 / 1;              /* ровный квадрат */
+    padding: 0;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.4s;
+    isolation: isolate;
+}
+
+/* Картинка заполняет весь квадрат */
+.service-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-card:hover .service-bg {
+    transform: scale(1.08);
+}
+
+/* Затемнение снизу, чтобы читался текст */
+.service-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+        to top,
+        rgba(4, 7, 13, 0.95) 0%,
+        rgba(4, 7, 13, 0.75) 30%,
+        rgba(4, 7, 13, 0.2) 65%,
+        transparent 100%
+    );
+    pointer-events: none;
+    transition: opacity 0.4s;
+}
+
+/* Текст внизу карточки */
+.service-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 24px 26px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 8px;
 }
 
-.service-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.12), transparent 60%);
-    opacity: 0;
-    transition: opacity 0.5s;
-    pointer-events: none;
-    z-index: 0;
+.service-content h3 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #fff;
+    line-height: 1.15;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.8);
+    margin: 0;
 }
 
-.service-card:hover::before { opacity: 1; }
-.service-card > * { position: relative; z-index: 1; }
-
-.service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 30px 70px -15px rgba(59, 130, 246, 0.3), var(--glass-shadow-lg);
-    border-color: rgba(59, 130, 246, 0.4);
-}
-
-.service-icon-wrapper {
-    width: 84px;
-    height: 84px;
-    margin: 0 auto 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 24px;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(6, 182, 212, 0.12));
-    border: 1px solid rgba(59, 130, 246, 0.25);
-    transition: transform 0.5s;
-}
-
-.service-card:hover .service-icon-wrapper { transform: scale(1.08) rotate(-4deg); }
-
-.service-icon {
-    font-size: 2.2rem;
-    color: var(--accent-light);
-}
-
-.service-card h3 { font-size: 1.4rem; margin-bottom: 12px; font-weight: 700; }
-.service-card p { color: var(--text-secondary); margin-bottom: 18px; font-size: 0.95rem; }
-
-.service-price-tag {
-    display: inline-block;
-    padding: 7px 20px;
-    background: rgba(59, 130, 246, 0.12);
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    border-radius: var(--radius-full);
+.service-content p {
     font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--accent-light);
-    margin-top: 10px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+    opacity: 0.95;
+}
+
+/* Hover / focus */
+.service-card[data-service]:hover {
+    transform: translateY(-8px);
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 30px 70px -15px rgba(59, 130, 246, 0.45), var(--glass-shadow-lg);
+}
+
+.service-card[data-service]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+.service-card[data-service]:active {
+    transform: translateY(-4px) scale(0.99);
+}
+
+/* Мобильная адаптация */
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+    }
+    .service-content {
+        padding: 20px 22px;
+    }
+    .service-content h3 {
+        font-size: 1.4rem;
+    }
+    .service-content p {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .service-content h3 {
+        font-size: 1.3rem;
+    }
+    .service-content p {
+        font-size: 0.8rem;
+    }
 }
 
 /* ===== CALCULATOR ===== */
