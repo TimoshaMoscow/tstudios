@@ -171,39 +171,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       9. ПЕРЕКЛЮЧАТЕЛЬ ПОЛА (тарифы)
-    ============================================================ */
-    const maleBtn = document.getElementById('maleBtn');
-    const femaleBtn = document.getElementById('femaleBtn');
-    const skinPrice = document.getElementById('skinPrice');
-    const skinNote = document.getElementById('skinNote');
-    const skinCard = document.getElementById('skinCard');
-
-    if (maleBtn && femaleBtn && skinPrice && skinCard) {
-        function updateSkinPrice(gender) {
-            if (gender === 'male') {
-                skinPrice.textContent = PRICES.skin;
-                skinNote.textContent = 'Индивидуальный дизайн';
-                maleBtn.classList.add('active');
-                maleBtn.setAttribute('aria-pressed', 'true');
-                femaleBtn.classList.remove('active');
-                femaleBtn.setAttribute('aria-pressed', 'false');
-                skinCard.classList.remove('female-theme');
-            } else {
-                skinPrice.textContent = PRICES.skinFemale;
-                skinNote.textContent = 'С учётом женских особенностей';
-                femaleBtn.classList.add('active');
-                femaleBtn.setAttribute('aria-pressed', 'true');
-                maleBtn.classList.remove('active');
-                maleBtn.setAttribute('aria-pressed', 'false');
-                skinCard.classList.add('female-theme');
-            }
-        }
-        maleBtn.addEventListener('click', () => updateSkinPrice('male'));
-        femaleBtn.addEventListener('click', () => updateSkinPrice('female'));
-    }
-
-    /* ============================================================
        10. МАССИВ АВТОРОВ
        ВАЖНО: services НЕ указываем — система сама их определит
        по работам в портфолио (см. getAuthorServices)
@@ -223,6 +190,25 @@ document.addEventListener('DOMContentLoaded', function () {
     function getAuthorByName(name) {
         return authors.find(a => a.name === name) || authors[0];
     }
+
+    /* ============================================================
+       ★ Клик по карточке услуги → открыть модалку заказа
+    ============================================================ */
+    document.querySelectorAll('.service-card[data-service]').forEach(card => {
+        const service = card.getAttribute('data-service');
+
+        card.addEventListener('click', () => {
+            openModal(service, {});
+        });
+
+        // Доступность с клавиатуры
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openModal(service, {});
+            }
+        });
+    });
 
     /* ============================================================
        11. ДАННЫЕ ПОРТФОЛИО
@@ -699,7 +685,7 @@ document.addEventListener('DOMContentLoaded', function () {
         { name: 'Тимоша Музыка', rating: 5, text: 'Классный Скин!', service: 'Скин' },
         { name: 'арсик', rating: 5, text: 'автор красава, все четко сделал:)', service: 'Скин' },
         { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' },
-        { name: 'Дашка', rating: 1, text: 'хороший.', service: 'Скин' }
+        { name: 'Дашка', rating: 4, text: 'хороший.', service: 'Скин' }
     ];
 
     const serviceIcons = {
@@ -872,6 +858,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const orderModal = document.getElementById('orderModal');
     const modalClose = document.getElementById('modalClose');
     const modalServiceName = document.getElementById('modalServiceName');
+    const modalPricing = document.getElementById('modalPricing');
+    const modalPriceAmount = document.getElementById('modalPriceAmount');
+    const modalPriceNote = document.getElementById('modalPriceNote');
+    const modalFeatures = document.getElementById('modalFeatures');
     const modalStepForm = document.getElementById('modalStepForm');
     const modalStepResult = document.getElementById('modalStepResult');
     const orderForm = document.getElementById('orderForm');
@@ -918,6 +908,32 @@ document.addEventListener('DOMContentLoaded', function () {
         'Скин': PRICES.skin,
         'Рендер': PRICES.render
     };
+
+/* ★ Данные для блока цены + фич в модалке (дублируем из тарифов) */
+const MODAL_TARIFFS = {
+    'Скин': {
+        note: 'Индивидуальный дизайн',
+        price: PRICES.skin,
+        femaleNote: 'С учётом женских особенностей',
+        femalePrice: PRICES.skinFemale,
+        features: [
+            { icon: 'fa-check', text: 'Уникальный дизайн' },
+            { icon: 'fa-check', text: '3D-рендер в подарок', gift: true },
+            { icon: 'fa-check', text: 'Правки до 3-х раз' },
+            { icon: 'fa-check', text: 'Срок: 1-2 дня' }
+        ]
+    },
+    'Рендер': {
+        note: 'За 1 рендер',
+        price: PRICES.render,
+        features: [
+            { icon: 'fa-check', text: 'HD качество' },
+            { icon: 'fa-check', text: 'На выбор фон' },
+            { icon: 'fa-check', text: 'Правки до 2-х раз' },
+            { icon: 'fa-check', text: 'Срок: до 24 часов' }
+        ]
+    }
+};
 
     function updateOrderTotal() {
         if (!orderTotal) return;
@@ -1066,15 +1082,17 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    document.querySelectorAll('input[name="skinGender"]').forEach(radio => {
-        radio.addEventListener('change', function () {
-            if (currentService === 'Скин') {
-                orderState.genderExtra = this.value === 'Женский' ? 50 : 0;
-                updateOrderTotal();
-            }
-            updateGenderHint();
-        });
+document.querySelectorAll('input[name="skinGender"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+        if (currentService === 'Скин') {
+            orderState.genderExtra = this.value === 'Женский' ? 50 : 0;
+            updateOrderTotal();
+            // ★ Обновляем блок тарифа (цена/тема)
+            renderModalTariff('Скин', orderState.genderExtra === 50);
+        }
+        updateGenderHint();
     });
+});
 
     if (orderRevisions) {
         orderRevisions.addEventListener('input', function () {
@@ -1104,16 +1122,28 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    document.querySelectorAll('.btn-pricing').forEach(btn => {
-        btn.addEventListener('click', function () {
-            const service = this.getAttribute('data-service') || 'Скин';
-            let genderExtra = 0;
-            if (service === 'Скин' && femaleBtn && femaleBtn.classList.contains('active')) {
-                genderExtra = 50;
-            }
-            openModal(service, { genderExtra });
-        });
-    });
+/* Отрисовать блок цены + фич из тарифа */
+function renderModalTariff(service, isFemale = false) {
+    const tariff = MODAL_TARIFFS[service];
+    if (!tariff || !modalPricing) return;
+
+    const price = isFemale && tariff.femalePrice ? tariff.femalePrice : tariff.price;
+    const note = isFemale && tariff.femaleNote ? tariff.femaleNote : tariff.note;
+
+    if (modalPriceAmount) modalPriceAmount.textContent = price;
+    if (modalPriceNote) modalPriceNote.textContent = note;
+
+    if (modalFeatures) {
+        modalFeatures.innerHTML = tariff.features.map(f => `
+            <li${f.gift ? ' class="is-gift"' : ''}>
+                <i class="fas ${f.icon}"></i>
+                <span>${f.text}</span>
+            </li>
+        `).join('');
+    }
+
+    modalPricing.classList.toggle('female-theme', isFemale && service === 'Скин');
+}
 
     function openModal(service, prefill = {}) {
         currentService = service;
@@ -1159,10 +1189,16 @@ document.addEventListener('DOMContentLoaded', function () {
             orderState.executorDiscord = author.discord;
         }
 
-        if (service === 'Скин' && orderState.genderExtra === 50) {
-            const femaleRadio = document.querySelector('input[name="skinGender"][value="Женский"]');
-            if (femaleRadio) femaleRadio.checked = true;
-        }
+    if (service === 'Скин' && orderState.genderExtra === 50) {
+        const femaleRadio = document.querySelector('input[name="skinGender"][value="Женский"]');
+        if (femaleRadio) femaleRadio.checked = true;
+    }
+
+    // ★ Рисуем блок цены + фич из тарифа
+    renderModalTariff(service, orderState.genderExtra === 50);
+
+    updateOrderTotal();
+
 
         updateOrderTotal();
 

@@ -3254,3 +3254,143 @@ body.modal-open { overflow: hidden; }
         font-size: 0.98rem;
     }
 }
+
+/* ===== Блок цены + фич в модалке заказа ===== */
+.modal-pricing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 20px 24px 18px;
+    margin-bottom: 24px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(6, 182, 212, 0.04));
+    border: 1px solid rgba(59, 130, 246, 0.22);
+    border-radius: var(--radius);
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-pricing::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+    pointer-events: none;
+}
+
+.modal-pricing-price {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    line-height: 1;
+}
+
+.modal-price-amount {
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #60a5fa, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.modal-price-currency {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--accent-light);
+}
+
+.modal-price-note {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.modal-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 20px;
+    width: 100%;
+    max-width: 380px;
+    text-align: left;
+}
+
+.modal-features li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.modal-features li i {
+    color: var(--accent-light);
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.modal-features li.is-gift {
+    color: #fbbf24;
+}
+.modal-features li.is-gift i {
+    color: var(--warning);
+}
+
+/* Женский скин — розовая тема, как в тарифе */
+.modal-pricing.female-theme {
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(59, 130, 246, 0.04));
+    border-color: rgba(255, 107, 157, 0.3);
+}
+.modal-pricing.female-theme .modal-price-amount {
+    background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.modal-pricing.female-theme .modal-price-currency {
+    color: var(--pink);
+}
+.modal-pricing.female-theme .modal-features li i {
+    color: var(--pink);
+}
+
+@media (max-width: 480px) {
+    .modal-pricing {
+        padding: 16px 18px 14px;
+    }
+    .modal-price-amount {
+        font-size: 2rem;
+    }
+    .modal-features {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        max-width: 100%;
+    }
+    .modal-features li {
+        font-size: 0.8rem;
+    }
+}
+
+/* Кликабельная карточка услуги */
+.service-card[data-service] {
+    cursor: pointer;
+    user-select: none;
+}
+
+.service-card[data-service]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+.service-card[data-service]:active {
+    transform: translateY(-6px) scale(0.99);
+}

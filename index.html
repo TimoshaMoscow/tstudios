@@ -126,7 +126,7 @@
             { "@type": "Review", "author": { "@type": "Person", "name": "Тимоша Музыка" }, "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1" }, "reviewBody": "Классный Скин!" },
             { "@type": "Review", "author": { "@type": "Person", "name": "арсик" }, "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1" }, "reviewBody": "автор красава, все четко сделал:)" },
             { "@type": "Review", "author": { "@type": "Person", "name": "Vakulko" }, "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1" }, "reviewBody": "да круто вышло, спасибо" },
-            { "@type": "Review", "author": { "@type": "Person", "name": "Дашка" }, "reviewRating": { "@type": "Rating", "ratingValue": "1", "bestRating": "5", "worstRating": "1" }, "reviewBody": "хороший" }
+            { "@type": "Review", "author": { "@type": "Person", "name": "Дашка" }, "reviewRating": { "@type": "Rating", "ratingValue": "4", "bestRating": "5", "worstRating": "1" }, "reviewBody": "хороший" }
         ]
     }
     </script>
@@ -217,20 +217,20 @@
         <div class="container">
             <h2 class="section-title glass-title">Что мы делаем</h2>
             <p class="section-subtitle">Заказать скин, рендер или что-то ещё по Minecraft — от 50₽</p>
-            <div class="services-grid">
-                <div class="service-card glass">
-                    <div class="service-icon-wrapper"><i class="fas fa-paint-brush service-icon"></i></div>
-                    <h3>Заказать скин</h3>
-                    <p>Разработка уникальных скинов Minecraft с нуля под ваш образ или бренд.</p>
-                    <div class="service-price-tag">от <span data-price="skin">100</span> ₽</div>
-                </div>
-                <div class="service-card glass">
-                    <div class="service-icon-wrapper"><i class="fas fa-cube service-icon"></i></div>
-                    <h3>Заказать рендер</h3>
-                    <p>Профессиональные 3D-рендеры Minecraft для обложек и аватарок.</p>
-                    <div class="service-price-tag">от <span data-price="render">50</span> ₽</div>
-                </div>
-            </div>
+<div class="services-grid">
+    <div class="service-card glass" data-service="Скин" role="button" tabindex="0">
+        <div class="service-icon-wrapper"><i class="fas fa-paint-brush service-icon"></i></div>
+        <h3>Заказать скин</h3>
+        <p>Разработка уникальных скинов Minecraft с нуля под ваш образ или бренд.</p>
+        <div class="service-price-tag">от <span data-price="skin">100</span> ₽</div>
+    </div>
+    <div class="service-card glass" data-service="Рендер" role="button" tabindex="0">
+        <div class="service-icon-wrapper"><i class="fas fa-cube service-icon"></i></div>
+        <h3>Заказать рендер</h3>
+        <p>Профессиональные 3D-рендеры Minecraft для обложек и аватарок.</p>
+        <div class="service-price-tag">от <span data-price="render">50</span> ₽</div>
+    </div>
+</div>
         </div>
     </section>
 
@@ -288,55 +288,6 @@
                 <button type="button" class="btn btn-primary btn-large calc-order-btn" id="calcOrderBtn">
                     <i class="fas fa-paper-plane"></i> Заказать за эту цену
                 </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ТАРИФЫ -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <h2 class="section-title glass-title">Наши тарифы</h2>
-            <p class="section-subtitle">Заказать скин, рендер по Minecraft</p>
-            <div class="pricing-grid">
-                <div class="pricing-card glass featured" id="skinCard">
-                    <div class="pricing-badge">Популярное</div>
-                    <div class="pricing-icon"><i class="fas fa-paint-brush"></i></div>
-                    <h3>Скины</h3>
-                    <div class="gender-switcher" id="genderSwitcher" role="group">
-                        <button class="gender-btn active" data-gender="male" id="maleBtn" aria-pressed="true">
-                            <i class="fas fa-mars"></i> Мужской
-                        </button>
-                        <button class="gender-btn" data-gender="female" id="femaleBtn" aria-pressed="false">
-                            <i class="fas fa-venus"></i> Женский
-                        </button>
-                    </div>
-                    <div class="pricing-price">
-                        <span class="price-amount" id="skinPrice">100</span>
-                        <span class="price-currency">₽</span>
-                    </div>
-                    <p class="price-note" id="skinNote">Индивидуальный дизайн</p>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Уникальный дизайн</li>
-                        <li><i class="fas fa-check"></i> 3D-рендер в подарок</li>
-                        <li><i class="fas fa-check"></i> Правки до 3-х раз</li>
-                        <li><i class="fas fa-check"></i> Срок: 1-2 дня</li>
-                    </ul>
-                    <button type="button" class="btn btn-primary btn-pricing" data-service="Скин">Заказать скин</button>
-                </div>
-
-                <div class="pricing-card glass">
-                    <div class="pricing-icon"><i class="fas fa-cube"></i></div>
-                    <h3>Рендеры</h3>
-                    <div class="pricing-price"><span class="price-amount" data-price="render">50</span><span class="price-currency">₽</span></div>
-                    <p class="price-note">За 1 рендер</p>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> HD качество</li>
-                        <li><i class="fas fa-check"></i> На выбор фон</li>
-                        <li><i class="fas fa-check"></i> Правки до 2-х раз</li>
-                        <li><i class="fas fa-check"></i> Срок: до 24 часов</li>
-                    </ul>
-                    <button type="button" class="btn btn-secondary btn-pricing" data-service="Рендер">Заказать рендер</button>
-                </div>
             </div>
         </div>
     </section>
@@ -615,11 +566,23 @@
                 <i class="fas fa-times"></i>
             </button>
 
-            <div class="modal-step" id="modalStepForm">
-                <div class="modal-header">
-                    <h3 id="modalTitle">Оформление заказа</h3>
-                    <p class="modal-subtitle" id="modalServiceName">Услуга: Скин</p>
-                </div>
+<div class="modal-step" id="modalStepForm">
+    <div class="modal-header">
+        <h3 id="modalTitle">Оформление заказа</h3>
+        <p class="modal-subtitle" id="modalServiceName">Услуга: Скин</p>
+    </div>
+
+    <!-- ★ Блок цены + фич из тарифа -->
+    <div class="modal-pricing" id="modalPricing">
+        <div class="modal-pricing-price">
+            <span class="modal-price-amount" id="modalPriceAmount">100</span>
+            <span class="modal-price-currency">₽</span>
+        </div>
+        <p class="modal-price-note" id="modalPriceNote">Индивидуальный дизайн</p>
+        <ul class="modal-features" id="modalFeatures"></ul>
+    </div>
+
+    <form id="orderForm" class="order-form" novalidate>
 
                 <form id="orderForm" class="order-form" novalidate>
                     <div class="form-group">
@@ -1084,7 +1047,6 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <script src="script.js"></script>
-    <script src="https://timoshamoscow.github.io/ads.js"></script>
 
 </body>
 </html>
