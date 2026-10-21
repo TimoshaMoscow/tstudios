@@ -3,12 +3,12 @@ document.addEventListener('DOMContentLoaded', function () {
     /* ============================================================
        0. ГЛОБАЛЬНЫЕ ЦЕНЫ
     ============================================================ */
-    const PRICES = {
-        skin: 100,
-        skinFemale: 150,
-        render: 50,
-        revision: 30
-    };
+const PRICES = {
+    skin: 250,
+    skinFemale: 300,
+    render: 150,
+    revision: 45
+};
 
     document.querySelectorAll('[data-price]').forEach(el => {
         const key = el.getAttribute('data-price');
@@ -513,11 +513,11 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         {
             q: 'Как заказать скин?',
-            a: 'Выбери пол скина (для парня / для девушки), укажи тему и цвета — мы сделаем уникальный дизайн. От 100₽, срок 1-2 дня.'
+            a: 'Выбери пол скина (для парня / для девушки), укажи тему и цвета — мы сделаем уникальный дизайн. Честные цены, срок 1-2 дня.'
         },
         {
             q: 'Как заказать рендер?',
-            a: 'Нажми «Рендер» в разделе «Что можно заказать» — откроется форма. Заполни детали (поза, фон, атмосфера) и отправь заявку в Discord. Цена от 50₽.'
+            a: 'Нажми «Рендер» в разделе «Что можно заказать» — откроется форма. Заполни детали (поза, фон, атмосфера) и отправь заявку в Discord. Честные цены.'
         }
     ];
 
@@ -800,7 +800,7 @@ document.addEventListener('DOMContentLoaded', function () {
             femalePrice: PRICES.skinFemale,
             features: [
                 { icon: 'fa-check', text: 'Только твой дизайн' },
-                { icon: 'fa-check', text: '3D-рендер в подарок', gift: true },
+                { icon: 'fa-check', text: 'В любом стиле' },
                 { icon: 'fa-check', text: 'До 3 правок бесплатно' },
                 { icon: 'fa-check', text: 'Готово за 1-2 дня' }
             ]
@@ -812,7 +812,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 { icon: 'fa-check', text: 'Рендер в HD' },
                 { icon: 'fa-check', text: 'Любой фон на выбор' },
                 { icon: 'fa-check', text: 'До 2 правок бесплатно' },
-                { icon: 'fa-check', text: 'Готово за сутки' }
+                { icon: 'fa-check', text: 'Готово за 2-3 часа' }
             ]
         }
     };
