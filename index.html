@@ -95,11 +95,11 @@
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
-            { "@type": "Question", "name": "Сколько ждать заказ?", "acceptedAnswer": { "@type": "Answer", "text": "Скин — 1-2 дня, рендер — до 24 часов. Есть срочный режим (×1.5) и экспресс (×2)." } },
-            { "@type": "Question", "name": "Какие способы оплаты?", "acceptedAnswer": { "@type": "Answer", "text": "Принимаем оплату переводом. Оплата после согласования финального результата." } },
-            { "@type": "Question", "name": "Что если не понравится?", "acceptedAnswer": { "@type": "Answer", "text": "В цену входят правки (до 3-х для скинов, до 2-х для рендеров). Если результат совсем не подошёл — вернём деньги до начала правок." } },
-            { "@type": "Question", "name": "Можно ли заказать срочно?", "acceptedAnswer": { "@type": "Answer", "text": "Да, есть срочный режим (×1.5 от цены, срок ~12 часов) и экспресс (×2 от цены, срок ~4-6 часов)." } },
-            { "@type": "Question", "name": "Как заказать рендер Minecraft?", "acceptedAnswer": { "@type": "Answer", "text": "Нажмите «Заказать» в тарифе «Рендеры» — откроется форма. Заполните детали и отправьте заявку в Discord. Стоимость от 50₽." } }
+            { "@type": "Question", "name": "Сколько ждать готовую работу?", "acceptedAnswer": { "@type": "Answer", "text": "Скин — 1-2 дня, рендер — до 24 часов. Нужно быстрее — есть ускорение за доплату." } },
+            { "@type": "Question", "name": "Как оплатить?", "acceptedAnswer": { "@type": "Answer", "text": "Сначала показываем готовое — платишь, только если всё нравится. Переводом (СБП или карта)." } },
+            { "@type": "Question", "name": "А если мне не понравится?", "acceptedAnswer": { "@type": "Answer", "text": "Бесплатно можно попросить правки: до 3 раз для скина, до 2 для рендера. Не зашло совсем — вернём деньги, пока не начали правки." } },
+            { "@type": "Question", "name": "Можно срочно?", "acceptedAnswer": { "@type": "Answer", "text": "Да, есть срочный режим (×1.5 от цены, срок ~12 часов) и экспресс (×2 от цены, срок ~4-6 часов)." } },
+            { "@type": "Question", "name": "Как заказать рендер?", "acceptedAnswer": { "@type": "Answer", "text": "Нажми «Рендер» в разделе «Что можно заказать» — откроется форма. Заполни детали и отправь заявку в Discord. Цена от 50₽." } }
         ]
     }
     </script>
@@ -136,21 +136,10 @@
 </head>
 <body>
 
-    <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
-    <div class="cursor-spotlight" id="cursorSpotlight" aria-hidden="true"></div>
-
-    <div class="bg-effects" aria-hidden="true">
-        <div class="parallax-layer" data-depth="0.2"><div class="bg-orb bg-orb-1"></div></div>
-        <div class="parallax-layer" data-depth="0.5"><div class="bg-orb bg-orb-2"></div></div>
-        <div class="parallax-layer" data-depth="0.8"><div class="bg-orb bg-orb-3"></div></div>
-        <div class="bg-grid"></div>
-        <div class="bg-stars" id="bgStars"></div>
-    </div>
-
-    <header class="header glass" role="banner">
+    <header class="header" role="banner">
         <div class="container header-container">
             <div class="logo-wrapper">
-                <img src="logo.png" alt="TStudios" class="logo-img" width="40" height="40">
+                <img src="logo.png" alt="TStudios" class="logo-img" width="36" height="36">
                 <span class="logo-text">TStudios</span>
             </div>
             <nav class="main-nav" aria-label="Главная навигация">
@@ -163,88 +152,98 @@
                 </ul>
             </nav>
             <div class="header-actions">
-                <button type="button" class="share-btn" id="shareBtn" aria-label="Поделиться сайтом">
+                <button type="button" class="icon-btn" id="shareBtn" aria-label="Поделиться сайтом">
                     <i class="fas fa-share-alt"></i>
                 </button>
-                <div class="hamburger" id="hamburger" aria-label="Открыть меню" role="button" tabindex="0">
+                <button type="button" class="hamburger" id="hamburger" aria-label="Открыть меню" aria-expanded="false">
                     <i class="fas fa-bars"></i>
-                </div>
+                </button>
             </div>
         </div>
     </header>
 
     <!-- HERO -->
     <section class="hero" id="home">
-        <div class="container hero-content">
-            <div class="hero-text glass">
-                <div class="hero-badge">
-                    <i class="fas fa-star"></i> Официальная студия Тимошки из Москвы
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-badge">
+                        <i class="fas fa-star"></i> Официальная студия Тимошки из Москвы
+                    </div>
+                    <h1>TStudios</h1>
+                    <p class="subtitle">Заказать скин, рендер и многое другое в <span class="highlight">Minecraft</span></p>
+                    <p class="hero-description">Индивидуальный дизайн, быстрые сроки и доступные цены. От идеи до готового результата — за 1-2 дня.</p>
+                    <div class="hero-buttons">
+                        <a href="https://www.youtube.com/channel/UCnyaLt81O3C-S5uWcpxwhIA" target="_blank" rel="noopener" class="btn btn-primary btn-large">
+                            <i class="fab fa-youtube"></i> YouTube
+                        </a>
+                        <a href="#calculator" class="btn btn-secondary btn-large">
+                            <i class="fas fa-calculator"></i> Рассчитать цену
+                        </a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">10+</span>
+                            <span class="stat-label">Работ</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-label">Индивидуально</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">На связи</span>
+                        </div>
+                    </div>
                 </div>
-                <h1 class="glitch" data-text="TStudios">TStudios</h1>
-                <p class="subtitle">Заказать скин, рендер и многое другое в <span class="highlight">Minecraft</span></p>
-                <p class="hero-description">Индивидуальный дизайн, быстрые сроки и доступные цены. От идеи до готового результата — за 1-2 дня.</p>
-                <div class="hero-buttons">
-                    <a href="https://www.youtube.com/channel/UCnyaLt81O3C-S5uWcpxwhIA" target="_blank" class="btn btn-primary" rel="noopener">
-                        <i class="fab fa-youtube"></i> YouTube
-                    </a>
-                    <a href="#calculator" class="btn btn-secondary">
-                        <i class="fas fa-calculator"></i> Рассчитать
-                    </a>
-                </div>
-            </div>
-            <div class="hero-stats glass">
-                <div class="stat-item">
-                    <span class="stat-number">10+</span>
-                    <span class="stat-label">Работ</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">100%</span>
-                    <span class="stat-label">Индивидуально</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">24/7</span>
-                    <span class="stat-label">На связи</span>
+                <div class="hero-visual">
+                    <img src="tim.png" alt="Тимошка из Москвы" loading="lazy">
                 </div>
             </div>
         </div>
         <div class="scroll-indicator">
-            <a href="#services" aria-label="Вниз"><i class="fas fa-chevron-down"></i></a>
+            <a href="#services" aria-label="Прокрутить вниз"><i class="fas fa-chevron-down"></i></a>
         </div>
     </section>
 
     <!-- УСЛУГИ -->
     <section class="services" id="services">
         <div class="container">
-            <h2 class="section-title glass-title">Что мы делаем</h2>
-            <p class="section-subtitle">Заказать скин, рендер или что-то ещё по Minecraft — от 50₽</p>
-<div class="services-grid">
-    <div class="service-card glass" data-service="Скин" role="button" tabindex="0" aria-label="Заказать скин">
-        <img class="service-bg" src="services/skin.png" alt="" loading="lazy">
-        <div class="service-overlay"></div>
-        <div class="service-content">
-            <h3>Скин</h3>
-            <p>Индивидуальный дизайн скина Minecraft с нуля — от 100 ₽</p>
-        </div>
-    </div>
-    <div class="service-card glass" data-service="Рендер" role="button" tabindex="0" aria-label="Заказать рендер">
-        <img class="service-bg" src="services/render.png" alt="" loading="lazy">
-        <div class="service-overlay"></div>
-        <div class="service-content">
-            <h3>Рендер</h3>
-            <p>3D-рендеры Minecraft для обложек и аватарок — от 50 ₽</p>
-        </div>
-    </div>
-</div>
+            <h2 class="section-title">Что можно заказать</h2>
+            <p class="section-subtitle">Выбери услугу — цена сразу видна. Кликни по карточке, чтобы начать заказ</p>
+            <div class="services-grid">
+                <div class="service-card" data-service="Скин" role="button" tabindex="0" aria-label="Заказать скин">
+                    <img class="service-bg" src="services/skin.png" alt="" loading="lazy">
+                    <div class="service-overlay"></div>
+                    <div class="service-badge">от 100 ₽</div>
+                    <div class="service-content">
+                        <h3>Скин</h3>
+                        <p>Уникальный скин под твой образ</p>
+                        <span class="service-cta">Заказать <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+                <div class="service-card" data-service="Рендер" role="button" tabindex="0" aria-label="Заказать рендер">
+                    <img class="service-bg" src="services/render.png" alt="" loading="lazy">
+                    <div class="service-overlay"></div>
+                    <div class="service-badge">от 50 ₽</div>
+                    <div class="service-content">
+                        <h3>Рендер</h3>
+                        <p>3D-рендер твоего персонажа</p>
+                        <span class="service-cta">Заказать <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- КАЛЬКУЛЯТОР -->
     <section class="calculator" id="calculator">
         <div class="container">
-            <h2 class="section-title glass-title">Калькулятор заказа</h2>
-            <div class="calculator-wrapper glass">
+            <h2 class="section-title">Собери заказ и узнай цену</h2>
+            <p class="section-subtitle">Быстро посчитай стоимость и сразу перейди к оформлению</p>
+            <div class="calculator-wrapper">
                 <div class="calc-row">
-                    <label>Тип услуги</label>
+                    <label>Что нужно?</label>
                     <div class="calc-options" id="calcService">
                         <button type="button" class="calc-opt active" data-service="Скин" data-price="100">
                             <i class="fas fa-paint-brush"></i> Скин
@@ -256,19 +255,19 @@
                 </div>
 
                 <div class="calc-row" id="calcGenderRow">
-                    <label>Пол скина</label>
+                    <label>Скин для парня или девушки?</label>
                     <div class="calc-options" id="calcGender">
                         <button type="button" class="calc-opt active" data-gender="male" data-extra="0">
-                            <i class="fas fa-mars"></i> Мужской
+                            <i class="fas fa-mars"></i> Для парня
                         </button>
                         <button type="button" class="calc-opt" data-gender="female" data-extra="50">
-                            <i class="fas fa-venus"></i> Женский (+50 ₽)
+                            <i class="fas fa-venus"></i> Для девушки (+50 ₽)
                         </button>
                     </div>
                 </div>
 
                 <div class="calc-row">
-                    <label>Доп. правки сверх нормы</label>
+                    <label>Сколько правок добавить?</label>
                     <div class="calc-slider">
                         <input type="range" id="calcRevisions" min="0" max="10" value="0" step="1">
                         <span class="calc-slider-value" id="calcRevisionsValue">0 правок × <span data-price="revision">30</span> ₽</span>
@@ -276,85 +275,82 @@
                 </div>
 
                 <div class="calc-row">
-                    <label>Срочность</label>
+                    <label>Как быстро?</label>
                     <div class="calc-options" id="calcUrgency">
-                        <button type="button" class="calc-opt active" data-urgency="normal" data-mult="1">Обычная</button>
-                        <button type="button" class="calc-opt" data-urgency="fast" data-mult="1.5">Быстро (×1.5)</button>
-                        <button type="button" class="calc-opt" data-urgency="express" data-mult="2">Экспресс (×2)</button>
+                        <button type="button" class="calc-opt active" data-urgency="normal" data-mult="1">Стандартно</button>
+                        <button type="button" class="calc-opt" data-urgency="fast" data-mult="1.5">Быстрее (×1.5)</button>
+                        <button type="button" class="calc-opt" data-urgency="express" data-mult="2">Срочно (×2)</button>
                     </div>
                 </div>
 
                 <div class="calc-total">
-                    <span>Итого:</span>
+                    <span>Примерная цена:</span>
                     <span class="calc-total-price" id="calcTotal">100 ₽</span>
                 </div>
 
                 <button type="button" class="btn btn-primary btn-large calc-order-btn" id="calcOrderBtn">
-                    <i class="fas fa-paper-plane"></i> Заказать за эту цену
+                    <i class="fas fa-paper-plane"></i> Перейти к заказу
                 </button>
             </div>
         </div>
     </section>
 
-<section class="how" id="how">
-    <div class="container">
-        <h2 class="section-title glass-title">Как мы работаем</h2>
-        <div class="how-grid">
-
-            <div class="how-step glass">
-                <img src="steps/step1.png" alt="Шаг 1 — Пишешь исполнителю" loading="lazy" class="how-step-bg">
-                <div class="how-step-overlay"></div>
-                <div class="how-step-number">01</div>
-                <div class="how-step-content">
-                    <h3><i class="fas fa-comment-dots"></i> Пишешь исполнителю</h3>
+    <!-- КАК РАБОТАЕМ -->
+    <section class="how" id="how">
+        <div class="container">
+            <h2 class="section-title">Как мы работаем</h2>
+            <p class="section-subtitle">Простые шаги от идеи до готового результата</p>
+            <div class="how-grid">
+                <div class="how-step">
+                    <img src="steps/step1.png" alt="" loading="lazy" class="how-step-bg">
+                    <div class="how-step-overlay"></div>
+                    <div class="how-step-number">01</div>
+                    <div class="how-step-content">
+                        <h3><i class="fas fa-comment-dots"></i> Пишешь нам в Discord</h3>
+                    </div>
+                </div>
+                <div class="how-step">
+                    <img src="steps/step2.png" alt="" loading="lazy" class="how-step-bg">
+                    <div class="how-step-overlay"></div>
+                    <div class="how-step-number">02</div>
+                    <div class="how-step-content">
+                        <h3><i class="fas fa-comments"></i> Согласуем идею и цену</h3>
+                    </div>
+                </div>
+                <div class="how-step">
+                    <img src="steps/step3.png" alt="" loading="lazy" class="how-step-bg">
+                    <div class="how-step-overlay"></div>
+                    <div class="how-step-number">03</div>
+                    <div class="how-step-content">
+                        <h3><i class="fas fa-palette"></i> Делаем работу</h3>
+                    </div>
+                </div>
+                <div class="how-step">
+                    <img src="steps/step4.png" alt="" loading="lazy" class="how-step-bg">
+                    <div class="how-step-overlay"></div>
+                    <div class="how-step-number">04</div>
+                    <div class="how-step-content">
+                        <h3><i class="fas fa-check-circle"></i> Отдаём готовое</h3>
+                    </div>
                 </div>
             </div>
-
-            <div class="how-step glass">
-                <img src="steps/step2.png" alt="Шаг 2 — Обсуждаем детали" loading="lazy" class="how-step-bg">
-                <div class="how-step-overlay"></div>
-                <div class="how-step-number">02</div>
-                <div class="how-step-content">
-                    <h3><i class="fas fa-comments"></i> Обсуждаем детали</h3>
-                </div>
-            </div>
-
-            <div class="how-step glass">
-                <img src="steps/step3.png" alt="Шаг 3 — Я делаю работу" loading="lazy" class="how-step-bg">
-                <div class="how-step-overlay"></div>
-                <div class="how-step-number">03</div>
-                <div class="how-step-content">
-                    <h3><i class="fas fa-palette"></i> Я делаю работу</h3>
-                </div>
-            </div>
-
-            <div class="how-step glass">
-                <img src="steps/step4.png" alt="Шаг 4 — Отдаю финальный результат" loading="lazy" class="how-step-bg">
-                <div class="how-step-overlay"></div>
-                <div class="how-step-number">04</div>
-                <div class="how-step-content">
-                    <h3><i class="fas fa-check-circle"></i> Отдаю результат</h3>
-                </div>
-            </div>
-
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- О СТУДИИ -->
     <section class="about" id="about">
         <div class="container">
-            <h2 class="section-title glass-title">Основатель студии</h2>
-            <div class="about-wrapper glass">
+            <h2 class="section-title">Основатель студии</h2>
+            <p class="section-subtitle">За TStudios стоит один человек — и это важно</p>
+            <div class="about-wrapper">
                 <div class="about-photo">
                     <img src="tim.png" alt="Тимошка из Москвы" loading="lazy">
-                    <div class="about-photo-glow"></div>
                 </div>
                 <div class="about-info">
                     <h3>Тимошка из Москвы</h3>
                     <p class="about-role">Основатель, креативный директор и главный разработчик</p>
                     <p class="about-text">Привет! Я — Тимошка из Москвы, ютубер по Minecraft с аудиторией более <strong>24к подписчиков</strong>.</p>
-                    <p class="about-text">В TStudios лично занимаюсь разработкой всех скинов, рендеров.</p>
+                    <p class="about-text">В TStudios лично занимаюсь разработкой всех скинов и рендеров — никаких «менеджеров» и посредников.</p>
                     <div class="about-tags">
                         <span class="about-tag"><i class="fas fa-paint-brush"></i> Скины</span>
                         <span class="about-tag"><i class="fas fa-cube"></i> Рендеры</span>
@@ -372,22 +368,19 @@
         </div>
     </section>
 
-    <!-- ПОРТФОЛИО: ДВЕ КАРУСЕЛИ -->
+    <!-- ПОРТФОЛИО -->
     <section class="gallery" id="gallery">
         <div class="container">
-            <h2 class="section-title glass-title">Наши работы</h2>
+            <h2 class="section-title">Примеры работ</h2>
+            <p class="section-subtitle">Кликни по любой работе, чтобы посмотреть детали и заказать похожее</p>
         </div>
-
-        <!-- Карусель 1: СКИНЫ (едет влево) -->
         <div class="carousel-block">
-            <div class="carousel-viewport" id="carouselSkins">
+            <div class="carousel-viewport" id="carouselSkins" aria-label="Карусель скинов">
                 <div class="carousel-track" id="carouselSkinsTrack"></div>
             </div>
         </div>
-
-        <!-- Карусель 2: РЕНДЕРЫ (едет вправо) -->
         <div class="carousel-block">
-            <div class="carousel-viewport" id="carouselRenders">
+            <div class="carousel-viewport" id="carouselRenders" aria-label="Карусель рендеров">
                 <div class="carousel-track" id="carouselRendersTrack"></div>
             </div>
         </div>
@@ -396,7 +389,8 @@
     <!-- FAQ -->
     <section class="faq" id="faq">
         <div class="container">
-            <h2 class="section-title glass-title">Частые вопросы</h2>
+            <h2 class="section-title">Частые вопросы</h2>
+            <p class="section-subtitle">Всё, что важно знать перед заказом</p>
             <div class="faq-list" id="faqList"></div>
         </div>
     </section>
@@ -404,34 +398,36 @@
     <!-- ОТЗЫВЫ -->
     <section class="reviews" id="reviews">
         <div class="container">
-            <h2 class="section-title glass-title">Отзывы клиентов</h2>
+            <h2 class="section-title">Отзывы клиентов</h2>
+            <p class="section-subtitle">Что говорят те, кто уже заказывал</p>
             <div class="reviews-slider" id="reviewsSlider"></div>
             <div class="slider-controls">
-                <button class="slider-btn" id="prevReview" aria-label="Назад"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn" id="prevReview" aria-label="Предыдущий отзыв"><i class="fas fa-chevron-left"></i></button>
                 <div class="slider-dots" id="reviewDots"></div>
-                <button class="slider-btn" id="nextReview" aria-label="Вперёд"><i class="fas fa-chevron-right"></i></button>
+                <button class="slider-btn" id="nextReview" aria-label="Следующий отзыв"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
     </section>
 
-    <!-- СЕКЦИЯ: В КОМАНДУ -->
+    <!-- В КОМАНДУ -->
     <section class="join" id="join">
         <div class="container">
-            <h2 class="section-title glass-title">Работа в TStudios</h2>
-            <div class="join-wrapper glass">
+            <h2 class="section-title">Хочешь работать с нами?</h2>
+            <p class="section-subtitle">Ищем талантливых ребят в команду TStudios</p>
+            <div class="join-wrapper">
                 <div class="join-info">
                     <div class="join-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h3>Хочешь в команду TStudios?</h3>
-                    <p>Мы ищем талантливых ребят: художников скинов, 3D-моделлеров, монтажёров и строителей. Если ты умеешь работать с Blockbench, Photoshop, Premiere Pro или Axiom — нам по пути.</p>
+                    <h3>Ищем ребят в команду TStudios</h3>
+                    <p>Нужны художники скинов, 3D-моделлеры, монтажёры и строители. Если умеешь работать с Blockbench, Photoshop, Premiere Pro или Axiom — нам по пути.</p>
 
                     <ul class="join-requirements">
-                        <li><i class="fas fa-check-circle"></i> Возраст от <strong>14 лет</strong></li>
+                        <li><i class="fas fa-check-circle"></i> Тебе <strong>есть 14 лет</strong></li>
                         <li><i class="fas fa-check-circle"></i> Есть <strong>паспорт</strong></li>
                         <li><i class="fas fa-check-circle"></i> Есть <strong>карта российского банка</strong></li>
-                        <li><i class="fas fa-check-circle"></i> Адекватность не ниже <strong>5/10</strong></li>
-                        <li><i class="fas fa-check-circle"></i> Грамотность не ниже <strong>6/10</strong></li>
+                        <li><i class="fas fa-check-circle"></i> Ты адекватный</li>
+                        <li><i class="fas fa-check-circle"></i> Пишешь без ошибок</li>
                         <li><i class="fas fa-check-circle"></i> Навыки в одной из ролей</li>
                     </ul>
 
@@ -443,21 +439,21 @@
                         <div class="join-rule">
                             <div class="join-rule-icon"><i class="fas fa-wallet"></i></div>
                             <div class="join-rule-text">
-                                <strong>Всю прибыль с заказа вы забираете себе.</strong>
-                                Клиент переводит оплату <strong>лично вам</strong> на ваши реквизиты — <strong><span class="join-highlight">Пока что</span></strong> мы не берём процент с заказов, которые пришли через вас.
+                                <strong>Всю оплату за свои заказы оставляешь себе.</strong>
+                                Клиент переводит деньги <strong>лично тебе</strong> на твои реквизиты — <strong><span class="join-highlight">Пока что</span></strong> мы не берём процент с заказов, которые пришли через нас.
                             </div>
                         </div>
 
                         <div class="join-rule">
                             <div class="join-rule-icon"><i class="fas fa-file-invoice"></i></div>
                             <div class="join-rule-text">
-                                <strong><span class="join-highlight">Пока что</span></strong> для выполнения заказов <strong>не нужна самозанятость</strong> и тем более <strong>ИП</strong>. Как только это понадобится — мы вам сообщим.
+                                <strong><span class="join-highlight">Пока что</span></strong> для выполнения заказов <strong>не нужна самозанятость</strong> и тем более <strong>ИП</strong>. Как только это понадобится — мы сообщим.
                             </div>
                         </div>
                     </div>
 
                     <button type="button" class="btn btn-primary btn-large" id="openTeamModal">
-                        <i class="fas fa-paper-plane"></i> Подать заявку в команду
+                        <i class="fas fa-paper-plane"></i> Заполнить заявку
                     </button>
                 </div>
                 <div class="join-decor" aria-hidden="true">
@@ -471,12 +467,12 @@
     </section>
 
     <!-- ФУТЕР -->
-    <footer class="footer glass" id="contacts" role="contentinfo">
+    <footer class="footer" id="contacts" role="contentinfo">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
                     <div class="footer-logo">
-                        <img src="logo.png" alt="TStudios" width="36" height="36">
+                        <img src="logo.png" alt="TStudios" width="32" height="32">
                         <span>TStudios</span>
                     </div>
                     <p class="footer-about">
@@ -489,9 +485,9 @@
 
                 <div class="footer-col">
                     <h4 class="footer-title">Свяжись с нами</h4>
-                    <ul class="social-list footer-socials">
+                    <ul class="footer-socials">
                         <li><a href="https://www.youtube.com/@TStudiosXXL" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> Наш YouTube канал</a></li>
-                        <li><a><i class="fa-brands fa-telegram"></i> Наш Telegram канал (скоро)</a></li>
+                        <li><a><i class="fab fa-telegram"></i> Наш Telegram канал (скоро)</a></li>
                         <li><a href="https://taplink.cc/timoshamoscow" target="_blank" rel="noopener"><i class="fas fa-link"></i> Все соцсети Тимошки</a></li>
                     </ul>
                 </div>
@@ -500,7 +496,7 @@
                     <h4 class="footer-title">Навигация</h4>
                     <ul class="footer-nav">
                         <li><a href="#services">Услуги</a></li>
-                        <li><a href="#gallery">Наши работы</a></li>
+                        <li><a href="#gallery">Примеры работ</a></li>
                         <li><a href="#faq">FAQ</a></li>
                         <li><a href="#join">В команду</a></li>
                     </ul>
@@ -514,23 +510,23 @@
                     <span class="footer-sep">•</span>
                     <button type="button" class="footer-link" id="openTermsModal">Условия использования</button>
                     <span class="footer-sep">•</span>
-                    <span class="footer-credit">Сделано с <i class="fas fa-heart" style="color: #ff4757;"></i></span>
+                    <span class="footer-credit">Сделано с <i class="fas fa-heart" style="color: #ec4899;"></i></span>
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- LIGHTBOX -->
-    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog">
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Просмотр работы">
         <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Закрыть">
             <i class="fas fa-times"></i>
         </button>
-        <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Предыдущее">
+        <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Предыдущая работа">
             <i class="fas fa-chevron-left"></i>
         </button>
         <div class="lightbox-content">
             <div class="lightbox-img-wrapper">
-                <div class="skeleton skeleton-lg" id="lightboxSkeleton"></div>
+                <div class="skeleton" id="lightboxSkeleton"></div>
                 <img id="lightboxImg" src="" alt="">
             </div>
             <div class="lightbox-info">
@@ -558,71 +554,72 @@
                 </div>
             </div>
         </div>
-        <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Следующее">
+        <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Следующая работа">
             <i class="fas fa-chevron-right"></i>
         </button>
     </div>
 
     <!-- МОДАЛКА ЗАКАЗА -->
-    <div class="modal-overlay" id="orderModal" aria-hidden="true" role="dialog">
-        <div class="modal-content glass">
+    <div class="modal-overlay" id="orderModal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle">
+        <div class="modal-content">
             <button type="button" class="modal-close" id="modalClose" aria-label="Закрыть">
                 <i class="fas fa-times"></i>
             </button>
 
-<div class="modal-step" id="modalStepForm">
-    <div class="modal-header">
-        <h3 id="modalTitle">Оформление заказа</h3>
-        <p class="modal-subtitle" id="modalServiceName">Услуга: Скин</p>
-    </div>
+            <div class="modal-step" id="modalStepForm">
+                <div class="modal-header">
+                    <span class="modal-popular-badge" id="modalPopularBadge">
+                        <i class="fas fa-fire"></i> Популярное
+                    </span>
+                    <h3 id="modalTitle">Расскажи, что нужно</h3>
+                    <p class="modal-subtitle" id="modalServiceName">Услуга: Скин</p>
+                </div>
 
-    <!-- ★ Блок цены + фич из тарифа -->
-    <div class="modal-pricing" id="modalPricing">
-        <div class="modal-pricing-price">
-            <span class="modal-price-amount" id="modalPriceAmount">100</span>
-            <span class="modal-price-currency">₽</span>
-        </div>
-        <p class="modal-price-note" id="modalPriceNote">Индивидуальный дизайн</p>
-        <ul class="modal-features" id="modalFeatures"></ul>
-    </div>
+                <div class="modal-pricing" id="modalPricing">
+                    <div class="modal-pricing-price">
+                        <span class="modal-price-amount" id="modalPriceAmount">100</span>
+                        <span class="modal-price-currency">₽</span>
+                    </div>
+                    <p class="modal-price-note" id="modalPriceNote">Уникальный скин под твой запрос</p>
+                    <ul class="modal-features" id="modalFeatures"></ul>
+                </div>
 
-    <form id="orderForm" class="order-form" novalidate>
+                <form id="orderForm" class="order-form" novalidate>
                     <div class="form-group">
-                        <label for="orderName">Ваше имя / никнейм *</label>
-                        <input type="text" id="orderName" name="name" placeholder="Например: Steve" required maxlength="50">
+                        <label for="orderName">Как тебя зовут? *</label>
+                        <input type="text" id="orderName" name="name" placeholder="Например: Steve или @timosha" required maxlength="50">
                     </div>
 
-                    <!-- Выбор исполнителя -->
                     <div class="form-group" id="executorGroup">
-                        <label for="orderExecutor">Кто выполняет заказ *</label>
+                        <label for="orderExecutor">Кому отправить заявку? *</label>
                         <select id="orderExecutor" name="executor" required>
-                            <option value="">— Выберите исполнителя —</option>
+                            <option value="">— Выбери —</option>
                         </select>
                         <div class="team-note" id="executorNote">
                             <i class="fas fa-info-circle"></i>
-                            <span>Показаны только те мастера, которые выполняют выбранный тип услуги.</span>
+                            <span>Здесь только те, кто делает выбранный тип работы.</span>
                         </div>
                     </div>
 
                     <div class="service-fields" id="fieldsSkin" hidden>
                         <div class="form-group">
-                            <label>Пол скина</label>
+                            <label>Скин для парня или девушки?</label>
                             <div class="radio-group">
-                                <label class="radio-item"><input type="radio" name="skinGender" value="Мужской" checked><span>Мужской</span></label>
-                                <label class="radio-item"><input type="radio" name="skinGender" value="Женский"><span>Женский</span></label>
+                                <label class="radio-item"><input type="radio" name="skinGender" value="Мужской" checked><span>Для парня</span></label>
+                                <label class="radio-item"><input type="radio" name="skinGender" value="Женский"><span>Для девушки</span></label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="skinTheme">Тема / стиль скина *</label>
-                            <input type="text" id="skinTheme" name="theme" placeholder="Например: рыцарь, киберпанк..." maxlength="80">
+                            <label for="skinTheme">Какая тема? *</label>
+                            <input type="text" id="skinTheme" name="theme" placeholder="Рыцарь, киберпанк, космос…" maxlength="80">
                         </div>
                         <div class="form-group">
-                            <label for="skinColors">Цветовая гамма</label>
-                            <input type="text" id="skinColors" name="colors" placeholder="Например: синий + чёрный" maxlength="80">
+                            <label for="skinColors">Какие цвета?</label>
+                            <input type="text" id="skinColors" name="colors" placeholder="Синий + чёрный, или на твой вкус" maxlength="80">
                         </div>
                         <div class="form-group">
-                            <label for="skinRefs">Референсы (ссылки)</label>
-                            <input type="text" id="skinRefs" name="refs" placeholder="Ссылки на картинки" maxlength="200">
+                            <label for="skinRefs">Есть примеры? (ссылки)</label>
+                            <input type="text" id="skinRefs" name="refs" placeholder="Ссылки на картинки, которые нравятся" maxlength="200">
                         </div>
                     </div>
 
@@ -636,9 +633,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="renderPose">Поза / ракурс *</label>
+                            <label for="renderPose">Как персонаж стоит? *</label>
                             <select id="renderPose" name="pose">
-                                <option value="">— Выберите —</option>
+                                <option value="">— Выбери —</option>
                                 <option value="Стоя (анфас)">Стоя (анфас)</option>
                                 <option value="Стоя (профиль)">Стоя (профиль)</option>
                                 <option value="Сидя">Сидя</option>
@@ -647,18 +644,18 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="renderBg">Фон</label>
-                            <input type="text" id="renderBg" name="background" placeholder="Например: замок, космос..." maxlength="100">
+                            <label for="renderBg">Что на фоне?</label>
+                            <input type="text" id="renderBg" name="background" placeholder="Замок, космос, лес…" maxlength="100">
                         </div>
                         <div class="form-group">
-                            <label for="renderMood">Настроение / атмосфера</label>
-                            <input type="text" id="renderMood" name="mood" placeholder="Например: эпичное, мрачное..." maxlength="80">
+                            <label for="renderMood">Атмосфера</label>
+                            <input type="text" id="renderMood" name="mood" placeholder="Эпично, мрачно, мило…" maxlength="80">
                         </div>
                     </div>
 
                     <div class="service-fields" id="fieldsExtras">
                         <div class="form-group">
-                            <label>Доп. правки сверх нормы</label>
+                            <label>Сколько правок добавить?</label>
                             <div class="calc-slider">
                                 <input type="range" id="orderRevisions" min="0" max="10" value="0" step="1">
                                 <span class="calc-slider-value" id="orderRevisionsValue">0 правок × <span data-price="revision">30</span> ₽</span>
@@ -666,23 +663,23 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Срочность</label>
+                            <label>Как быстро?</label>
                             <div class="calc-options" id="orderUrgency">
-                                <button type="button" class="calc-opt active" data-urgency="normal" data-mult="1">Обычная</button>
-                                <button type="button" class="calc-opt" data-urgency="fast" data-mult="1.5">Быстро (×1.5)</button>
-                                <button type="button" class="calc-opt" data-urgency="express" data-mult="2">Экспресс (×2)</button>
+                                <button type="button" class="calc-opt active" data-urgency="normal" data-mult="1">Стандартно</button>
+                                <button type="button" class="calc-opt" data-urgency="fast" data-mult="1.5">Быстрее (×1.5)</button>
+                                <button type="button" class="calc-opt" data-urgency="express" data-mult="2">Срочно (×2)</button>
                             </div>
                         </div>
 
                         <div class="calc-total">
-                            <span>Предварительная стоимость:</span>
+                            <span>Примерная цена:</span>
                             <span class="calc-total-price" id="orderTotal">100 ₽</span>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="orderDesc">Подробное описание заказа *</label>
-                        <textarea id="orderDesc" name="description" placeholder="Опишите все детали..." required maxlength="500" rows="4"></textarea>
+                        <label for="orderDesc">Опиши заказ словами *</label>
+                        <textarea id="orderDesc" name="description" placeholder="Что должно быть на скине или рендере, настроение, детали…" required maxlength="500" rows="4"></textarea>
                         <span class="form-counter" id="descCounter">0 / 500</span>
                         <div class="gender-hint" id="genderHint" hidden>
                             <i class="fas fa-exclamation-triangle"></i>
@@ -691,15 +688,15 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="orderExtra">Дополнительные пожелания</label>
-                        <textarea id="orderExtra" name="extra" placeholder="Что-то ещё?" maxlength="300" rows="3"></textarea>
+                        <label for="orderExtra">Что-то ещё? (необязательно)</label>
+                        <textarea id="orderExtra" name="extra" placeholder="Любые пожелания, не связанные с ТЗ" maxlength="300" rows="3"></textarea>
                         <span class="form-counter" id="extraCounter">0 / 300</span>
                     </div>
 
                     <div class="form-actions">
                         <button type="button" class="btn btn-secondary" id="cancelOrder">Отмена</button>
                         <button type="submit" class="btn btn-primary" id="submitOrder">
-                            <i class="fas fa-paper-plane"></i> Создать обращение
+                            <i class="fas fa-paper-plane"></i> Создать заявку
                         </button>
                     </div>
                 </form>
@@ -708,56 +705,56 @@
             <div class="modal-step" id="modalStepResult" hidden>
                 <div class="modal-header">
                     <div class="success-icon"><i class="fas fa-check-circle"></i></div>
-                    <h3>Обращение готово!</h3>
-                    <p class="modal-subtitle">Скопируйте текст и отправьте исполнителю в Discord</p>
+                    <h3>Готово! Теперь отправь заявку</h3>
+                    <p class="modal-subtitle">Скопируй текст ниже и отправь его в Discord — ответим в течение дня</p>
                 </div>
                 <div class="result-text-wrapper">
                     <textarea id="resultText" class="result-text" readonly rows="14"></textarea>
-                    <button type="button" class="copy-btn" id="copyBtn" aria-label="Скопировать">
+                    <button type="button" class="copy-btn" id="copyBtn" aria-label="Скопировать текст заявки">
                         <i class="fas fa-copy"></i> <span>Скопировать</span>
                     </button>
                 </div>
                 <div class="result-actions">
                     <button type="button" class="btn btn-secondary" id="backToForm">
-                        <i class="fas fa-arrow-left"></i> Изменить
+                        <i class="fas fa-arrow-left"></i> Назад к форме
                     </button>
                     <a href="#" target="_blank" rel="noopener" class="btn btn-primary btn-discord" id="resultDiscordLink">
-                        <i class="fab fa-discord"></i> Открыть Discord исполнителя
+                        <i class="fab fa-discord"></i> Открыть Discord и отправить
                     </a>
                 </div>
                 <p class="result-hint">
-                    <i class="fas fa-info-circle"></i> Откройте Discord, вставьте текст и отправьте
+                    <i class="fas fa-info-circle"></i> Открой Discord, вставь текст и отправь
                 </p>
             </div>
         </div>
     </div>
 
     <!-- МОДАЛКА ЗАЯВКИ В КОМАНДУ -->
-    <div class="modal-overlay" id="teamModal" aria-hidden="true" role="dialog">
-        <div class="modal-content glass team-modal-content">
+    <div class="modal-overlay" id="teamModal" aria-hidden="true" role="dialog" aria-labelledby="teamModalTitle">
+        <div class="modal-content team-modal-content">
             <button type="button" class="modal-close" id="teamModalClose" aria-label="Закрыть">
                 <i class="fas fa-times"></i>
             </button>
 
             <div class="modal-step" id="teamStepForm">
                 <div class="modal-header">
-                    <h3>Заявка в команду TStudios</h3>
-                    <p class="modal-subtitle">Заполните форму — мы свяжемся с вами</p>
+                    <h3 id="teamModalTitle">Заявка в команду TStudios</h3>
+                    <p class="modal-subtitle">Заполни форму — мы свяжемся с тобой</p>
                 </div>
 
                 <form id="teamForm" class="order-form" novalidate>
                     <div class="form-group">
-                        <label for="teamName">Имя или ник *</label>
+                        <label for="teamName">Как тебя зовут? *</label>
                         <input type="text" id="teamName" name="teamName" placeholder="Например: Steve" maxlength="50" required>
                     </div>
                     <div class="form-group">
-                        <label for="teamAge">Возраст (от 14 лет) *</label>
+                        <label for="teamAge">Сколько тебе лет? (от 14) *</label>
                         <input type="number" id="teamAge" name="teamAge" min="14" max="99" placeholder="Например: 16" required>
                     </div>
                     <div class="form-group">
-                        <label for="teamAdequacy">Адекватность (1-10) *</label>
+                        <label for="teamAdequacy">Оцени свою адекватность (1-10) *</label>
                         <select id="teamAdequacy" name="teamAdequacy" required>
-                            <option value="">— Выберите —</option>
+                            <option value="">— Выбери —</option>
                             <option value="1">1</option><option value="2">2</option><option value="3">3</option>
                             <option value="4">4</option><option value="5">5</option><option value="6">6</option>
                             <option value="7">7</option><option value="8">8</option><option value="9">9</option>
@@ -765,13 +762,13 @@
                         </select>
                         <div class="team-note team-note-warning">
                             <i class="fas fa-exclamation-triangle"></i>
-                            <span>Минимум <strong>5</strong> из 10 — иначе заявка не пройдёт</span>
+                            <span>Нужно минимум <strong>5</strong> из 10 — иначе заявка не пройдёт</span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="teamLiteracy">Грамотность (1-10) *</label>
+                        <label for="teamLiteracy">Оцени свою грамотность (1-10) *</label>
                         <select id="teamLiteracy" name="teamLiteracy" required>
-                            <option value="">— Выберите —</option>
+                            <option value="">— Выбери —</option>
                             <option value="1">1</option><option value="2">2</option><option value="3">3</option>
                             <option value="4">4</option><option value="5">5</option><option value="6">6</option>
                             <option value="7">7</option><option value="8">8</option><option value="9">9</option>
@@ -779,7 +776,7 @@
                         </select>
                         <div class="team-note team-note-warning">
                             <i class="fas fa-exclamation-triangle"></i>
-                            <span>Минимум <strong>6</strong> из 10 — иначе заявка не пройдёт</span>
+                            <span>Нужно минимум <strong>6</strong> из 10 — иначе заявка не пройдёт</span>
                         </div>
                     </div>
 
@@ -795,7 +792,7 @@
                                 <span><i class="fas fa-times-circle"></i> Нет паспорта</span>
                             </label>
                         </div>
-                        <div class="radio-group radio-group-vertical" style="margin-top: 10px;">
+                        <div class="radio-group radio-group-vertical" style="margin-top: 8px;">
                             <label class="radio-item">
                                 <input type="radio" name="teamBankCard" value="Есть карта российского банка" required>
                                 <span><i class="fas fa-credit-card"></i> Есть карта российского банка</span>
@@ -808,9 +805,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="teamRole">Роль в команде *</label>
+                        <label for="teamRole">Кем хочешь быть в команде? *</label>
                         <select id="teamRole" name="teamRole" required>
-                            <option value="">— Выберите роль —</option>
+                            <option value="">— Выбери роль —</option>
                             <option value="Художник скинов">Художник скинов</option>
                             <option value="3D моделлер">3D моделлер</option>
                             <option value="Монтажер">Монтажер</option>
@@ -844,11 +841,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="teamChannel">Ссылка на ваш YouTube канал *</label>
-                        <input type="text" id="teamChannel" name="teamChannel" placeholder="https://youtube.com/@ваш_ник" maxlength="200" required>
+                        <label for="teamChannel">Ссылка на твой YouTube канал *</label>
+                        <input type="text" id="teamChannel" name="teamChannel" placeholder="https://youtube.com/@твой_ник" maxlength="200" required>
                         <div class="team-note">
                             <i class="fas fa-info-circle"></i>
-                            <span>Перед подачей заявки создайте YouTube канал со своим ником.</span>
+                            <span>Перед подачей заявки создай YouTube канал со своим ником.</span>
                         </div>
                     </div>
 
@@ -865,20 +862,20 @@
                 <div class="modal-header">
                     <div class="success-icon"><i class="fas fa-check-circle"></i></div>
                     <h3>Заявка готова!</h3>
-                    <p class="modal-subtitle">Скопируйте текст и отправьте в Discord</p>
+                    <p class="modal-subtitle">Скопируй текст и отправь в Discord</p>
                 </div>
                 <div class="result-text-wrapper">
                     <textarea id="teamResultText" class="result-text" readonly rows="14"></textarea>
-                    <button type="button" class="copy-btn" id="teamCopyBtn" aria-label="Скопировать">
+                    <button type="button" class="copy-btn" id="teamCopyBtn" aria-label="Скопировать текст заявки">
                         <i class="fas fa-copy"></i> <span>Скопировать</span>
                     </button>
                 </div>
                 <div class="result-actions">
                     <button type="button" class="btn btn-secondary" id="teamBackToForm">
-                        <i class="fas fa-arrow-left"></i> Изменить
+                        <i class="fas fa-arrow-left"></i> Назад к форме
                     </button>
                     <a href="https://discord.com/users/1146355058880040970" target="_blank" rel="noopener" class="btn btn-primary btn-discord">
-                        <i class="fab fa-discord"></i> Открыть Discord
+                        <i class="fab fa-discord"></i> Открыть Discord и отправить
                     </a>
                 </div>
             </div>
@@ -887,7 +884,7 @@
 
     <!-- МОДАЛКА: ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ -->
     <div class="modal-overlay" id="privacyModal" aria-hidden="true" role="dialog" aria-labelledby="privacyTitle">
-        <div class="modal-content glass legal-modal-content">
+        <div class="modal-content legal-modal-content">
             <button type="button" class="modal-close" id="privacyModalClose" aria-label="Закрыть">
                 <i class="fas fa-times"></i>
             </button>
@@ -957,7 +954,7 @@
 
     <!-- МОДАЛКА: УСЛОВИЯ ИСПОЛЬЗОВАНИЯ -->
     <div class="modal-overlay" id="termsModal" aria-hidden="true" role="dialog" aria-labelledby="termsTitle">
-        <div class="modal-content glass legal-modal-content">
+        <div class="modal-content legal-modal-content">
             <button type="button" class="modal-close" id="termsModalClose" aria-label="Закрыть">
                 <i class="fas fa-times"></i>
             </button>

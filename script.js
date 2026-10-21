@@ -24,9 +24,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const nav = document.querySelector('.main-nav');
 
     if (hamburger && nav) {
-        hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+        hamburger.addEventListener('click', () => {
+            const isOpen = nav.classList.toggle('open');
+            hamburger.setAttribute('aria-expanded', String(isOpen));
+        });
         nav.querySelectorAll('a').forEach(link =>
-            link.addEventListener('click', () => nav.classList.remove('open'))
+            link.addEventListener('click', () => {
+                nav.classList.remove('open');
+                hamburger.setAttribute('aria-expanded', 'false');
+            })
         );
     }
 
@@ -34,128 +40,29 @@ document.addEventListener('DOMContentLoaded', function () {
        2. СКРОЛЛ ХЕДЕРА
     ============================================================ */
     const header = document.querySelector('.header');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) header.classList.add('scrolled');
-        else header.classList.remove('scrolled');
-    });
-
-    /* ============================================================
-       3. СЧЁТЧИКИ
-    ============================================================ */
-    const statNumbers = document.querySelectorAll('.stat-number[data-count]');
-    if (statNumbers.length) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const el = entry.target;
-                    const target = parseInt(el.getAttribute('data-count'));
-                    let current = 0;
-                    const step = Math.max(1, Math.floor(target / 30));
-                    const timer = setInterval(() => {
-                        current += step;
-                        if (current >= target) {
-                            current = target;
-                            clearInterval(timer);
-                        }
-                        el.textContent = current;
-                    }, 40);
-                    observer.unobserve(el);
-                }
-            });
-        }, { threshold: 0.5 });
-        statNumbers.forEach(el => observer.observe(el));
+    if (header) {
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 40);
+        }, { passive: true });
     }
 
     /* ============================================================
-       4. ПАРАЛЛАКС + ЗВЁЗДЫ
-    ============================================================ */
-    const parallaxLayers = document.querySelectorAll('.parallax-layer');
-    let ticking = false;
-
-    function updateParallax() {
-        const scrolled = window.scrollY;
-        parallaxLayers.forEach(layer => {
-            const depth = parseFloat(layer.dataset.depth) || 0.5;
-            layer.style.transform = `translate3d(0, ${scrolled * depth * -0.3}px, 0)`;
-        });
-        ticking = false;
-    }
-
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            window.requestAnimationFrame(updateParallax);
-            ticking = true;
-        }
-    }, { passive: true });
-
-    const bgStars = document.getElementById('bgStars');
-    if (bgStars) {
-        const starCount = 60;
-        let html = '';
-        for (let i = 0; i < starCount; i++) {
-            const size = Math.random() * 2 + 1;
-            const top = Math.random() * 100;
-            const left = Math.random() * 100;
-            const delay = Math.random() * 3;
-            const dur = 2 + Math.random() * 3;
-            html += `<div class="bg-star" style="width:${size}px;height:${size}px;top:${top}%;left:${left}%;animation-delay:${delay}s;animation-duration:${dur}s;"></div>`;
-        }
-        bgStars.innerHTML = html;
-    }
-
-    /* ============================================================
-       5. SPOTLIGHT
-    ============================================================ */
-    const spotlight = document.getElementById('cursorSpotlight');
-    if (spotlight && window.matchMedia('(hover: hover)').matches) {
-        let sx = window.innerWidth / 2;
-        let sy = window.innerHeight / 2;
-        let tx = sx, ty = sy;
-
-        document.addEventListener('mousemove', (e) => {
-            tx = e.clientX;
-            ty = e.clientY;
-        });
-
-        function animateSpotlight() {
-            sx += (tx - sx) * 0.15;
-            sy += (ty - sy) * 0.15;
-            spotlight.style.transform = `translate(${sx}px, ${sy}px) translate(-50%, -50%)`;
-            requestAnimationFrame(animateSpotlight);
-        }
-        animateSpotlight();
-    }
-
-    /* ============================================================
-       6. ПРОГРЕСС-БАР
-    ============================================================ */
-    const readingProgress = document.getElementById('readingProgress');
-    function updateReadingProgress() {
-        if (!readingProgress) return;
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        readingProgress.style.width = `${Math.min(percent, 100)}%`;
-    }
-    window.addEventListener('scroll', updateReadingProgress, { passive: true });
-    window.addEventListener('resize', updateReadingProgress);
-    updateReadingProgress();
-
-    /* ============================================================
-       7. ПЛАВНЫЙ СКРОЛЛ
+       3. ПЛАВНЫЙ СКРОЛЛ
     ============================================================ */
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
             if (href === '#') return;
-            e.preventDefault();
             const target = document.querySelector(href);
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         });
     });
 
     /* ============================================================
-       8. TOAST
+       4. TOAST
     ============================================================ */
     const toastContainer = document.getElementById('toastContainer');
     function showToast(message, type = 'info') {
@@ -171,9 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       10. МАССИВ АВТОРОВ
-       ВАЖНО: services НЕ указываем — система сама их определит
-       по работам в портфолио (см. getAuthorServices)
+       5. МАССИВ АВТОРОВ
     ============================================================ */
     const authors = [
         {
@@ -183,8 +88,6 @@ document.addEventListener('DOMContentLoaded', function () {
             discord: 'https://discord.com/users/1146355058880040970',
             telegram: 'https://t.me/MinecraftWithTimosha'
         }
-        // Чтобы добавить нового автора — просто добавь объект сюда.
-        // Услуги система определит сама по его работам в skinsData / rendersData .
     ];
 
     function getAuthorByName(name) {
@@ -192,16 +95,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       ★ Клик по карточке услуги → открыть модалку заказа
+       6. КЛИК ПО КАРТОЧКЕ УСЛУГИ
     ============================================================ */
     document.querySelectorAll('.service-card[data-service]').forEach(card => {
         const service = card.getAttribute('data-service');
 
-        card.addEventListener('click', () => {
-            openModal(service, {});
-        });
+        card.addEventListener('click', () => openModal(service, {}));
 
-        // Доступность с клавиатуры
         card.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -211,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     /* ============================================================
-       11. ДАННЫЕ ПОРТФОЛИО
+       7. ДАННЫЕ ПОРТФОЛИО
     ============================================================ */
     const skinsData = [
         { name: 'Тимоша Музыка', price: 0, image: 'skins/tmusic.png', author: 'Тимошка из Москвы' },
@@ -238,10 +138,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return `${price} ₽`;
     }
 
-    /* ============================================================
-       ★ Определение услуг автора по его работам
-       Возвращает массив сервис-ключей: ['skins', 'renders', ']
-    ============================================================ */
     function getAuthorServices(authorName) {
         const services = [];
         if (skinsData.some(item => item.author === authorName)) services.push('skins');
@@ -249,16 +145,15 @@ document.addEventListener('DOMContentLoaded', function () {
         return services;
     }
 
-    // Сопоставление: ключ сервиса → название услуги в модалке
     const SERVICE_TO_KEY = {
         'Скин': 'skins',
         'Рендер': 'renders'
     };
 
     /* ============================================================
-       12. КАРУСЕЛИ
+       8. КАРУСЕЛИ
     ============================================================ */
-    const CAROUSEL_SPEED = 0.6; // px per frame
+    const CAROUSEL_SPEED = 0.6;
 
     const carousels = {
         skins: {
@@ -320,8 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
             img.style.opacity = '0.3';
         });
 
-        card.addEventListener('click', (e) => {
-            // Не открывать лайтбокс, если это было перетаскивание
+        card.addEventListener('click', () => {
             if (carouselDragMoved[carouselKey]) return;
             openLightbox(carouselKey, parseInt(card.dataset.index));
         });
@@ -337,27 +231,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
         c.track.innerHTML = '';
 
-        // Дублируем элементы 3 раза для бесконечности
         const items = [...c.data, ...c.data, ...c.data];
 
         items.forEach((item, i) => {
-            // Для каждой копии передаём индекс из оригинального массива
             const originalIndex = i % c.data.length;
             const card = createCarouselCard(item, originalIndex, key);
             c.track.appendChild(card);
         });
 
-        // Стартовый offset: одна треть (начало второй копии)
         requestAnimationFrame(() => {
             const singleSetWidth = c.track.scrollWidth / 3;
             c.offset = c.direction === 'left' ? 0 : singleSetWidth;
         });
 
-        // Пауза при наведении
         c.viewport.addEventListener('mouseenter', () => { c.paused = true; });
         c.viewport.addEventListener('mouseleave', () => { c.paused = false; });
 
-        // Drag-скролл
         c.viewport.addEventListener('mousedown', (e) => {
             c.dragging = true;
             c.dragStartX = e.clientX;
@@ -381,7 +270,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Touch
         c.viewport.addEventListener('touchstart', (e) => {
             c.dragging = true;
             c.dragStartX = e.touches[0].clientX;
@@ -420,7 +308,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
 
-            // Плавно возвращаем в диапазон
             if (c.offset < 0) c.offset += singleSetWidth;
             if (c.offset >= singleSetWidth * 2) c.offset -= singleSetWidth;
 
@@ -429,23 +316,12 @@ document.addEventListener('DOMContentLoaded', function () {
         requestAnimationFrame(animateCarousels);
     }
 
-    // Кнопки-стрелки
-    document.querySelectorAll('.carousel-arrow').forEach(btn => {
-        btn.addEventListener('click', function () {
-            const key = this.dataset.carousel;
-            const dir = parseInt(this.dataset.dir);
-            const c = carousels[key];
-            if (!c) return;
-            c.offset -= dir * 260;
-        });
-    });
-
     initCarousel('skins');
     initCarousel('renders');
     requestAnimationFrame(animateCarousels);
 
     /* ============================================================
-       13. LIGHTBOX
+       9. LIGHTBOX
     ============================================================ */
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
@@ -484,7 +360,6 @@ document.addEventListener('DOMContentLoaded', function () {
         lightboxAuthorAvatar.alt = author.name;
         lightboxAuthorName.textContent = author.name;
 
-        // Соцсети автора
         lightboxAuthorSocials.innerHTML = '';
         if (author.youtube) {
             lightboxAuthorSocials.innerHTML += `<a href="${author.youtube}" target="_blank" rel="noopener" class="yt"><i class="fab fa-youtube"></i> YouTube</a>`;
@@ -545,7 +420,6 @@ document.addEventListener('DOMContentLoaded', function () {
         lightboxOrderBtn.addEventListener('click', () => {
             let service = 'Скин';
             if (lightboxCurrentType === 'renders') service = 'Рендер';
-            // Автоматически подставляем автора этой работы как исполнителя
             const item = lightboxItems[lightboxIndex];
             const authorName = item ? item.author : null;
 
@@ -562,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       14. ПОДЕЛИТЬСЯ
+       10. ПОДЕЛИТЬСЯ
     ============================================================ */
     async function shareItem(item) {
         const url = window.location.origin + window.location.pathname + `#gallery`;
@@ -618,42 +492,43 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       15. FAQ
+       11. FAQ — ключевые вопросы наверх
     ============================================================ */
     const faqData = [
         {
-            q: 'Сколько ждать заказ?',
-            a: 'Скин — 1-2 дня, рендер — до 24 часов. Есть срочный режим (×1.5 от цены, срок ~12 часов) и экспресс (×2 от цены, срок ~4-6 часов).'
+            q: 'Как оплатить?',
+            a: 'Сначала показываем готовое — платишь, только если всё нравится. Переводом (СБП или карта).'
         },
         {
-            q: 'Какие способы оплаты?',
-            a: 'Принимаем оплату переводом. Оплата после согласования финального результата — сначала вы видите работу, потом оплачиваете.'
+            q: 'Сколько ждать готовую работу?',
+            a: 'Скин — 1-2 дня, рендер — до 24 часов. Нужно быстрее — есть ускорение за доплату.'
         },
         {
-            q: 'Что если не понравится?',
-            a: 'В цену входят правки (до 3-х для скинов, до 2-х для рендеров). Если результат совсем не подошёл — вернём деньги до начала правок. Мы дорожим репутацией.'
+            q: 'А если мне не понравится?',
+            a: 'Бесплатно можно попросить правки: до 3 раз для скина, до 2 для рендера. Не зашло совсем — вернём деньги, пока не начали правки. Мы дорожим репутацией.'
         },
         {
-            q: 'Можно ли заказать срочно?',
-            a: 'Да! Есть срочный режим (×1.5 от цены) и экспресс (×2 от цены). Срочные заказы берём по возможности — уточняйте в Discord.'
+            q: 'Можно срочно?',
+            a: 'Да! Есть срочный режим (×1.5 от цены) и экспресс (×2 от цены). Срочные заказы берём по возможности — уточняй в Discord.'
         },
         {
-            q: 'Как заказать рендер Minecraft?',
-            a: 'Нажмите «Заказать рендер» в тарифе «Рендеры» — откроется форма. Заполните детали (поза, фон, атмосфера) и отправьте заявку в Discord. Цена от 50₽.'
+            q: 'Как заказать скин?',
+            a: 'Выбери пол скина (для парня / для девушки), укажи тему и цвета — мы сделаем уникальный дизайн. От 100₽, срок 1-2 дня.'
         },
         {
-            q: 'Как заказать скин Minecraft?',
-            a: 'Выберите пол скина (мужской/женский), укажите тему и цвета — мы сделаем индивидуальный дизайн. От 100₽, срок 1-2 дня.'
+            q: 'Как заказать рендер?',
+            a: 'Нажми «Рендер» в разделе «Что можно заказать» — откроется форма. Заполни детали (поза, фон, атмосфера) и отправь заявку в Discord. Цена от 50₽.'
         }
     ];
 
     const faqList = document.getElementById('faqList');
     if (faqList) {
-        faqData.forEach((item) => {
+        faqData.forEach((item, i) => {
             const el = document.createElement('div');
-            el.className = 'faq-item glass';
+            el.className = 'faq-item';
+            if (i === 0) el.classList.add('open');
             el.innerHTML = `
-                <button type="button" class="faq-question" aria-expanded="false">
+                <button type="button" class="faq-question" aria-expanded="${i === 0 ? 'true' : 'false'}">
                     <span>${item.q}</span>
                     <i class="fas fa-chevron-down"></i>
                 </button>
@@ -677,7 +552,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       16. ОТЗЫВЫ
+       12. ОТЗЫВЫ
     ============================================================ */
     const reviewsData = [
         { name: 'FIREFOX', rating: 5, text: 'Очень хорошее качество и очень не плохое качество рук и буква моего канала.', service: 'Скин' },
@@ -703,7 +578,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
             const icon = serviceIcons[review.service] || 'fa-tag';
             const card = document.createElement('div');
-            card.className = 'review-card glass' + (index === 0 ? ' active' : '');
+            card.className = 'review-card' + (index === 0 ? ' active' : '');
             card.innerHTML = `
                 <div class="review-header">
                     <div class="review-header-left">
@@ -763,7 +638,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       17. КАЛЬКУЛЯТОР
+       13. КАЛЬКУЛЯТОР
     ============================================================ */
     const calcService = document.getElementById('calcService');
     const calcGenderRow = document.getElementById('calcGenderRow');
@@ -803,6 +678,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     calcGenderRow.hidden = true;
                     calcState.genderExtra = 0;
+
+                    // Сбрасываем визуальный выбор пола — возвращаем «Для парня»
+                    if (calcGender) {
+                        calcGender.querySelectorAll('.calc-opt').forEach(b => b.classList.remove('active'));
+                        const maleBtn = calcGender.querySelector('.calc-opt[data-gender="male"]');
+                        if (maleBtn) maleBtn.classList.add('active');
+                    }
                 }
                 updateCalcTotal();
             });
@@ -844,16 +726,16 @@ document.addEventListener('DOMContentLoaded', function () {
             openModal(calcState.service, {
                 revisions: calcState.revisions,
                 urgencyMult: calcState.urgencyMult,
-                urgencyLabel: calcState.urgencyMult === 1 ? 'Обычная'
-                    : calcState.urgencyMult === 1.5 ? 'Быстро (×1.5)'
-                    : 'Экспресс (×2)',
+                urgencyLabel: calcState.urgencyMult === 1 ? 'Стандартно'
+                    : calcState.urgencyMult === 1.5 ? 'Быстрее (×1.5)'
+                    : 'Срочно (×2)',
                 genderExtra: calcState.genderExtra
             });
         });
     }
 
     /* ============================================================
-       18. МОДАЛКА ЗАКАЗА
+       14. МОДАЛКА ЗАКАЗА
     ============================================================ */
     const orderModal = document.getElementById('orderModal');
     const modalClose = document.getElementById('modalClose');
@@ -862,6 +744,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalPriceAmount = document.getElementById('modalPriceAmount');
     const modalPriceNote = document.getElementById('modalPriceNote');
     const modalFeatures = document.getElementById('modalFeatures');
+    const modalPopularBadge = document.getElementById('modalPopularBadge');
     const modalStepForm = document.getElementById('modalStepForm');
     const modalStepResult = document.getElementById('modalStepResult');
     const orderForm = document.getElementById('orderForm');
@@ -899,7 +782,7 @@ document.addEventListener('DOMContentLoaded', function () {
         revisions: 0,
         revisionsPrice: PRICES.revision,
         urgencyMult: 1,
-        urgencyLabel: 'Обычная',
+        urgencyLabel: 'Стандартно',
         executorName: null,
         executorDiscord: null
     };
@@ -909,31 +792,30 @@ document.addEventListener('DOMContentLoaded', function () {
         'Рендер': PRICES.render
     };
 
-/* ★ Данные для блока цены + фич в модалке (дублируем из тарифов) */
-const MODAL_TARIFFS = {
-    'Скин': {
-        note: 'Индивидуальный дизайн',
-        price: PRICES.skin,
-        femaleNote: 'С учётом женских особенностей',
-        femalePrice: PRICES.skinFemale,
-        features: [
-            { icon: 'fa-check', text: 'Уникальный дизайн' },
-            { icon: 'fa-check', text: '3D-рендер в подарок', gift: true },
-            { icon: 'fa-check', text: 'Правки до 3-х раз' },
-            { icon: 'fa-check', text: 'Срок: 1-2 дня' }
-        ]
-    },
-    'Рендер': {
-        note: 'За 1 рендер',
-        price: PRICES.render,
-        features: [
-            { icon: 'fa-check', text: 'HD качество' },
-            { icon: 'fa-check', text: 'На выбор фон' },
-            { icon: 'fa-check', text: 'Правки до 2-х раз' },
-            { icon: 'fa-check', text: 'Срок: до 24 часов' }
-        ]
-    }
-};
+    const MODAL_TARIFFS = {
+        'Скин': {
+            note: 'Уникальный скин под твой запрос',
+            price: PRICES.skin,
+            femaleNote: 'Женский скин — дороже на 50 ₽',
+            femalePrice: PRICES.skinFemale,
+            features: [
+                { icon: 'fa-check', text: 'Только твой дизайн' },
+                { icon: 'fa-check', text: '3D-рендер в подарок', gift: true },
+                { icon: 'fa-check', text: 'До 3 правок бесплатно' },
+                { icon: 'fa-check', text: 'Готово за 1-2 дня' }
+            ]
+        },
+        'Рендер': {
+            note: 'Цена за 1 рендер',
+            price: PRICES.render,
+            features: [
+                { icon: 'fa-check', text: 'Рендер в HD' },
+                { icon: 'fa-check', text: 'Любой фон на выбор' },
+                { icon: 'fa-check', text: 'До 2 правок бесплатно' },
+                { icon: 'fa-check', text: 'Готово за сутки' }
+            ]
+        }
+    };
 
     function updateOrderTotal() {
         if (!orderTotal) return;
@@ -943,12 +825,11 @@ const MODAL_TARIFFS = {
         return total;
     }
 
-    /* Заполнить селект исполнителей для конкретной услуги */
     function populateExecutors(service, prefillName) {
         if (!orderExecutor) return;
 
         const serviceKey = SERVICE_TO_KEY[service];
-        orderExecutor.innerHTML = '<option value="">— Выберите исполнителя —</option>';
+        orderExecutor.innerHTML = '<option value="">— Выбери —</option>';
 
         let count = 0;
         authors.forEach(author => {
@@ -962,18 +843,16 @@ const MODAL_TARIFFS = {
             }
         });
 
-        // Если был prefill (например, из lightbox) — выбрать его
         if (prefillName) {
             const exists = Array.from(orderExecutor.options).some(o => o.value === prefillName);
             if (exists) orderExecutor.value = prefillName;
         }
 
-        // Подсказка
         if (executorNote) {
             if (count === 0) {
                 executorNote.innerHTML = '<i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i> <span>Пока нет исполнителей по этой услуге</span>';
             } else {
-                executorNote.innerHTML = '<i class="fas fa-info-circle"></i> <span>Показаны только те мастера, которые выполняют выбранный тип услуги.</span>';
+                executorNote.innerHTML = '<i class="fas fa-info-circle"></i> <span>Здесь только те, кто делает выбранный тип работы.</span>';
             }
         }
     }
@@ -1018,10 +897,7 @@ const MODAL_TARIFFS = {
         if (currentService !== 'Скин') {
             genderHint.hidden = true;
             if (orderDesc) orderDesc.classList.remove('conflict');
-            if (submitOrderBtn) {
-                submitOrderBtn.disabled = false;
-                submitOrderBtn.classList.remove('disabled');
-            }
+            if (submitOrderBtn) submitOrderBtn.disabled = false;
             return;
         }
 
@@ -1036,41 +912,32 @@ const MODAL_TARIFFS = {
         if (maleSelected && hasFemale) {
             genderHint.hidden = false;
             genderHint.classList.add('danger');
-            genderHintText.innerHTML = '<strong>Кнопка заблокирована.</strong> Вы выбрали <strong>мужской скин</strong>, но в описании есть женские детали. Переключите пол на <strong>«Женский»</strong> (' + PRICES.skinFemale + ' ₽) или уберите женские детали.';
+            genderHintText.innerHTML = '<strong>Кнопка заблокирована.</strong> Ты выбрал <strong>скин для парня</strong>, но в описании есть женские детали. Переключи на <strong>«Для девушки»</strong> (' + PRICES.skinFemale + ' ₽) или убери женские детали.';
             if (orderDesc) orderDesc.classList.add('conflict');
-            if (submitOrderBtn) {
-                submitOrderBtn.disabled = true;
-                submitOrderBtn.classList.add('disabled');
-            }
+            if (submitOrderBtn) submitOrderBtn.disabled = true;
             return;
         }
 
         if (femaleSelected && hasMale) {
             genderHint.hidden = false;
             genderHint.classList.remove('danger');
-            genderHint.style.background = 'rgba(245, 158, 11, 0.1)';
-            genderHint.style.borderColor = 'rgba(245, 158, 11, 0.4)';
-            genderHint.style.color = 'var(--warning)';
-            genderHintText.innerHTML = '<strong>Внимание!</strong> Вы выбрали <strong>женский скин</strong>, но в описании есть мужские детали. Проверьте, пожалуйста, пол.';
+            genderHintText.innerHTML = '<strong>Внимание!</strong> Ты выбрал <strong>скин для девушки</strong>, но в описании есть мужские детали. Проверь, пожалуйста, пол.';
             if (orderDesc) orderDesc.classList.remove('conflict');
-            if (submitOrderBtn) {
-                submitOrderBtn.disabled = false;
-                submitOrderBtn.classList.remove('disabled');
-            }
+            if (submitOrderBtn) submitOrderBtn.disabled = false;
             return;
         }
 
         genderHint.hidden = true;
         if (orderDesc) orderDesc.classList.remove('conflict');
-        if (submitOrderBtn) {
-            submitOrderBtn.disabled = false;
-            submitOrderBtn.classList.remove('disabled');
-        }
+        if (submitOrderBtn) submitOrderBtn.disabled = false;
     }
 
     if (orderDesc) {
         orderDesc.addEventListener('input', function () {
-            descCounter.textContent = `${this.value.length} / 500`;
+            const len = this.value.length;
+            descCounter.textContent = `${len} / 500`;
+            descCounter.classList.toggle('warn', len > 400 && len <= 480);
+            descCounter.classList.toggle('danger', len > 480);
             updateGenderHint();
         });
     }
@@ -1082,17 +949,16 @@ const MODAL_TARIFFS = {
         });
     }
 
-document.querySelectorAll('input[name="skinGender"]').forEach(radio => {
-    radio.addEventListener('change', function () {
-        if (currentService === 'Скин') {
-            orderState.genderExtra = this.value === 'Женский' ? 50 : 0;
-            updateOrderTotal();
-            // ★ Обновляем блок тарифа (цена/тема)
-            renderModalTariff('Скин', orderState.genderExtra === 50);
-        }
-        updateGenderHint();
+    document.querySelectorAll('input[name="skinGender"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            if (currentService === 'Скин') {
+                orderState.genderExtra = this.value === 'Женский' ? 50 : 0;
+                updateOrderTotal();
+                renderModalTariff('Скин', orderState.genderExtra === 50);
+            }
+            updateGenderHint();
+        });
     });
-});
 
     if (orderRevisions) {
         orderRevisions.addEventListener('input', function () {
@@ -1122,28 +988,31 @@ document.querySelectorAll('input[name="skinGender"]').forEach(radio => {
         });
     }
 
-/* Отрисовать блок цены + фич из тарифа */
-function renderModalTariff(service, isFemale = false) {
-    const tariff = MODAL_TARIFFS[service];
-    if (!tariff || !modalPricing) return;
+    function renderModalTariff(service, isFemale = false) {
+        const tariff = MODAL_TARIFFS[service];
+        if (!tariff || !modalPricing) return;
 
-    const price = isFemale && tariff.femalePrice ? tariff.femalePrice : tariff.price;
-    const note = isFemale && tariff.femaleNote ? tariff.femaleNote : tariff.note;
+        const price = isFemale && tariff.femalePrice ? tariff.femalePrice : tariff.price;
+        const note = isFemale && tariff.femaleNote ? tariff.femaleNote : tariff.note;
 
-    if (modalPriceAmount) modalPriceAmount.textContent = price;
-    if (modalPriceNote) modalPriceNote.textContent = note;
+        if (modalPriceAmount) modalPriceAmount.textContent = price;
+        if (modalPriceNote) modalPriceNote.textContent = note;
 
-    if (modalFeatures) {
-        modalFeatures.innerHTML = tariff.features.map(f => `
-            <li${f.gift ? ' class="is-gift"' : ''}>
-                <i class="fas ${f.icon}"></i>
-                <span>${f.text}</span>
-            </li>
-        `).join('');
+        if (modalPopularBadge) {
+            modalPopularBadge.style.display = service === 'Скин' ? '' : 'none';
+        }
+
+        if (modalFeatures) {
+            modalFeatures.innerHTML = tariff.features.map(f => `
+                <li${f.gift ? ' class="is-gift"' : ''}>
+                    <i class="fas ${f.icon}"></i>
+                    <span>${f.text}</span>
+                </li>
+            `).join('');
+        }
+
+        modalPricing.classList.toggle('female-theme', isFemale && service === 'Скин');
     }
-
-    modalPricing.classList.toggle('female-theme', isFemale && service === 'Скин');
-}
 
     function openModal(service, prefill = {}) {
         currentService = service;
@@ -1159,13 +1028,14 @@ function renderModalTariff(service, isFemale = false) {
         orderState.genderExtra = prefill.genderExtra || 0;
         orderState.revisions = prefill.revisions || 0;
         orderState.urgencyMult = prefill.urgencyMult || 1;
-        orderState.urgencyLabel = prefill.urgencyLabel || 'Обычная';
+        orderState.urgencyLabel = prefill.urgencyLabel || 'Стандартно';
         orderState.executorName = null;
         orderState.executorDiscord = null;
 
         orderForm.reset();
         descCounter.textContent = '0 / 500';
         extraCounter.textContent = '0 / 300';
+        descCounter.classList.remove('warn', 'danger');
 
         if (orderRevisions) {
             orderRevisions.value = orderState.revisions;
@@ -1179,27 +1049,20 @@ function renderModalTariff(service, isFemale = false) {
             if (target) target.classList.add('active');
         }
 
-        // Заполняем исполнителей для этой услуги
         populateExecutors(service, prefill.prefillExecutor);
 
-        // Если prefill по имени есть — проставим и state
         if (prefill.prefillExecutor && orderExecutor.value === prefill.prefillExecutor) {
             const author = getAuthorByName(prefill.prefillExecutor);
             orderState.executorName = author.name;
             orderState.executorDiscord = author.discord;
         }
 
-    if (service === 'Скин' && orderState.genderExtra === 50) {
-        const femaleRadio = document.querySelector('input[name="skinGender"][value="Женский"]');
-        if (femaleRadio) femaleRadio.checked = true;
-    }
+        if (service === 'Скин' && orderState.genderExtra === 50) {
+            const femaleRadio = document.querySelector('input[name="skinGender"][value="Женский"]');
+            if (femaleRadio) femaleRadio.checked = true;
+        }
 
-    // ★ Рисуем блок цены + фич из тарифа
-    renderModalTariff(service, orderState.genderExtra === 50);
-
-    updateOrderTotal();
-
-
+        renderModalTariff(service, orderState.genderExtra === 50);
         updateOrderTotal();
 
         modalStepForm.hidden = false;
@@ -1210,10 +1073,7 @@ function renderModalTariff(service, isFemale = false) {
             genderHint.classList.remove('danger');
         }
         if (orderDesc) orderDesc.classList.remove('conflict');
-        if (submitOrderBtn) {
-            submitOrderBtn.disabled = false;
-            submitOrderBtn.classList.remove('disabled');
-        }
+        if (submitOrderBtn) submitOrderBtn.disabled = false;
 
         orderModal.classList.add('active');
         orderModal.setAttribute('aria-hidden', 'false');
@@ -1222,7 +1082,7 @@ function renderModalTariff(service, isFemale = false) {
         setTimeout(() => {
             const firstInput = orderForm.querySelector('input[type="text"]');
             if (firstInput) firstInput.focus();
-        }, 300);
+        }, 250);
     }
 
     function closeModal() {
@@ -1299,31 +1159,31 @@ function renderModalTariff(service, isFemale = false) {
         const desc = orderDesc.value.trim();
 
         if (!name) {
-            showToast('Укажите имя или ник', 'error');
+            showToast('Укажи имя или ник', 'error');
             document.getElementById('orderName').focus();
             return false;
         }
         if (!orderExecutor.value) {
-            showToast('Выберите исполнителя', 'error');
+            showToast('Выбери, кому отправить заявку', 'error');
             orderExecutor.focus();
             return false;
         }
         if (!desc) {
-            showToast('Заполните описание заказа', 'error');
+            showToast('Заполни описание заказа', 'error');
             orderDesc.focus();
             return false;
         }
         if (currentService === 'Скин') {
             const theme = document.getElementById('skinTheme').value.trim();
             if (!theme) {
-                showToast('Укажите тему скина', 'error');
+                showToast('Укажи тему скина', 'error');
                 document.getElementById('skinTheme').focus();
                 return false;
             }
         } else if (currentService === 'Рендер') {
             const pose = document.getElementById('renderPose').value;
             if (!pose) {
-                showToast('Выберите позу', 'error');
+                showToast('Выбери позу персонажа', 'error');
                 document.getElementById('renderPose').focus();
                 return false;
             }
@@ -1337,7 +1197,6 @@ function renderModalTariff(service, isFemale = false) {
             if (submitOrderBtn && submitOrderBtn.disabled) return;
             if (!validateForm()) return;
 
-            // Ссылка на Discord исполнителя
             if (resultDiscordLink) {
                 resultDiscordLink.href = orderState.executorDiscord || 'https://discord.com/users/1146355058880040970';
             }
@@ -1372,7 +1231,7 @@ function renderModalTariff(service, isFemale = false) {
     }
 
     /* ============================================================
-       19. МОДАЛКА ЗАЯВКИ В КОМАНДУ
+       15. МОДАЛКА ЗАЯВКИ В КОМАНДУ
     ============================================================ */
     const teamModal = document.getElementById('teamModal');
     const teamModalClose = document.getElementById('teamModalClose');
@@ -1422,7 +1281,7 @@ function renderModalTariff(service, isFemale = false) {
             setTimeout(() => {
                 const firstInput = teamForm.querySelector('input[type="text"]');
                 if (firstInput) firstInput.focus();
-            }, 300);
+            }, 250);
         });
     }
 
@@ -1495,16 +1354,16 @@ function renderModalTariff(service, isFemale = false) {
         const passport = document.querySelector('input[name="teamPassport"]:checked');
         const bankCard = document.querySelector('input[name="teamBankCard"]:checked');
 
-        if (!name) { showToast('Укажите имя', 'error'); return false; }
+        if (!name) { showToast('Укажи имя', 'error'); return false; }
         if (!age || age < 14) { showToast('Возраст должен быть от 14 лет', 'error'); return false; }
         if (!adequacy || adequacy < 5) { showToast('Адекватность должна быть не ниже 5', 'error'); return false; }
         if (!literacy || literacy < 6) { showToast('Грамотность должна быть не ниже 6', 'error'); return false; }
-        if (!passport) { showToast('Укажите наличие паспорта', 'error'); return false; }
+        if (!passport) { showToast('Укажи наличие паспорта', 'error'); return false; }
         if (passport.value === 'Нет паспорта') { showToast('Без паспорта заявка не принимается', 'error'); return false; }
-        if (!bankCard) { showToast('Укажите наличие карты РФ', 'error'); return false; }
+        if (!bankCard) { showToast('Укажи наличие карты РФ', 'error'); return false; }
         if (bankCard.value === 'Нет карты российского банка') { showToast('Без карты российского банка заявка не принимается', 'error'); return false; }
-        if (!role) { showToast('Выберите роль', 'error'); return false; }
-        if (!channel) { showToast('Укажите YouTube канал', 'error'); return false; }
+        if (!role) { showToast('Выбери роль', 'error'); return false; }
+        if (!channel) { showToast('Укажи YouTube канал', 'error'); return false; }
 
         return true;
     }
@@ -1543,7 +1402,7 @@ function renderModalTariff(service, isFemale = false) {
     }
 
     /* ============================================================
-       20. ЮРИДИЧЕСКИЕ МОДАЛКИ
+       16. ЮРИДИЧЕСКИЕ МОДАЛКИ
     ============================================================ */
     const privacyModal = document.getElementById('privacyModal');
     const privacyModalClose = document.getElementById('privacyModalClose');
@@ -1599,7 +1458,7 @@ function renderModalTariff(service, isFemale = false) {
     }
 
     /* ============================================================
-       21. ESCAPE
+       17. ESCAPE + СТРЕЛКИ
     ============================================================ */
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
@@ -1614,10 +1473,5 @@ function renderModalTariff(service, isFemale = false) {
             if (e.key === 'ArrowRight') navigateLightbox(1);
         }
     });
-
-    /* ============================================================
-       22. ИНИЦИАЛИЗАЦИЯ
-    ============================================================ */
-    // Осталось только переопределить openModal — уже сделано
 
 });
