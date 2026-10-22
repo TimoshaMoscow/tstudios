@@ -97,26 +97,131 @@ document.addEventListener('DOMContentLoaded', function () {
        6. ПОРТФОЛИО
     ============================================================ */
     const skinsData = [
-        { name: 'Тимоша Музыка', price: 0, image: 'skins/tmusic.png', author: 'Тимошка из Москвы' },
-        { name: 'beatlewind', price: 0, image: 'skins/beatlewind.png', author: 'Тимошка из Москвы' },
-        { name: 'FIREFOX', price: 0, image: 'skins/firefox.png', author: 'Тимошка из Москвы' },
-        { name: 'Рыцарь', price: 0, image: 'skins/knight.png', author: 'Тимошка из Москвы' },
-        { name: 'Toxinator', price: 50, image: 'skins/toxinator.png', author: 'Тимошка из Москвы' },
-        { name: 'арсик', price: 0, image: 'skins/zakazMAJORrender.png', author: 'Тимошка из Москвы' },
-        { name: 'Дашка', price: 0, image: 'skins/dasha.png', author: 'Тимошка из Москвы' },
-        { name: 'Тима-тян', price: 0, image: 'skins/timgirl.png', author: 'Тимошка из Москвы' },
-        { name: 'Тима-тян 2', price: 0, image: 'skins/v2timgirl.png', author: 'Тимошка из Москвы' }
+        {
+            name: 'Тимоша Музыка',
+            price: 0,
+            image: 'skins/tmusic.png',
+            author: 'Тимошка из Москвы',
+            tag: 'gift',
+            review: { name: 'Тимоша Музыка', rating: 5, text: 'Классный Скин!', service: 'Скин' }
+        },
+        {
+            name: 'beatlewind',
+            price: 0,
+            image: 'skins/beatlewind.png',
+            author: 'Тимошка из Москвы',
+            tag: 'gift',
+            review: { name: 'Beatlewind', rating: 4, text: 'Хорошо подобран стиль, но не хватает уникальности и изюминки в скине.', service: 'Скин' }
+        },
+        {
+            name: 'FIREFOX',
+            price: 0,
+            image: 'skins/firefox.png',
+            author: 'Тимошка из Москвы',
+            tag: 'gift',
+            review: { name: 'FIREFOX', rating: 5, text: 'Очень хорошее качество и очень не плохое качество рук и буква моего канала.', service: 'Скин' }
+        },
+        {
+            name: 'Рыцарь',
+            price: 0,
+            image: 'skins/knight.png',
+            author: 'Тимошка из Москвы',
+            tag: 'practice',
+            review: null
+        },
+        {
+            name: 'Toxinator',
+            price: 50,
+            image: 'skins/toxinator.png',
+            author: 'Тимошка из Москвы',
+            tag: null,
+            review: null
+        },
+        {
+            name: 'арсик',
+            price: 0,
+            image: 'skins/zakazMAJORrender.png',
+            author: 'Тимошка из Москвы',
+            tag: 'gift',
+            review: { name: 'арсик', rating: 5, text: 'автор красава, все четко сделал:)', service: 'Скин' }
+        },
+        {
+            name: 'Дашка',
+            price: 0,
+            image: 'skins/dasha.png',
+            author: 'Тимошка из Москвы',
+            tag: 'gift',
+            review: { name: 'Дашка', rating: 4, text: 'хороший.', service: 'Скин' }
+        },
+        {
+            name: 'Тима-тян',
+            price: 0,
+            image: 'skins/timgirl.png',
+            author: 'Тимошка из Москвы',
+            tag: 'practice',
+            review: null
+        },
+        {
+            name: 'Тима-тян 2',
+            price: 0,
+            image: 'skins/v2timgirl.png',
+            author: 'Тимошка из Москвы',
+            tag: 'practice',
+            review: null
+        }
     ];
 
     const rendersData = [
-        { name: 'NPOT', price: 50, image: 'renders/npot.png', author: 'Тимошка из Москвы' },
-        { name: 'Sword', price: 50, image: 'renders/sword.png', author: 'Тимошка из Москвы' },
-        { name: 'OP', price: 50, image: 'renders/OP.png', author: 'Тимошка из Москвы' },
-        { name: 'Наблюдение', price: 50, image: 'renders/peeks.png', author: 'Тимошка из Москвы' },
-        { name: 'Думает', price: 50, image: 'renders/question.png', author: 'Тимошка из Москвы' }
+        {
+            name: 'NPOT',
+            price: 50,
+            image: 'renders/npot.png',
+            author: 'Тимошка из Москвы',
+            tag: null,
+            review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
+        },
+        {
+            name: 'Sword',
+            price: 50,
+            image: 'renders/sword.png',
+            author: 'Тимошка из Москвы',
+            tag: null,
+            review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
+        },
+        {
+            name: 'OP',
+            price: 50,
+            image: 'renders/OP.png',
+            author: 'Тимошка из Москвы',
+            tag: null,
+            review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
+        },
+        {
+            name: 'Наблюдение',
+            price: 50,
+            image: 'renders/peeks.png',
+            author: 'Тимошка из Москвы',
+            tag: null,
+            review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
+        },
+        {
+            name: 'Думает',
+            price: 50,
+            image: 'renders/question.png',
+            author: 'Тимошка из Москвы',
+            tag: null,
+            review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
+        }
     ];
 
-    function formatPrice(price) {
+    /* formatPrice — учитывает tag: gift / practice / цена */
+    function formatPrice(price, tag) {
+        if (tag === 'gift') {
+            return '<i class="fas fa-gift"></i> Подарок';
+        }
+        if (tag === 'practice') {
+            return '<i class="fas fa-pen"></i> Практика';
+        }
         if (price === 0 || price === '0' || price === '0 ₽') {
             return '<i class="fas fa-gift"></i> Подарок';
         }
@@ -169,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
             <div class="carousel-info">
                 <h4>${item.name}</h4>
-                <span class="price">${formatPrice(item.price)}</span>
+                <span class="price">${formatPrice(item.price, item.tag)}</span>
             </div>
             <div class="carousel-author">
                 <img src="${author.avatar}" alt="${author.name}" onerror="this.style.display='none'">
@@ -322,7 +427,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         lightboxType.textContent = type === 'skins' ? 'Скин' : 'Рендер';
         lightboxTitle.textContent = item.name;
-        lightboxPrice.innerHTML = formatPrice(item.price);
+        lightboxPrice.innerHTML = formatPrice(item.price, item.tag);
 
         lightboxAuthorAvatar.src = author.avatar;
         lightboxAuthorAvatar.alt = author.name;
@@ -337,6 +442,31 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         if (author.telegram) {
             lightboxAuthorSocials.innerHTML += `<a href="${author.telegram}" target="_blank" rel="noopener" class="tg"><i class="fab fa-telegram"></i> ТГК</a>`;
+        }
+
+        /* --- Отзыв работы (если есть) --- */
+        const lightboxReview = document.getElementById('lightboxReview');
+        if (lightboxReview) {
+            if (item.review && item.review.text) {
+                const r = item.review;
+                const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+                lightboxReview.classList.remove('is-empty');
+                lightboxReview.innerHTML = `
+                    <div class="lightbox-review-header">
+                        <span class="lightbox-review-name">
+                            <i class="fas fa-quote-left"></i> ${r.name}
+                        </span>
+                        <span class="lightbox-review-stars">${stars}</span>
+                    </div>
+                    <p class="lightbox-review-text">"${r.text}"</p>
+                `;
+            } else {
+                lightboxReview.classList.add('is-empty');
+                lightboxReview.innerHTML = `
+                    <i class="fas fa-comment-slash"></i>
+                    <p class="lightbox-review-empty-text">Отзыва пока нет</p>
+                `;
+            }
         }
 
         lightboxImg.classList.remove('loaded');
@@ -535,16 +665,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       11. ОТЗЫВЫ
+       11. ОТЗЫВЫ — собираем из портфолио
     ============================================================ */
     const reviewsData = [
-        { name: 'FIREFOX', rating: 5, text: 'Очень хорошее качество и очень не плохое качество рук и буква моего канала.', service: 'Скин' },
-        { name: 'Beatlewind', rating: 4, text: 'Хорошо подобран стиль, но не хватает уникальности и изюминки в скине.', service: 'Скин' },
-        { name: 'Тимоша Музыка', rating: 5, text: 'Классный Скин!', service: 'Скин' },
-        { name: 'арсик', rating: 5, text: 'автор красава, все четко сделал:)', service: 'Скин' },
-        { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' },
-        { name: 'Дашка', rating: 4, text: 'хороший.', service: 'Скин' }
-    ];
+        ...skinsData.map(item => item.review).filter(Boolean),
+        ...rendersData.map(item => item.review).filter(Boolean)
+    ].filter((r, i, arr) =>
+        arr.findIndex(x => x.name === r.name && x.text === r.text) === i
+    );
 
     const serviceIcons = { 'Скин': 'fa-paint-brush', 'Рендер': 'fa-cube' };
     const reviewsSlider = document.getElementById('reviewsSlider');

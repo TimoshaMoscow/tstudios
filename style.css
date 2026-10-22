@@ -2785,3 +2785,91 @@ input, textarea, select { font-family: inherit; }
         font-size: 1.3rem;
     }
 }
+
+/* ===== Отзыв в лайтбоксе ===== */
+.lightbox-review {
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--primary);
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.lightbox-review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.lightbox-review-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--primary-light);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.lightbox-review-name i {
+    color: var(--primary-light);
+    font-size: 0.75rem;
+}
+
+.lightbox-review-stars {
+    color: var(--warning);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    line-height: 1;
+}
+
+.lightbox-review-text {
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    font-style: italic;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Если отзыва нет */
+.lightbox-review.is-empty {
+    border-left-color: var(--border-strong);
+    opacity: 0.65;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.lightbox-review.is-empty .lightbox-review-empty-text {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin: 0;
+    font-style: italic;
+}
+
+.lightbox-review.is-empty i {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+/* Мобильная адаптация */
+@media (max-width: 768px) {
+    .lightbox-review {
+        padding: 12px 14px;
+    }
+    .lightbox-review-name { font-size: 0.8rem; }
+    .lightbox-review-text { font-size: 0.8rem; }
+}
+
+@media (max-width: 480px) {
+    .lightbox-review { padding: 10px 12px; }
+    .lightbox-review-name { font-size: 0.76rem; }
+    .lightbox-review-stars { font-size: 0.8rem; }
+    .lightbox-review-text { font-size: 0.76rem; line-height: 1.55; }
+    .lightbox-review.is-empty .lightbox-review-empty-text { font-size: 0.76rem; }
+}
