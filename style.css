@@ -933,7 +933,7 @@ input, textarea, select { font-family: inherit; }
 .about-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
 
 /* ============================================================
-   Gallery
+   Gallery (бесшовная лента картинок)
    ============================================================ */
 
 .gallery { padding: 80px 0; }
@@ -952,33 +952,38 @@ input, textarea, select { font-family: inherit; }
 
 .carousel-viewport:active { cursor: grabbing; }
 
-.carousel-track { display: flex; gap: 16px; will-change: transform; padding: 4px; }
+.carousel-track {
+    display: flex;
+    gap: 0;
+    will-change: transform;
+    padding: 4px 0;
+}
 
+/* Карточка без рамок — только картинка */
 .carousel-card {
     flex: 0 0 auto;
     width: 200px;
-    padding: 14px;
-    border-radius: var(--radius);
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    transition: all 0.25s;
+    aspect-ratio: 1;
+    position: relative;
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    padding: 0;
+    overflow: hidden;
     cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
-.carousel-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(99, 102, 241, 0.5);
-    box-shadow: 0 16px 40px -8px rgba(99, 102, 241, 0.3);
-}
+.carousel-card:hover { transform: scale(1.05); }
 
 .carousel-card .carousel-img-wrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 1;
-    border-radius: var(--radius-sm);
+    height: 100%;
+    border-radius: 0;
     overflow: hidden;
     background: rgba(0, 0, 0, 0.3);
-    margin-bottom: 12px;
+    margin: 0;
 }
 
 .carousel-card .carousel-img-wrapper img {
@@ -987,67 +992,16 @@ input, textarea, select { font-family: inherit; }
     object-fit: contain;
     padding: 8px;
     opacity: 0;
-    transition: transform 0.3s, opacity 0.3s;
+    transition: transform 0.4s, opacity 0.4s;
 }
 
 .carousel-card .carousel-img-wrapper img.loaded { opacity: 1; }
-.carousel-card:hover .carousel-img-wrapper img { transform: scale(1.05); }
+.carousel-card:hover .carousel-img-wrapper img { transform: scale(1.06); }
 
-.carousel-card .carousel-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-    padding: 0 4px;
-}
-
-.carousel-card .carousel-info h4 {
-    font-size: 0.9rem;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: var(--text);
-}
-
-.carousel-card .price {
-    padding: 3px 10px;
-    border-radius: var(--radius-full);
-    font-size: 0.74rem;
-    font-weight: 600;
-    color: var(--primary-light);
-    background: rgba(99, 102, 241, 0.15);
-    border: 1px solid rgba(99, 102, 241, 0.3);
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
+/* Всю текстовую инфу прячем — она только в лайтбоксе */
+.carousel-card .carousel-info,
 .carousel-card .carousel-author {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 10px;
-    padding: 6px 10px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    font-size: 0.72rem;
-    color: var(--text-muted);
-}
-
-.carousel-card .carousel-author img {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    object-fit: cover;
-    flex-shrink: 0;
-    border: 1px solid rgba(99, 102, 241, 0.4);
-}
-
-.carousel-card .carousel-author span {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: none;
 }
 
 /* Skeleton */
@@ -1476,6 +1430,8 @@ input, textarea, select { font-family: inherit; }
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.25s, visibility 0.25s;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .lightbox.active { opacity: 1; visibility: visible; }
@@ -1485,10 +1441,11 @@ input, textarea, select { font-family: inherit; }
     gap: 28px;
     max-width: 1080px;
     width: 100%;
-    max-height: 88vh;
+    max-height: calc(100vh - 48px);
     align-items: center;
     flex-wrap: wrap;
     justify-content: center;
+    margin: auto;
 }
 
 .lightbox-img-wrapper {
@@ -1591,7 +1548,7 @@ input, textarea, select { font-family: inherit; }
     text-overflow: ellipsis;
 }
 
-.lightbox-author-socials { display: flex; gap: 8px; }
+.lightbox-author-socials { display: flex; gap: 8px; flex-wrap: wrap; }
 
 .lightbox-author-socials a {
     display: inline-flex;
@@ -1599,6 +1556,7 @@ input, textarea, select { font-family: inherit; }
     justify-content: center;
     gap: 6px;
     flex: 1;
+    min-width: 80px;
     padding: 9px 12px;
     border-radius: var(--radius-sm);
     background: rgba(255, 255, 255, 0.04);
@@ -1646,6 +1604,90 @@ input, textarea, select { font-family: inherit; }
     background: var(--primary);
     border-color: transparent;
     transform: translateY(-50%) scale(1.08);
+}
+
+/* ===== Мобильный лайтбокс — полная инфа как на ПК ===== */
+@media (max-width: 768px) {
+    .lightbox {
+        padding: 12px;
+        align-items: flex-start;
+    }
+
+    .lightbox-content {
+        flex-direction: column;
+        gap: 14px;
+        max-height: none;
+        padding-top: 48px;
+        padding-bottom: 40px;
+        align-items: stretch;
+    }
+
+    .lightbox-img-wrapper {
+        width: 100%;
+        max-width: 100%;
+        flex: none;
+        aspect-ratio: 1;
+    }
+
+    .lightbox-img-wrapper img {
+        padding: 12px;
+    }
+
+    .lightbox-info {
+        flex: none;
+        max-width: 100%;
+        padding: 20px;
+        gap: 10px;
+    }
+
+    .lightbox-info h3 { font-size: 1.3rem; }
+
+    .lightbox-price { font-size: 1.1rem; }
+
+    .lightbox-close {
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+        position: fixed;
+    }
+
+    .lightbox-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+        top: 34%;
+    }
+
+    .lightbox-prev { left: 6px; }
+    .lightbox-next { right: 6px; }
+
+    .lightbox-author-socials a {
+        font-size: 0.78rem;
+        padding: 8px 10px;
+    }
+
+    .lightbox-actions {
+        gap: 8px;
+        margin-top: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .lightbox-info { padding: 16px; }
+    .lightbox-info h3 { font-size: 1.15rem; }
+    .lightbox-price { font-size: 1rem; }
+
+    .lightbox-author-block { padding: 10px; gap: 10px; }
+    .lightbox-author-block img { width: 34px; height: 34px; }
+    .lightbox-author-text strong { font-size: 0.9rem; }
+
+    .lightbox-author-socials a {
+        font-size: 0.72rem;
+        padding: 7px 8px;
+        min-width: 70px;
+    }
 }
 
 /* ============================================================

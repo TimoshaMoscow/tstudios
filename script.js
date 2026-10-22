@@ -103,7 +103,9 @@ document.addEventListener('DOMContentLoaded', function () {
         { name: 'Рыцарь', price: 0, image: 'skins/knight.png', author: 'Тимошка из Москвы' },
         { name: 'Toxinator', price: 50, image: 'skins/toxinator.png', author: 'Тимошка из Москвы' },
         { name: 'арсик', price: 0, image: 'skins/zakazMAJORrender.png', author: 'Тимошка из Москвы' },
-        { name: 'Дашка', price: 0, image: 'skins/dasha.png', author: 'Тимошка из Москвы' }
+        { name: 'Дашка', price: 0, image: 'skins/dasha.png', author: 'Тимошка из Москвы' },
+        { name: 'Тима-тян', price: 0, image: 'skins/timgirl.png', author: 'Тимошка из Москвы' },
+        { name: 'Тима-тян 2', price: 0, image: 'skins/v2timgirl.png', author: 'Тимошка из Москвы' }
     ];
 
     const rendersData = [
