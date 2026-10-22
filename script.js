@@ -3,18 +3,16 @@ document.addEventListener('DOMContentLoaded', function () {
     /* ============================================================
        0. ГЛОБАЛЬНЫЕ ЦЕНЫ
     ============================================================ */
-const PRICES = {
-    skin: 250,
-    skinFemale: 300,
-    render: 150,
-    revision: 45
-};
+    const PRICES = {
+        skin: 250,
+        skinFemale: 300,
+        render: 150,
+        revision: 45
+    };
 
     document.querySelectorAll('[data-price]').forEach(el => {
         const key = el.getAttribute('data-price');
-        if (PRICES[key] !== undefined) {
-            el.textContent = PRICES[key];
-        }
+        if (PRICES[key] !== undefined) el.textContent = PRICES[key];
     });
 
     /* ============================================================
@@ -65,6 +63,7 @@ const PRICES = {
        4. TOAST
     ============================================================ */
     const toastContainer = document.getElementById('toastContainer');
+
     function showToast(message, type = 'info') {
         if (!toastContainer) return;
         const toast = document.createElement('div');
@@ -78,7 +77,7 @@ const PRICES = {
     }
 
     /* ============================================================
-       5. МАССИВ АВТОРОВ
+       5. АВТОРЫ
     ============================================================ */
     const authors = [
         {
@@ -95,23 +94,7 @@ const PRICES = {
     }
 
     /* ============================================================
-       6. КЛИК ПО КАРТОЧКЕ УСЛУГИ
-    ============================================================ */
-    document.querySelectorAll('.service-card[data-service]').forEach(card => {
-        const service = card.getAttribute('data-service');
-
-        card.addEventListener('click', () => openModal(service, {}));
-
-        card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                openModal(service, {});
-            }
-        });
-    });
-
-    /* ============================================================
-       7. ДАННЫЕ ПОРТФОЛИО
+       6. ПОРТФОЛИО
     ============================================================ */
     const skinsData = [
         { name: 'Тимоша Музыка', price: 0, image: 'skins/tmusic.png', author: 'Тимошка из Москвы' },
@@ -138,20 +121,8 @@ const PRICES = {
         return `${price} ₽`;
     }
 
-    function getAuthorServices(authorName) {
-        const services = [];
-        if (skinsData.some(item => item.author === authorName)) services.push('skins');
-        if (rendersData.some(item => item.author === authorName)) services.push('renders');
-        return services;
-    }
-
-    const SERVICE_TO_KEY = {
-        'Скин': 'skins',
-        'Рендер': 'renders'
-    };
-
     /* ============================================================
-       8. КАРУСЕЛИ
+       7. КАРУСЕЛИ
     ============================================================ */
     const CAROUSEL_SPEED = 0.6;
 
@@ -180,9 +151,10 @@ const PRICES = {
         }
     };
 
+    const carouselDragMoved = { skins: false, renders: false };
+
     function createCarouselCard(item, index, carouselKey) {
         const author = getAuthorByName(item.author);
-
         const card = document.createElement('div');
         card.className = 'carousel-card';
         card.dataset.index = index;
@@ -223,20 +195,15 @@ const PRICES = {
         return card;
     }
 
-    const carouselDragMoved = { skins: false, renders: false };
-
     function initCarousel(key) {
         const c = carousels[key];
         if (!c.viewport || !c.track) return;
-
         c.track.innerHTML = '';
 
         const items = [...c.data, ...c.data, ...c.data];
-
         items.forEach((item, i) => {
             const originalIndex = i % c.data.length;
-            const card = createCarouselCard(item, originalIndex, key);
-            c.track.appendChild(card);
+            c.track.appendChild(createCarouselCard(item, originalIndex, key));
         });
 
         requestAnimationFrame(() => {
@@ -294,7 +261,6 @@ const PRICES = {
         Object.keys(carousels).forEach(key => {
             const c = carousels[key];
             if (!c.track) return;
-
             const singleSetWidth = c.track.scrollWidth / 3;
             if (singleSetWidth <= 0) return;
 
@@ -321,7 +287,7 @@ const PRICES = {
     requestAnimationFrame(animateCarousels);
 
     /* ============================================================
-       9. LIGHTBOX
+       8. LIGHTBOX
     ============================================================ */
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
@@ -393,12 +359,7 @@ const PRICES = {
     function closeLightbox() {
         lightbox.classList.remove('active');
         lightbox.setAttribute('aria-hidden', 'true');
-        if (!orderModal.classList.contains('active')
-            && !teamModal.classList.contains('active')
-            && (!privacyModal || !privacyModal.classList.contains('active'))
-            && (!termsModal || !termsModal.classList.contains('active'))) {
-            document.body.classList.remove('modal-open');
-        }
+        document.body.classList.remove('modal-open');
     }
 
     function navigateLightbox(dir) {
@@ -418,51 +379,43 @@ const PRICES = {
 
     if (lightboxOrderBtn) {
         lightboxOrderBtn.addEventListener('click', () => {
-            let service = 'Скин';
-            if (lightboxCurrentType === 'renders') service = 'Рендер';
+            const type = lightboxCurrentType;
             const item = lightboxItems[lightboxIndex];
-            const authorName = item ? item.author : null;
-
-            closeLightbox();
-            openModal(service, { prefillExecutor: authorName });
+            const executor = item ? item.author : '';
+            const page = type === 'renders' ? 'order-render.html' : 'order-skin.html';
+            const url = executor
+                ? `${page}?executor=${encodeURIComponent(executor)}`
+                : page;
+            window.location.href = url;
         });
     }
 
     if (lightboxShareBtn) {
         lightboxShareBtn.addEventListener('click', () => {
             const item = lightboxItems[lightboxIndex];
-            if (item) shareItem(item);
+            if (!item) return;
+            const page = lightboxCurrentType === 'renders' ? 'order-render.html' : 'order-skin.html';
+            const url = `${window.location.origin}${window.location.pathname.replace(/[^/]*$/, '')}${page}`;
+            const text = `${item.name} — работа в TStudios (${lightboxCurrentType === 'renders' ? 'рендер' : 'скин'} по Minecraft)`;
+            shareText(text, url);
         });
     }
 
     /* ============================================================
-       10. ПОДЕЛИТЬСЯ
+       9. ПОДЕЛИТЬСЯ
     ============================================================ */
-    async function shareItem(item) {
-        const url = window.location.origin + window.location.pathname + `#gallery`;
-        const text = `${item.name} — работа в TStudios Minecraft`;
+    function getBaseUrl() {
+        return window.location.origin + window.location.pathname;
+    }
+
+    async function shareText(text, url) {
         if (navigator.share) {
             try {
                 await navigator.share({ title: 'TStudios', text, url });
                 return;
-            } catch (err) {}
+            } catch (err) { /* отменил */ }
         }
-        copyToClipboard(url, 'Ссылка скопирована!');
-    }
-
-    const shareBtn = document.getElementById('shareBtn');
-    if (shareBtn) {
-        shareBtn.addEventListener('click', async () => {
-            const url = window.location.href;
-            const text = 'TStudios — Скины, рендеры и многое другое по Minecraft на заказ!';
-            if (navigator.share) {
-                try {
-                    await navigator.share({ title: 'TStudios', text, url });
-                    return;
-                } catch (err) {}
-            }
-            copyToClipboard(url, 'Ссылка на сайт скопирована!');
-        });
+        copyToClipboard(`${text}\n${url}`, 'Скопировано!');
     }
 
     function copyToClipboard(text, successMsg) {
@@ -491,34 +444,62 @@ const PRICES = {
         document.body.removeChild(ta);
     }
 
+    const shareBtn = document.getElementById('shareBtn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', () => {
+            const text = 'TStudios — скины, рендеры и многое другое по Minecraft на заказ. Честные цены, срок 1-2 дня.';
+            shareText(text, getBaseUrl());
+        });
+    }
+
+    const shareSkinBtn = document.getElementById('shareSkinBtn');
+    if (shareSkinBtn) {
+        shareSkinBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const url = `${window.location.origin}${window.location.pathname.replace(/[^/]*$/, '')}order-skin.html`;
+            const text = 'Закажи уникальный скин по Minecraft в TStudios — от 250 ₽, срок 1-2 дня, сначала результат, потом оплата.';
+            shareText(text, url);
+        });
+    }
+
+    const shareRenderBtn = document.getElementById('shareRenderBtn');
+    if (shareRenderBtn) {
+        shareRenderBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const url = `${window.location.origin}${window.location.pathname.replace(/[^/]*$/, '')}order-render.html`;
+            const text = 'Закажи 3D-рендер по Minecraft в TStudios — от 150 ₽, готов за сутки, сначала результат, потом оплата.';
+            shareText(text, url);
+        });
+    }
+
+    const shareJoinBtn = document.getElementById('shareJoinBtn');
+    if (shareJoinBtn) {
+        shareJoinBtn.addEventListener('click', () => {
+            const text = 'TStudios ищет в команду художников скинов, 3D-моделлеров, монтажёров и строителей. 14+, оплата за заказы остаётся тебе.';
+            shareText(text, `${getBaseUrl()}#join`);
+        });
+    }
+
+    const shareFooterBtn = document.getElementById('shareFooterBtn');
+    if (shareFooterBtn) {
+        shareFooterBtn.addEventListener('click', () => {
+            const text = 'TStudios — студия Тимошки из Москвы. Скины, рендеры Minecraft на заказ. Честные цены, быстрые сроки.';
+            shareText(text, getBaseUrl());
+        });
+    }
+
     /* ============================================================
-       11. FAQ — ключевые вопросы наверх
+       10. FAQ
     ============================================================ */
     const faqData = [
-        {
-            q: 'Как оплатить?',
-            a: 'Сначала показываем готовое — платишь, только если всё нравится. Переводом (СБП или карта).'
-        },
-        {
-            q: 'Сколько ждать готовую работу?',
-            a: 'Скин — 1-2 дня, рендер — до 24 часов. Нужно быстрее — есть ускорение за доплату.'
-        },
-        {
-            q: 'А если мне не понравится?',
-            a: 'Бесплатно можно попросить правки: до 3 раз для скина, до 2 для рендера. Не зашло совсем — вернём деньги, пока не начали правки. Мы дорожим репутацией.'
-        },
-        {
-            q: 'Можно срочно?',
-            a: 'Да! Есть срочный режим (×1.5 от цены) и экспресс (×2 от цены). Срочные заказы берём по возможности — уточняй в Discord.'
-        },
-        {
-            q: 'Как заказать скин?',
-            a: 'Выбери пол скина (для парня / для девушки), укажи тему и цвета — мы сделаем уникальный дизайн. Честные цены, срок 1-2 дня.'
-        },
-        {
-            q: 'Как заказать рендер?',
-            a: 'Нажми «Рендер» в разделе «Что можно заказать» — откроется форма. Заполни детали (поза, фон, атмосфера) и отправь заявку в Discord. Честные цены.'
-        }
+        { q: 'Как оплатить?', a: 'Сначала показываем готовое — платишь, только если всё нравится. Переводом (СБП или карта).' },
+        { q: 'Сколько ждать готовую работу?', a: 'Скин — 1-2 дня, рендер — до 24 часов. Нужно быстрее — есть ускорение за доплату.' },
+        { q: 'А если мне не понравится?', a: 'Бесплатно можно попросить правки: до 3 раз для скина, до 2 для рендера. Не зашло совсем — вернём деньги, пока не начали правки.' },
+        { q: 'Можно срочно?', a: 'Да! Есть срочный режим (×1.5 от цены) и экспресс (×2 от цены).' },
+        { q: 'Как заказать скин?', a: 'Нажми «Скин» в разделе «Что можно заказать» — откроется страница заказа. Заполни шаги и отправь заявку в Discord. От 250 ₽.' },
+        { q: 'Как заказать рендер?', a: 'Нажми «Рендер» в разделе «Что можно заказать» — откроется страница заказа. Заполни шаги и отправь заявку в Discord. От 150 ₽.' }
     ];
 
     const faqList = document.getElementById('faqList');
@@ -552,7 +533,7 @@ const PRICES = {
     }
 
     /* ============================================================
-       12. ОТЗЫВЫ
+       11. ОТЗЫВЫ
     ============================================================ */
     const reviewsData = [
         { name: 'FIREFOX', rating: 5, text: 'Очень хорошее качество и очень не плохое качество рук и буква моего канала.', service: 'Скин' },
@@ -563,11 +544,7 @@ const PRICES = {
         { name: 'Дашка', rating: 4, text: 'хороший.', service: 'Скин' }
     ];
 
-    const serviceIcons = {
-        'Скин': 'fa-paint-brush',
-        'Рендер': 'fa-cube'
-    };
-
+    const serviceIcons = { 'Скин': 'fa-paint-brush', 'Рендер': 'fa-cube' };
     const reviewsSlider = document.getElementById('reviewsSlider');
     const reviewDots = document.getElementById('reviewDots');
     let currentReview = 0;
@@ -608,9 +585,9 @@ const PRICES = {
     }
 
     function showReview(index) {
-        const reviewCards = document.querySelectorAll('.review-card');
+        const cards = document.querySelectorAll('.review-card');
         const dots = document.querySelectorAll('.slider-dot');
-        reviewCards.forEach((el, i) => el.classList.toggle('active', i === index));
+        cards.forEach((el, i) => el.classList.toggle('active', i === index));
         dots.forEach((el, i) => el.classList.toggle('active', i === index));
     }
 
@@ -638,7 +615,7 @@ const PRICES = {
     }
 
     /* ============================================================
-       13. КАЛЬКУЛЯТОР
+       12. КАЛЬКУЛЯТОР
     ============================================================ */
     const calcService = document.getElementById('calcService');
     const calcGenderRow = document.getElementById('calcGenderRow');
@@ -678,8 +655,6 @@ const PRICES = {
                 } else {
                     calcGenderRow.hidden = true;
                     calcState.genderExtra = 0;
-
-                    // Сбрасываем визуальный выбор пола — возвращаем «Для парня»
                     if (calcGender) {
                         calcGender.querySelectorAll('.calc-opt').forEach(b => b.classList.remove('active'));
                         const maleBtn = calcGender.querySelector('.calc-opt[data-gender="male"]');
@@ -723,515 +698,18 @@ const PRICES = {
 
     if (calcOrderBtn) {
         calcOrderBtn.addEventListener('click', () => {
-            openModal(calcState.service, {
-                revisions: calcState.revisions,
-                urgencyMult: calcState.urgencyMult,
-                urgencyLabel: calcState.urgencyMult === 1 ? 'Стандартно'
-                    : calcState.urgencyMult === 1.5 ? 'Быстрее (×1.5)'
-                    : 'Срочно (×2)',
-                genderExtra: calcState.genderExtra
-            });
+            const page = calcState.service === 'Рендер' ? 'order-render.html' : 'order-skin.html';
+            const params = new URLSearchParams();
+            if (calcState.revisions > 0) params.set('revisions', calcState.revisions);
+            if (calcState.urgencyMult !== 1) params.set('urgency', calcState.urgencyMult);
+            if (calcState.service === 'Скин' && calcState.genderExtra === 50) params.set('gender', 'female');
+            const qs = params.toString();
+            window.location.href = `${page}${qs ? '?' + qs : ''}`;
         });
     }
 
     /* ============================================================
-       14. МОДАЛКА ЗАКАЗА
-    ============================================================ */
-    const orderModal = document.getElementById('orderModal');
-    const modalClose = document.getElementById('modalClose');
-    const modalServiceName = document.getElementById('modalServiceName');
-    const modalPricing = document.getElementById('modalPricing');
-    const modalPriceAmount = document.getElementById('modalPriceAmount');
-    const modalPriceNote = document.getElementById('modalPriceNote');
-    const modalFeatures = document.getElementById('modalFeatures');
-    const modalPopularBadge = document.getElementById('modalPopularBadge');
-    const modalStepForm = document.getElementById('modalStepForm');
-    const modalStepResult = document.getElementById('modalStepResult');
-    const orderForm = document.getElementById('orderForm');
-    const resultText = document.getElementById('resultText');
-    const copyBtn = document.getElementById('copyBtn');
-    const cancelOrder = document.getElementById('cancelOrder');
-    const backToForm = document.getElementById('backToForm');
-    const descCounter = document.getElementById('descCounter');
-    const extraCounter = document.getElementById('extraCounter');
-    const resultDiscordLink = document.getElementById('resultDiscordLink');
-
-    const orderExecutor = document.getElementById('orderExecutor');
-    const executorNote = document.getElementById('executorNote');
-
-    const fieldsSkin = document.getElementById('fieldsSkin');
-    const fieldsRender = document.getElementById('fieldsRender');
-    const fieldsExtras = document.getElementById('fieldsExtras');
-
-    const orderRevisions = document.getElementById('orderRevisions');
-    const orderRevisionsValue = document.getElementById('orderRevisionsValue');
-    const orderUrgency = document.getElementById('orderUrgency');
-    const orderTotal = document.getElementById('orderTotal');
-
-    const genderHint = document.getElementById('genderHint');
-    const genderHintText = document.getElementById('genderHintText');
-
-    const orderDesc = document.getElementById('orderDesc');
-    const orderExtra = document.getElementById('orderExtra');
-    const submitOrderBtn = document.getElementById('submitOrder');
-
-    let currentService = 'Скин';
-    let orderState = {
-        basePrice: PRICES.skin,
-        genderExtra: 0,
-        revisions: 0,
-        revisionsPrice: PRICES.revision,
-        urgencyMult: 1,
-        urgencyLabel: 'Стандартно',
-        executorName: null,
-        executorDiscord: null
-    };
-
-    const BASE_PRICES = {
-        'Скин': PRICES.skin,
-        'Рендер': PRICES.render
-    };
-
-    const MODAL_TARIFFS = {
-        'Скин': {
-            note: 'Уникальный скин под твой запрос',
-            price: PRICES.skin,
-            femaleNote: 'Женский скин — дороже на 50 ₽',
-            femalePrice: PRICES.skinFemale,
-            features: [
-                { icon: 'fa-check', text: 'Только твой дизайн' },
-                { icon: 'fa-check', text: 'В любом стиле' },
-                { icon: 'fa-check', text: 'До 3 правок бесплатно' },
-                { icon: 'fa-check', text: 'Готово за 1-2 дня' }
-            ]
-        },
-        'Рендер': {
-            note: 'Цена за 1 рендер',
-            price: PRICES.render,
-            features: [
-                { icon: 'fa-check', text: 'Рендер в HD' },
-                { icon: 'fa-check', text: 'Любой фон на выбор' },
-                { icon: 'fa-check', text: 'До 2 правок бесплатно' },
-                { icon: 'fa-check', text: 'Готово за 2-3 часа' }
-            ]
-        }
-    };
-
-    function updateOrderTotal() {
-        if (!orderTotal) return;
-        let total = (orderState.basePrice + orderState.genderExtra + orderState.revisions * orderState.revisionsPrice) * orderState.urgencyMult;
-        total = Math.round(total);
-        orderTotal.textContent = `${total} ₽`;
-        return total;
-    }
-
-    function populateExecutors(service, prefillName) {
-        if (!orderExecutor) return;
-
-        const serviceKey = SERVICE_TO_KEY[service];
-        orderExecutor.innerHTML = '<option value="">— Выбери —</option>';
-
-        let count = 0;
-        authors.forEach(author => {
-            const services = getAuthorServices(author.name);
-            if (services.includes(serviceKey)) {
-                const opt = document.createElement('option');
-                opt.value = author.name;
-                opt.textContent = author.name;
-                orderExecutor.appendChild(opt);
-                count++;
-            }
-        });
-
-        if (prefillName) {
-            const exists = Array.from(orderExecutor.options).some(o => o.value === prefillName);
-            if (exists) orderExecutor.value = prefillName;
-        }
-
-        if (executorNote) {
-            if (count === 0) {
-                executorNote.innerHTML = '<i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i> <span>Пока нет исполнителей по этой услуге</span>';
-            } else {
-                executorNote.innerHTML = '<i class="fas fa-info-circle"></i> <span>Здесь только те, кто делает выбранный тип работы.</span>';
-            }
-        }
-    }
-
-    const FEMALE_TRIGGERS = [
-        'женск', 'женщин', 'девушк', 'девочк', 'девчон', 'леди', 'дама',
-        'female', 'girl', 'woman', 'lady',
-        'платье', 'юбка', 'юбк', 'бант', 'косичк', 'макияж', 'губ',
-        'туфли', 'каблук', 'сумочк', 'маникюр', 'прическ'
-    ];
-
-    const MALE_TRIGGERS = [
-        'мужск', 'мужчин', 'мужик', 'парн', 'парен', 'мальчик', 'пацан',
-        'male', 'boy', 'man',
-        'борода', 'усы', 'бород', 'качок', 'мускул', 'качалк',
-        'шорты'
-    ];
-
-    function hasFemaleTriggers(text) {
-        const lower = text.toLowerCase();
-        return FEMALE_TRIGGERS.some(t => lower.includes(t));
-    }
-    function hasMaleTriggers(text) {
-        const lower = text.toLowerCase();
-        return MALE_TRIGGERS.some(t => lower.includes(t));
-    }
-
-    function isMaleSkinSelected() {
-        if (currentService !== 'Скин') return false;
-        const g = document.querySelector('input[name="skinGender"]:checked');
-        return g && g.value === 'Мужской';
-    }
-    function isFemaleSkinSelected() {
-        if (currentService !== 'Скин') return false;
-        const g = document.querySelector('input[name="skinGender"]:checked');
-        return g && g.value === 'Женский';
-    }
-
-    function updateGenderHint() {
-        if (!genderHint || !genderHintText) return;
-
-        if (currentService !== 'Скин') {
-            genderHint.hidden = true;
-            if (orderDesc) orderDesc.classList.remove('conflict');
-            if (submitOrderBtn) submitOrderBtn.disabled = false;
-            return;
-        }
-
-        const desc = orderDesc ? orderDesc.value.trim() : '';
-        const extra = orderExtra ? orderExtra.value.trim() : '';
-        const allText = (desc + ' ' + extra).toLowerCase();
-        const maleSelected = isMaleSkinSelected();
-        const femaleSelected = isFemaleSkinSelected();
-        const hasFemale = hasFemaleTriggers(allText);
-        const hasMale = hasMaleTriggers(allText);
-
-        if (maleSelected && hasFemale) {
-            genderHint.hidden = false;
-            genderHint.classList.add('danger');
-            genderHintText.innerHTML = '<strong>Кнопка заблокирована.</strong> Ты выбрал <strong>скин для парня</strong>, но в описании есть женские детали. Переключи на <strong>«Для девушки»</strong> (' + PRICES.skinFemale + ' ₽) или убери женские детали.';
-            if (orderDesc) orderDesc.classList.add('conflict');
-            if (submitOrderBtn) submitOrderBtn.disabled = true;
-            return;
-        }
-
-        if (femaleSelected && hasMale) {
-            genderHint.hidden = false;
-            genderHint.classList.remove('danger');
-            genderHintText.innerHTML = '<strong>Внимание!</strong> Ты выбрал <strong>скин для девушки</strong>, но в описании есть мужские детали. Проверь, пожалуйста, пол.';
-            if (orderDesc) orderDesc.classList.remove('conflict');
-            if (submitOrderBtn) submitOrderBtn.disabled = false;
-            return;
-        }
-
-        genderHint.hidden = true;
-        if (orderDesc) orderDesc.classList.remove('conflict');
-        if (submitOrderBtn) submitOrderBtn.disabled = false;
-    }
-
-    if (orderDesc) {
-        orderDesc.addEventListener('input', function () {
-            const len = this.value.length;
-            descCounter.textContent = `${len} / 500`;
-            descCounter.classList.toggle('warn', len > 400 && len <= 480);
-            descCounter.classList.toggle('danger', len > 480);
-            updateGenderHint();
-        });
-    }
-
-    if (orderExtra) {
-        orderExtra.addEventListener('input', function () {
-            extraCounter.textContent = `${this.value.length} / 300`;
-            updateGenderHint();
-        });
-    }
-
-    document.querySelectorAll('input[name="skinGender"]').forEach(radio => {
-        radio.addEventListener('change', function () {
-            if (currentService === 'Скин') {
-                orderState.genderExtra = this.value === 'Женский' ? 50 : 0;
-                updateOrderTotal();
-                renderModalTariff('Скин', orderState.genderExtra === 50);
-            }
-            updateGenderHint();
-        });
-    });
-
-    if (orderRevisions) {
-        orderRevisions.addEventListener('input', function () {
-            orderState.revisions = parseInt(this.value);
-            orderRevisionsValue.innerHTML = `${orderState.revisions} правок × <span data-price="revision">${PRICES.revision}</span> ₽`;
-            updateOrderTotal();
-        });
-    }
-
-    if (orderUrgency) {
-        orderUrgency.querySelectorAll('.calc-opt').forEach(btn => {
-            btn.addEventListener('click', function () {
-                orderUrgency.querySelectorAll('.calc-opt').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                orderState.urgencyMult = parseFloat(this.dataset.mult);
-                orderState.urgencyLabel = this.textContent.trim();
-                updateOrderTotal();
-            });
-        });
-    }
-
-    if (orderExecutor) {
-        orderExecutor.addEventListener('change', function () {
-            const author = getAuthorByName(this.value);
-            orderState.executorName = author ? author.name : null;
-            orderState.executorDiscord = author ? author.discord : null;
-        });
-    }
-
-    function renderModalTariff(service, isFemale = false) {
-        const tariff = MODAL_TARIFFS[service];
-        if (!tariff || !modalPricing) return;
-
-        const price = isFemale && tariff.femalePrice ? tariff.femalePrice : tariff.price;
-        const note = isFemale && tariff.femaleNote ? tariff.femaleNote : tariff.note;
-
-        if (modalPriceAmount) modalPriceAmount.textContent = price;
-        if (modalPriceNote) modalPriceNote.textContent = note;
-
-        if (modalPopularBadge) {
-            modalPopularBadge.style.display = service === 'Скин' ? '' : 'none';
-        }
-
-        if (modalFeatures) {
-            modalFeatures.innerHTML = tariff.features.map(f => `
-                <li${f.gift ? ' class="is-gift"' : ''}>
-                    <i class="fas ${f.icon}"></i>
-                    <span>${f.text}</span>
-                </li>
-            `).join('');
-        }
-
-        modalPricing.classList.toggle('female-theme', isFemale && service === 'Скин');
-    }
-
-    function openModal(service, prefill = {}) {
-        currentService = service;
-        modalServiceName.textContent = `Услуга: ${service}`;
-
-        fieldsSkin.hidden = true;
-        fieldsRender.hidden = true;
-
-        if (service === 'Скин') fieldsSkin.hidden = false;
-        else if (service === 'Рендер') fieldsRender.hidden = false;
-
-        orderState.basePrice = BASE_PRICES[service] || PRICES.skin;
-        orderState.genderExtra = prefill.genderExtra || 0;
-        orderState.revisions = prefill.revisions || 0;
-        orderState.urgencyMult = prefill.urgencyMult || 1;
-        orderState.urgencyLabel = prefill.urgencyLabel || 'Стандартно';
-        orderState.executorName = null;
-        orderState.executorDiscord = null;
-
-        orderForm.reset();
-        descCounter.textContent = '0 / 500';
-        extraCounter.textContent = '0 / 300';
-        descCounter.classList.remove('warn', 'danger');
-
-        if (orderRevisions) {
-            orderRevisions.value = orderState.revisions;
-            orderRevisionsValue.innerHTML = `${orderState.revisions} правок × <span data-price="revision">${PRICES.revision}</span> ₽`;
-        }
-
-        if (orderUrgency) {
-            orderUrgency.querySelectorAll('.calc-opt').forEach(b => b.classList.remove('active'));
-            const target = Array.from(orderUrgency.querySelectorAll('.calc-opt'))
-                .find(b => parseFloat(b.dataset.mult) === orderState.urgencyMult);
-            if (target) target.classList.add('active');
-        }
-
-        populateExecutors(service, prefill.prefillExecutor);
-
-        if (prefill.prefillExecutor && orderExecutor.value === prefill.prefillExecutor) {
-            const author = getAuthorByName(prefill.prefillExecutor);
-            orderState.executorName = author.name;
-            orderState.executorDiscord = author.discord;
-        }
-
-        if (service === 'Скин' && orderState.genderExtra === 50) {
-            const femaleRadio = document.querySelector('input[name="skinGender"][value="Женский"]');
-            if (femaleRadio) femaleRadio.checked = true;
-        }
-
-        renderModalTariff(service, orderState.genderExtra === 50);
-        updateOrderTotal();
-
-        modalStepForm.hidden = false;
-        modalStepResult.hidden = true;
-
-        if (genderHint) {
-            genderHint.hidden = true;
-            genderHint.classList.remove('danger');
-        }
-        if (orderDesc) orderDesc.classList.remove('conflict');
-        if (submitOrderBtn) submitOrderBtn.disabled = false;
-
-        orderModal.classList.add('active');
-        orderModal.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('modal-open');
-
-        setTimeout(() => {
-            const firstInput = orderForm.querySelector('input[type="text"]');
-            if (firstInput) firstInput.focus();
-        }, 250);
-    }
-
-    function closeModal() {
-        orderModal.classList.remove('active');
-        orderModal.setAttribute('aria-hidden', 'true');
-        if (!teamModal.classList.contains('active')
-            && (!privacyModal || !privacyModal.classList.contains('active'))
-            && (!termsModal || !termsModal.classList.contains('active'))) {
-            document.body.classList.remove('modal-open');
-        }
-    }
-
-    if (modalClose) modalClose.addEventListener('click', closeModal);
-    if (cancelOrder) cancelOrder.addEventListener('click', closeModal);
-    if (orderModal) {
-        orderModal.addEventListener('click', (e) => {
-            if (e.target === orderModal) closeModal();
-        });
-    }
-
-    function generateOrderText() {
-        const name = document.getElementById('orderName').value.trim();
-        const desc = orderDesc.value.trim();
-        const extra = orderExtra.value.trim();
-
-        let text = '';
-        text += `Заказ в TStudios\n`;
-        text += `━━━━━━━━━━━━━━━━━━━━\n\n`;
-        text += `Услуга: ${currentService}\n`;
-        text += `Имя: ${name}\n`;
-        if (orderState.executorName) {
-            text += `Исполнитель: ${orderState.executorName}\n`;
-        }
-
-        if (currentService === 'Скин') {
-            const gender = document.querySelector('input[name="skinGender"]:checked');
-            const theme = document.getElementById('skinTheme').value.trim();
-            const colors = document.getElementById('skinColors').value.trim();
-            const refs = document.getElementById('skinRefs').value.trim();
-            if (gender) text += `Пол скина: ${gender.value}\n`;
-            if (theme) text += `Тема / стиль: ${theme}\n`;
-            if (colors) text += `Цвета: ${colors}\n`;
-            if (refs) text += `Референсы: ${refs}\n`;
-        } else if (currentService === 'Рендер') {
-            const renderType = document.querySelector('input[name="renderType"]:checked');
-            const pose = document.getElementById('renderPose').value;
-            const bg = document.getElementById('renderBg').value.trim();
-            const mood = document.getElementById('renderMood').value.trim();
-            if (renderType) text += `Тип рендера: ${renderType.value}\n`;
-            if (pose) text += `Поза / ракурс: ${pose}\n`;
-            if (bg) text += `Фон: ${bg}\n`;
-            if (mood) text += `Атмосфера: ${mood}\n`;
-        }
-
-        if (orderState.revisions > 0) {
-            text += `Доп. правки: ${orderState.revisions} × ${orderState.revisionsPrice} ₽\n`;
-        }
-        text += `Срочность: ${orderState.urgencyLabel}\n`;
-
-        const total = Math.round(
-            (orderState.basePrice + orderState.genderExtra + orderState.revisions * orderState.revisionsPrice) * orderState.urgencyMult
-        );
-        text += `Предварительная стоимость: ${total} ₽\n`;
-
-        text += `\nОписание:\n${desc}\n`;
-        if (extra) text += `\nДополнительно:\n${extra}\n`;
-        text += `\n━━━━━━━━━━━━━━━━━━━━\n`;
-        text += `Отправлено через сайт TStudios`;
-        return text;
-    }
-
-    function validateForm() {
-        const name = document.getElementById('orderName').value.trim();
-        const desc = orderDesc.value.trim();
-
-        if (!name) {
-            showToast('Укажи имя или ник', 'error');
-            document.getElementById('orderName').focus();
-            return false;
-        }
-        if (!orderExecutor.value) {
-            showToast('Выбери, кому отправить заявку', 'error');
-            orderExecutor.focus();
-            return false;
-        }
-        if (!desc) {
-            showToast('Заполни описание заказа', 'error');
-            orderDesc.focus();
-            return false;
-        }
-        if (currentService === 'Скин') {
-            const theme = document.getElementById('skinTheme').value.trim();
-            if (!theme) {
-                showToast('Укажи тему скина', 'error');
-                document.getElementById('skinTheme').focus();
-                return false;
-            }
-        } else if (currentService === 'Рендер') {
-            const pose = document.getElementById('renderPose').value;
-            if (!pose) {
-                showToast('Выбери позу персонажа', 'error');
-                document.getElementById('renderPose').focus();
-                return false;
-            }
-        }
-        return true;
-    }
-
-    if (orderForm) {
-        orderForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            if (submitOrderBtn && submitOrderBtn.disabled) return;
-            if (!validateForm()) return;
-
-            if (resultDiscordLink) {
-                resultDiscordLink.href = orderState.executorDiscord || 'https://discord.com/users/1146355058880040970';
-            }
-
-            resultText.value = generateOrderText();
-            modalStepForm.hidden = true;
-            modalStepResult.hidden = false;
-        });
-    }
-
-    if (copyBtn && resultText) {
-        copyBtn.addEventListener('click', function () {
-            copyToClipboard(resultText.value, 'Текст скопирован!');
-            copyBtn.classList.add('copied');
-            const span = copyBtn.querySelector('span');
-            if (span) {
-                const original = span.textContent;
-                span.textContent = 'Скопировано!';
-                setTimeout(() => {
-                    copyBtn.classList.remove('copied');
-                    span.textContent = original;
-                }, 2000);
-            }
-        });
-    }
-
-    if (backToForm) {
-        backToForm.addEventListener('click', () => {
-            modalStepForm.hidden = false;
-            modalStepResult.hidden = true;
-        });
-    }
-
-    /* ============================================================
-       15. МОДАЛКА ЗАЯВКИ В КОМАНДУ
+       13. МОДАЛКА «В КОМАНДУ»
     ============================================================ */
     const teamModal = document.getElementById('teamModal');
     const teamModalClose = document.getElementById('teamModalClose');
@@ -1288,11 +766,7 @@ const PRICES = {
     function closeTeamModal() {
         teamModal.classList.remove('active');
         teamModal.setAttribute('aria-hidden', 'true');
-        if (!orderModal.classList.contains('active')
-            && (!privacyModal || !privacyModal.classList.contains('active'))
-            && (!termsModal || !termsModal.classList.contains('active'))) {
-            document.body.classList.remove('modal-open');
-        }
+        document.body.classList.remove('modal-open');
     }
 
     if (teamModalClose) teamModalClose.addEventListener('click', closeTeamModal);
@@ -1356,8 +830,8 @@ const PRICES = {
 
         if (!name) { showToast('Укажи имя', 'error'); return false; }
         if (!age || age < 14) { showToast('Возраст должен быть от 14 лет', 'error'); return false; }
-        if (!adequacy || adequacy < 5) { showToast('Адекватность должна быть не ниже 5', 'error'); return false; }
-        if (!literacy || literacy < 6) { showToast('Грамотность должна быть не ниже 6', 'error'); return false; }
+        if (!adequacy || adequacy < 5) { showToast('Адекватность не ниже 5', 'error'); return false; }
+        if (!literacy || literacy < 6) { showToast('Грамотность не ниже 6', 'error'); return false; }
         if (!passport) { showToast('Укажи наличие паспорта', 'error'); return false; }
         if (passport.value === 'Нет паспорта') { showToast('Без паспорта заявка не принимается', 'error'); return false; }
         if (!bankCard) { showToast('Укажи наличие карты РФ', 'error'); return false; }
@@ -1402,7 +876,7 @@ const PRICES = {
     }
 
     /* ============================================================
-       16. ЮРИДИЧЕСКИЕ МОДАЛКИ
+       14. ЮРИДИЧЕСКИЕ МОДАЛКИ
     ============================================================ */
     const privacyModal = document.getElementById('privacyModal');
     const privacyModalClose = document.getElementById('privacyModalClose');
@@ -1425,32 +899,21 @@ const PRICES = {
         if (!modal) return;
         modal.classList.remove('active');
         modal.setAttribute('aria-hidden', 'true');
-        if (!orderModal.classList.contains('active')
-            && !teamModal.classList.contains('active')
-            && (!privacyModal || !privacyModal.classList.contains('active'))
-            && (!termsModal || !termsModal.classList.contains('active'))) {
+        if (!teamModal.classList.contains('active')) {
             document.body.classList.remove('modal-open');
         }
     }
 
-    if (openPrivacyModalBtn) {
-        openPrivacyModalBtn.addEventListener('click', () => openLegalModal(privacyModal));
-    }
-    if (privacyModalClose) {
-        privacyModalClose.addEventListener('click', () => closeLegalModal(privacyModal));
-    }
+    if (openPrivacyModalBtn) openPrivacyModalBtn.addEventListener('click', () => openLegalModal(privacyModal));
+    if (privacyModalClose) privacyModalClose.addEventListener('click', () => closeLegalModal(privacyModal));
     if (privacyModal) {
         privacyModal.addEventListener('click', (e) => {
             if (e.target === privacyModal) closeLegalModal(privacyModal);
         });
     }
 
-    if (openTermsModalBtn) {
-        openTermsModalBtn.addEventListener('click', () => openLegalModal(termsModal));
-    }
-    if (termsModalClose) {
-        termsModalClose.addEventListener('click', () => closeLegalModal(termsModal));
-    }
+    if (openTermsModalBtn) openTermsModalBtn.addEventListener('click', () => openLegalModal(termsModal));
+    if (termsModalClose) termsModalClose.addEventListener('click', () => closeLegalModal(termsModal));
     if (termsModal) {
         termsModal.addEventListener('click', (e) => {
             if (e.target === termsModal) closeLegalModal(termsModal);
@@ -1458,12 +921,11 @@ const PRICES = {
     }
 
     /* ============================================================
-       17. ESCAPE + СТРЕЛКИ
+       15. ESCAPE
     ============================================================ */
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             if (lightbox && lightbox.classList.contains('active')) closeLightbox();
-            else if (orderModal && orderModal.classList.contains('active')) closeModal();
             else if (teamModal && teamModal.classList.contains('active')) closeTeamModal();
             else if (privacyModal && privacyModal.classList.contains('active')) closeLegalModal(privacyModal);
             else if (termsModal && termsModal.classList.contains('active')) closeLegalModal(termsModal);

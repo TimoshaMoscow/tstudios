@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Заказать скин Minecraft — TStudios</title>
+    <meta name="description" content="Заказать уникальный скин Minecraft от TStudios. От 250 ₽, срок 1-2 дня, сначала результат — потом оплата. Индивидуальный дизайн от Тимошки из Москвы.">
+    <meta name="author" content="Тимошка из Москвы">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://timoshamoscow.github.io/tstudios/order-skin.html">
+
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="logo.png">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body data-service="skin">
+
+    <header class="header" role="banner">
+        <div class="container header-container">
+            <a href="index.html" class="logo-wrapper">
+                <img src="logo.png" alt="TStudios" class="logo-img" width="36" height="36">
+                <span class="logo-text">TStudios</span>
+            </a>
+            <nav class="main-nav" aria-label="Главная навигация">
+                <ul>
+                    <li><a href="index.html#services">Услуги</a></li>
+                    <li><a href="index.html#how">Как работаем</a></li>
+                    <li><a href="index.html#gallery">Портфолио</a></li>
+                    <li><a href="index.html#faq">FAQ</a></li>
+                    <li><a href="index.html#join">В команду</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button type="button" class="icon-btn" id="shareBtn" aria-label="Поделиться страницей">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+                <button type="button" class="hamburger" id="hamburger" aria-label="Открыть меню" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="order-page">
+        <div class="container">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> На главную
+            </a>
+
+<div class="order-hero-banner">
+    <div class="order-hero-text">
+        <span class="order-hero-badge">
+            <i class="fas fa-paint-brush"></i> Скин Minecraft
+        </span>
+        <h1 class="order-hero-title">Заказать скин</h1>
+        <p class="order-hero-subtitle">Три простых шага — и уникальный скин у тебя. Сначала видишь результат, потом платишь.</p>
+    </div>
+    <div class="order-hero-image">
+        <img src="services/skin.png" alt="Скин Minecraft" loading="lazy">
+    </div>
+</div>
+
+            <div class="order-steps">
+                <div class="order-step active" data-step="1">
+                    <span class="order-step-num">1</span>
+                    <span class="order-step-label">Данные</span>
+                </div>
+                <div class="order-step-sep"></div>
+                <div class="order-step" data-step="2">
+                    <span class="order-step-num">2</span>
+                    <span class="order-step-label">Скин</span>
+                </div>
+                <div class="order-step-sep"></div>
+                <div class="order-step" data-step="3">
+                    <span class="order-step-num">3</span>
+                    <span class="order-step-label">Описание</span>
+                </div>
+                <div class="order-step-sep"></div>
+                <div class="order-step" data-step="4">
+                    <span class="order-step-num">4</span>
+                    <span class="order-step-label">Готово</span>
+                </div>
+            </div>
+
+            <div class="order-form-card">
+
+                <!-- Шаг 1 — Данные -->
+                <div class="order-form-step" id="stepData">
+                    <div class="order-price-banner" id="orderPricingBanner">
+                        <div>
+                            <div class="order-price-label">Предварительная стоимость</div>
+                            <div class="order-price-value" id="orderPriceValue">250 ₽</div>
+                        </div>
+                        <ul class="order-features">
+                            <li><i class="fas fa-check"></i> Только твой дизайн</li>
+                            <li><i class="fas fa-check"></i> В любом стиле</li>
+                            <li><i class="fas fa-check"></i> До 3 правок бесплатно</li>
+                            <li><i class="fas fa-check"></i> Готово за 1-2 дня</li>
+                        </ul>
+                    </div>
+
+                    <div class="order-form">
+                        <div class="form-group">
+                            <label for="orderName">Как тебя зовут? *</label>
+                            <input type="text" id="orderName" name="name" placeholder="Например: Steve или @timosha" required maxlength="50">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="orderExecutor">Кому отправить заявку?</label>
+                            <select id="orderExecutor" name="executor">
+                                <option value="">— Выбери —</option>
+                                <option value="Тимошка из Москвы">Тимошка из Москвы</option>
+                            </select>
+                            <div class="team-note" id="executorNote">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Заявку увидит автор — он же и исполнитель.</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Скин для парня или девушки?</label>
+                            <div class="radio-group">
+                                <label class="radio-item"><input type="radio" name="skinGender" value="Мужской" checked><span>Для парня</span></label>
+                                <label class="radio-item"><input type="radio" name="skinGender" value="Женский"><span>Для девушки (+50 ₽)</span></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Сколько правок добавить?</label>
+                            <div class="calc-slider">
+                                <input type="range" id="orderRevisions" min="0" max="10" value="0" step="1">
+                                <span class="calc-slider-value" id="orderRevisionsValue">0 правок × <span data-price="revision">45</span> ₽</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Как быстро?</label>
+                            <div class="calc-options" id="orderUrgency">
+                                <button type="button" class="calc-opt active" data-mult="1">Стандартно</button>
+                                <button type="button" class="calc-opt" data-mult="1.5">Быстрее (×1.5)</button>
+                                <button type="button" class="calc-opt" data-mult="2">Срочно (×2)</button>
+                            </div>
+                        </div>
+
+                        <div class="order-nav">
+                            <button type="button" class="btn btn-primary btn-large" id="nextBtn1">
+                                Далее <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Шаг 2 — Скин -->
+                <div class="order-form-step" id="stepDetails" hidden>
+                    <div class="order-form">
+                        <div class="form-group">
+                            <label for="skinTheme">Какая тема? *</label>
+                            <input type="text" id="skinTheme" name="theme" placeholder="Рыцарь, киберпанк, космос…" maxlength="80">
+                        </div>
+                        <div class="form-group">
+                            <label for="skinColors">Какие цвета?</label>
+                            <input type="text" id="skinColors" name="colors" placeholder="Синий + чёрный, или на твой вкус" maxlength="80">
+                        </div>
+                        <div class="form-group">
+                            <label for="skinRefs">Есть примеры? (ссылки)</label>
+                            <input type="text" id="skinRefs" name="refs" placeholder="Ссылки на картинки, которые нравятся" maxlength="200">
+                        </div>
+                    </div>
+
+                    <div class="order-nav">
+                        <button type="button" class="btn btn-secondary" id="backBtn2">
+                            <i class="fas fa-arrow-left"></i> Назад
+                        </button>
+                        <button type="button" class="btn btn-primary" id="nextBtn2">
+                            Далее <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Шаг 3 — Описание -->
+                <div class="order-form-step" id="stepContact" hidden>
+                    <div class="order-form">
+                        <div class="form-group">
+                            <label for="orderDesc">Опиши заказ словами *</label>
+                            <textarea id="orderDesc" name="description" placeholder="Что должно быть на скине, настроение, детали…" required maxlength="500" rows="4"></textarea>
+                            <span class="form-counter" id="descCounter">0 / 500</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="orderExtra">Что-то ещё? (необязательно)</label>
+                            <textarea id="orderExtra" name="extra" placeholder="Любые пожелания, не связанные с ТЗ" maxlength="300" rows="3"></textarea>
+                            <span class="form-counter" id="extraCounter">0 / 300</span>
+                        </div>
+                    </div>
+
+                    <div class="order-nav">
+                        <button type="button" class="btn btn-secondary" id="backBtn3">
+                            <i class="fas fa-arrow-left"></i> Назад
+                        </button>
+                        <button type="button" class="btn btn-primary" id="submitOrderBtn">
+                            <i class="fas fa-paper-plane"></i> Создать заявку
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Шаг 4 — Готово -->
+                <div class="order-form-step" id="stepResult" hidden>
+                    <div class="order-success">
+                        <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+                        <h2>Готово! Теперь отправь заявку</h2>
+                        <p>Скопируй текст ниже и отправь его в Discord — ответим в течение дня</p>
+                    </div>
+
+                    <div class="result-text-wrapper">
+                        <textarea id="resultText" class="result-text" readonly rows="14"></textarea>
+                        <button type="button" class="copy-btn" id="copyResultBtn" aria-label="Скопировать текст заявки">
+                            <i class="fas fa-copy"></i> <span>Скопировать</span>
+                        </button>
+                    </div>
+
+                    <div class="result-actions">
+                        <a href="index.html" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> На главную
+                        </a>
+                        <a href="https://discord.com/users/1146355058880040970" target="_blank" rel="noopener" class="btn btn-primary btn-discord" id="resultDiscordLink">
+                            <i class="fab fa-discord"></i> Открыть Discord и отправить
+                        </a>
+                    </div>
+
+                    <p class="result-hint">
+                        <i class="fas fa-info-circle"></i> Открой Discord, вставь текст и отправь
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="order.js"></script>
+</body>
+</html>

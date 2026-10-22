@@ -99,34 +99,7 @@
             { "@type": "Question", "name": "Как оплатить?", "acceptedAnswer": { "@type": "Answer", "text": "Сначала показываем готовое — платишь, только если всё нравится. Переводом (СБП или карта)." } },
             { "@type": "Question", "name": "А если мне не понравится?", "acceptedAnswer": { "@type": "Answer", "text": "Бесплатно можно попросить правки: до 3 раз для скина, до 2 для рендера. Не зашло совсем — вернём деньги, пока не начали правки." } },
             { "@type": "Question", "name": "Можно срочно?", "acceptedAnswer": { "@type": "Answer", "text": "Да, есть срочный режим (×1.5 от цены, срок ~12 часов) и экспресс (×2 от цены, срок ~4-6 часов)." } },
-            { "@type": "Question", "name": "Как заказать рендер?", "acceptedAnswer": { "@type": "Answer", "text": "Нажми «Рендер» в разделе «Что можно заказать» — откроется форма. Заполни детали и отправь заявку в Discord. Честные цены." } }
-        ]
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": "TStudios — Услуги для Minecraft",
-        "image": "https://timoshamoscow.github.io/tstudios/logo.png",
-        "description": "Скины, рендеры Minecraft на заказ от студии TStudios. Честные цены.",
-        "brand": { "@type": "Brand", "name": "TStudios" },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "bestRating": "5",
-            "worstRating": "1",
-            "ratingCount": "5",
-            "reviewCount": "5"
-        },
-        "review": [
-            { "@type": "Review", "author": { "@type": "Person", "name": "FIREFOX" }, "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1" }, "reviewBody": "Очень хорошее качество и очень не плохое качество рук и буква моего канала." },
-            { "@type": "Review", "author": { "@type": "Person", "name": "Beatlewind" }, "reviewRating": { "@type": "Rating", "ratingValue": "4", "bestRating": "5", "worstRating": "1" }, "reviewBody": "Хорошо подобран стиль, но не хватает уникальности и изюминки в скине." },
-            { "@type": "Review", "author": { "@type": "Person", "name": "Тимоша Музыка" }, "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1" }, "reviewBody": "Классный Скин!" },
-            { "@type": "Review", "author": { "@type": "Person", "name": "арсик" }, "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1" }, "reviewBody": "автор красава, все четко сделал:)" },
-            { "@type": "Review", "author": { "@type": "Person", "name": "Vakulko" }, "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1" }, "reviewBody": "да круто вышло, спасибо" },
-            { "@type": "Review", "author": { "@type": "Person", "name": "Дашка" }, "reviewRating": { "@type": "Rating", "ratingValue": "4", "bestRating": "5", "worstRating": "1" }, "reviewBody": "хороший" }
+            { "@type": "Question", "name": "Как заказать рендер?", "acceptedAnswer": { "@type": "Answer", "text": "Нажми «Рендер» в разделе «Что можно заказать» — откроется страница заказа. Заполни шаги и отправь заявку в Discord. Честные цены." } }
         ]
     }
     </script>
@@ -138,10 +111,10 @@
 
     <header class="header" role="banner">
         <div class="container header-container">
-            <div class="logo-wrapper">
+            <a href="index.html" class="logo-wrapper">
                 <img src="logo.png" alt="TStudios" class="logo-img" width="36" height="36">
                 <span class="logo-text">TStudios</span>
-            </div>
+            </a>
             <nav class="main-nav" aria-label="Главная навигация">
                 <ul>
                     <li><a href="#services">Услуги</a></li>
@@ -212,26 +185,32 @@
             <h2 class="section-title">Что можно заказать</h2>
             <p class="section-subtitle">Выбери услугу — цена сразу видна. Кликни по карточке, чтобы начать заказ</p>
             <div class="services-grid">
-                <div class="service-card" data-service="Скин" role="button" tabindex="0" aria-label="Заказать скин">
+                <a href="order-skin.html" class="service-card" aria-label="Заказать скин">
                     <img class="service-bg" src="services/skin.png" alt="" loading="lazy">
                     <div class="service-overlay"></div>
+                    <button type="button" class="service-share" id="shareSkinBtn" aria-label="Поделиться скином">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
                     <div class="service-badge">от 250 ₽</div>
                     <div class="service-content">
                         <h3>Скин</h3>
                         <p>Уникальный скин под твой образ</p>
                         <span class="service-cta">Заказать <i class="fas fa-arrow-right"></i></span>
                     </div>
-                </div>
-                <div class="service-card" data-service="Рендер" role="button" tabindex="0" aria-label="Заказать рендер">
+                </a>
+                <a href="order-render.html" class="service-card" aria-label="Заказать рендер">
                     <img class="service-bg" src="services/render.png" alt="" loading="lazy">
                     <div class="service-overlay"></div>
+                    <button type="button" class="service-share" id="shareRenderBtn" aria-label="Поделиться рендером">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
                     <div class="service-badge">от 150 ₽</div>
                     <div class="service-content">
                         <h3>Рендер</h3>
                         <p>3D-рендер твоего персонажа</p>
                         <span class="service-cta">Заказать <i class="fas fa-arrow-right"></i></span>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -244,25 +223,25 @@
             <div class="calculator-wrapper">
                 <div class="calc-row">
                     <label>Что нужно?</label>
-<div class="calc-options" id="calcService">
-    <button type="button" class="calc-opt active" data-service="Скин" data-price="250">
-        <i class="fas fa-paint-brush"></i> Скин
-    </button>
-    <button type="button" class="calc-opt" data-service="Рендер" data-price="150">
-        <i class="fas fa-cube"></i> Рендер
-    </button>
-</div>
+                    <div class="calc-options" id="calcService">
+                        <button type="button" class="calc-opt active" data-service="Скин" data-price="250">
+                            <i class="fas fa-paint-brush"></i> Скин
+                        </button>
+                        <button type="button" class="calc-opt" data-service="Рендер" data-price="150">
+                            <i class="fas fa-cube"></i> Рендер
+                        </button>
+                    </div>
                 </div>
 
                 <div class="calc-row" id="calcGenderRow">
                     <label>Скин для парня или девушки?</label>
                     <div class="calc-options" id="calcGender">
-<button type="button" class="calc-opt active" data-gender="male" data-extra="0">
-    <i class="fas fa-mars"></i> Для парня
-</button>
-<button type="button" class="calc-opt" data-gender="female" data-extra="50">
-    <i class="fas fa-venus"></i> Для девушки (+50 ₽)
-</button>
+                        <button type="button" class="calc-opt active" data-gender="male" data-extra="0">
+                            <i class="fas fa-mars"></i> Для парня
+                        </button>
+                        <button type="button" class="calc-opt" data-gender="female" data-extra="50">
+                            <i class="fas fa-venus"></i> Для девушки (+50 ₽)
+                        </button>
                     </div>
                 </div>
 
@@ -416,9 +395,7 @@
             <p class="section-subtitle">Ищем талантливых ребят в команду TStudios</p>
             <div class="join-wrapper">
                 <div class="join-info">
-                    <div class="join-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
+                    <div class="join-icon"><i class="fas fa-users"></i></div>
                     <h3>Ищем ребят в команду TStudios</h3>
                     <p>Нужны художники скинов, 3D-моделлеры, монтажёры и строители. Если умеешь работать с Blockbench, Photoshop, Premiere Pro или Axiom — нам по пути.</p>
 
@@ -432,10 +409,7 @@
                     </ul>
 
                     <div class="join-rules">
-                        <h4 class="join-rules-title">
-                            <i class="fas fa-info-circle"></i> Важно знать перед подачей заявки
-                        </h4>
-
+                        <h4 class="join-rules-title"><i class="fas fa-info-circle"></i> Важно знать перед подачей заявки</h4>
                         <div class="join-rule">
                             <div class="join-rule-icon"><i class="fas fa-wallet"></i></div>
                             <div class="join-rule-text">
@@ -443,7 +417,6 @@
                                 Клиент переводит деньги <strong>лично тебе</strong> на твои реквизиты — <strong><span class="join-highlight">Пока что</span></strong> мы не берём процент с заказов, которые пришли через нас.
                             </div>
                         </div>
-
                         <div class="join-rule">
                             <div class="join-rule-icon"><i class="fas fa-file-invoice"></i></div>
                             <div class="join-rule-text">
@@ -452,9 +425,14 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-primary btn-large" id="openTeamModal">
-                        <i class="fas fa-paper-plane"></i> Заполнить заявку
-                    </button>
+                    <div class="join-actions">
+                        <button type="button" class="btn btn-primary btn-large" id="openTeamModal">
+                            <i class="fas fa-paper-plane"></i> Заполнить заявку
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-large" id="shareJoinBtn">
+                            <i class="fas fa-share-alt"></i> Поделиться
+                        </button>
+                    </div>
                 </div>
                 <div class="join-decor" aria-hidden="true">
                     <i class="fas fa-paint-brush"></i>
@@ -475,12 +453,8 @@
                         <img src="logo.png" alt="TStudios" width="32" height="32">
                         <span>TStudios</span>
                     </div>
-                    <p class="footer-about">
-                        Студия по созданию скинов, рендеров и многого другого по Minecraft на заказ. Работаем с 2026 года.
-                    </p>
-                    <p class="footer-author">
-                        Основатель — <strong>Тимошка из Москвы</strong>
-                    </p>
+                    <p class="footer-about">Студия по созданию скинов, рендеров и многого другого по Minecraft на заказ. Работаем с 2026 года.</p>
+                    <p class="footer-author">Основатель — <strong>Тимошка из Москвы</strong></p>
                 </div>
 
                 <div class="footer-col">
@@ -510,6 +484,8 @@
                     <span class="footer-sep">•</span>
                     <button type="button" class="footer-link" id="openTermsModal">Условия использования</button>
                     <span class="footer-sep">•</span>
+                    <button type="button" class="footer-link" id="shareFooterBtn"><i class="fas fa-share-alt"></i> Поделиться</button>
+                    <span class="footer-sep">•</span>
                     <span class="footer-credit">Сделано с <i class="fas fa-heart" style="color: #ec4899;"></i></span>
                 </div>
             </div>
@@ -518,12 +494,8 @@
 
     <!-- LIGHTBOX -->
     <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Просмотр работы">
-        <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Закрыть">
-            <i class="fas fa-times"></i>
-        </button>
-        <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Предыдущая работа">
-            <i class="fas fa-chevron-left"></i>
-        </button>
+        <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Закрыть"><i class="fas fa-times"></i></button>
+        <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Предыдущая работа"><i class="fas fa-chevron-left"></i></button>
         <div class="lightbox-content">
             <div class="lightbox-img-wrapper">
                 <div class="skeleton" id="lightboxSkeleton"></div>
@@ -533,7 +505,6 @@
                 <span class="lightbox-type" id="lightboxType"></span>
                 <h3 id="lightboxTitle"></h3>
                 <p class="lightbox-price" id="lightboxPrice"></p>
-
                 <div class="lightbox-author-block">
                     <img id="lightboxAuthorAvatar" src="" alt="" onerror="this.style.display='none'">
                     <div class="lightbox-author-text">
@@ -541,200 +512,20 @@
                         <strong id="lightboxAuthorName">—</strong>
                     </div>
                 </div>
-
                 <div class="lightbox-author-socials" id="lightboxAuthorSocials"></div>
-
                 <div class="lightbox-actions">
-                    <button type="button" class="btn btn-primary" id="lightboxOrderBtn">
-                        <i class="fas fa-paper-plane"></i> Заказать похожее
-                    </button>
-                    <button type="button" class="btn btn-secondary" id="lightboxShareBtn">
-                        <i class="fas fa-share-alt"></i> Поделиться
-                    </button>
+                    <button type="button" class="btn btn-primary" id="lightboxOrderBtn"><i class="fas fa-paper-plane"></i> Заказать похожее</button>
+                    <button type="button" class="btn btn-secondary" id="lightboxShareBtn"><i class="fas fa-share-alt"></i> Поделиться</button>
                 </div>
             </div>
         </div>
-        <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Следующая работа">
-            <i class="fas fa-chevron-right"></i>
-        </button>
+        <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Следующая работа"><i class="fas fa-chevron-right"></i></button>
     </div>
 
-    <!-- МОДАЛКА ЗАКАЗА -->
-    <div class="modal-overlay" id="orderModal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle">
-        <div class="modal-content">
-            <button type="button" class="modal-close" id="modalClose" aria-label="Закрыть">
-                <i class="fas fa-times"></i>
-            </button>
-
-            <div class="modal-step" id="modalStepForm">
-                <div class="modal-header">
-                    <span class="modal-popular-badge" id="modalPopularBadge">
-                        <i class="fas fa-fire"></i> Популярное
-                    </span>
-                    <h3 id="modalTitle">Расскажи, что нужно</h3>
-                    <p class="modal-subtitle" id="modalServiceName">Услуга: Скин</p>
-                </div>
-
-                <div class="modal-pricing" id="modalPricing">
-                    <div class="modal-pricing-price">
-                        <span class="modal-price-amount" id="modalPriceAmount">250</span>
-                        <span class="modal-price-currency">₽</span>
-                    </div>
-                    <p class="modal-price-note" id="modalPriceNote">Уникальный скин под твой запрос</p>
-                    <ul class="modal-features" id="modalFeatures"></ul>
-                </div>
-
-                <form id="orderForm" class="order-form" novalidate>
-                    <div class="form-group">
-                        <label for="orderName">Как тебя зовут? *</label>
-                        <input type="text" id="orderName" name="name" placeholder="Например: Steve или @timosha" required maxlength="50">
-                    </div>
-
-                    <div class="form-group" id="executorGroup">
-                        <label for="orderExecutor">Кому отправить заявку? *</label>
-                        <select id="orderExecutor" name="executor" required>
-                            <option value="">— Выбери —</option>
-                        </select>
-                        <div class="team-note" id="executorNote">
-                            <i class="fas fa-info-circle"></i>
-                            <span>Здесь только те, кто делает выбранный тип работы.</span>
-                        </div>
-                    </div>
-
-                    <div class="service-fields" id="fieldsSkin" hidden>
-                        <div class="form-group">
-                            <label>Скин для парня или девушки?</label>
-                            <div class="radio-group">
-                                <label class="radio-item"><input type="radio" name="skinGender" value="Мужской" checked><span>Для парня</span></label>
-                                <label class="radio-item"><input type="radio" name="skinGender" value="Женский"><span>Для девушки</span></label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="skinTheme">Какая тема? *</label>
-                            <input type="text" id="skinTheme" name="theme" placeholder="Рыцарь, киберпанк, космос…" maxlength="80">
-                        </div>
-                        <div class="form-group">
-                            <label for="skinColors">Какие цвета?</label>
-                            <input type="text" id="skinColors" name="colors" placeholder="Синий + чёрный, или на твой вкус" maxlength="80">
-                        </div>
-                        <div class="form-group">
-                            <label for="skinRefs">Есть примеры? (ссылки)</label>
-                            <input type="text" id="skinRefs" name="refs" placeholder="Ссылки на картинки, которые нравятся" maxlength="200">
-                        </div>
-                    </div>
-
-                    <div class="service-fields" id="fieldsRender" hidden>
-                        <div class="form-group">
-                            <label>Тип рендера</label>
-                            <div class="radio-group">
-                                <label class="radio-item"><input type="radio" name="renderType" value="Аватарка" checked><span>Аватарка</span></label>
-                                <label class="radio-item"><input type="radio" name="renderType" value="Обложка"><span>Обложка</span></label>
-                                <label class="radio-item"><input type="radio" name="renderType" value="Баннер"><span>Баннер</span></label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="renderPose">Как персонаж стоит? *</label>
-                            <select id="renderPose" name="pose">
-                                <option value="">— Выбери —</option>
-                                <option value="Стоя (анфас)">Стоя (анфас)</option>
-                                <option value="Стоя (профиль)">Стоя (профиль)</option>
-                                <option value="Сидя">Сидя</option>
-                                <option value="В прыжке">В прыжке</option>
-                                <option value="С оружием в руках">С оружием в руках</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="renderBg">Что на фоне?</label>
-                            <input type="text" id="renderBg" name="background" placeholder="Замок, космос, лес…" maxlength="100">
-                        </div>
-                        <div class="form-group">
-                            <label for="renderMood">Атмосфера</label>
-                            <input type="text" id="renderMood" name="mood" placeholder="Эпично, мрачно, мило…" maxlength="80">
-                        </div>
-                    </div>
-
-                    <div class="service-fields" id="fieldsExtras">
-                        <div class="form-group">
-                            <label>Сколько правок добавить?</label>
-                            <div class="calc-slider">
-                                <input type="range" id="orderRevisions" min="0" max="10" value="0" step="1">
-                                <span class="calc-slider-value" id="orderRevisionsValue">0 правок × <span data-price="revision">45</span> ₽</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Как быстро?</label>
-                            <div class="calc-options" id="orderUrgency">
-                                <button type="button" class="calc-opt active" data-urgency="normal" data-mult="1">Стандартно</button>
-                                <button type="button" class="calc-opt" data-urgency="fast" data-mult="1.5">Быстрее (×1.5)</button>
-                                <button type="button" class="calc-opt" data-urgency="express" data-mult="2">Срочно (×2)</button>
-                            </div>
-                        </div>
-
-                        <div class="calc-total">
-                            <span>Примерная цена:</span>
-                            <span class="calc-total-price" id="orderTotal">250 ₽</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="orderDesc">Опиши заказ словами *</label>
-                        <textarea id="orderDesc" name="description" placeholder="Что должно быть на скине или рендере, настроение, детали…" required maxlength="500" rows="4"></textarea>
-                        <span class="form-counter" id="descCounter">0 / 500</span>
-                        <div class="gender-hint" id="genderHint" hidden>
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <span id="genderHintText"></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="orderExtra">Что-то ещё? (необязательно)</label>
-                        <textarea id="orderExtra" name="extra" placeholder="Любые пожелания, не связанные с ТЗ" maxlength="300" rows="3"></textarea>
-                        <span class="form-counter" id="extraCounter">0 / 300</span>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" id="cancelOrder">Отмена</button>
-                        <button type="submit" class="btn btn-primary" id="submitOrder">
-                            <i class="fas fa-paper-plane"></i> Создать заявку
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="modal-step" id="modalStepResult" hidden>
-                <div class="modal-header">
-                    <div class="success-icon"><i class="fas fa-check-circle"></i></div>
-                    <h3>Готово! Теперь отправь заявку</h3>
-                    <p class="modal-subtitle">Скопируй текст ниже и отправь его в Discord — ответим в течение дня</p>
-                </div>
-                <div class="result-text-wrapper">
-                    <textarea id="resultText" class="result-text" readonly rows="14"></textarea>
-                    <button type="button" class="copy-btn" id="copyBtn" aria-label="Скопировать текст заявки">
-                        <i class="fas fa-copy"></i> <span>Скопировать</span>
-                    </button>
-                </div>
-                <div class="result-actions">
-                    <button type="button" class="btn btn-secondary" id="backToForm">
-                        <i class="fas fa-arrow-left"></i> Назад к форме
-                    </button>
-                    <a href="#" target="_blank" rel="noopener" class="btn btn-primary btn-discord" id="resultDiscordLink">
-                        <i class="fab fa-discord"></i> Открыть Discord и отправить
-                    </a>
-                </div>
-                <p class="result-hint">
-                    <i class="fas fa-info-circle"></i> Открой Discord, вставь текст и отправь
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- МОДАЛКА ЗАЯВКИ В КОМАНДУ -->
+    <!-- МОДАЛКА ЗАЯВКИ В КОМАНДУ (осталась) -->
     <div class="modal-overlay" id="teamModal" aria-hidden="true" role="dialog" aria-labelledby="teamModalTitle">
         <div class="modal-content team-modal-content">
-            <button type="button" class="modal-close" id="teamModalClose" aria-label="Закрыть">
-                <i class="fas fa-times"></i>
-            </button>
+            <button type="button" class="modal-close" id="teamModalClose" aria-label="Закрыть"><i class="fas fa-times"></i></button>
 
             <div class="modal-step" id="teamStepForm">
                 <div class="modal-header">
@@ -783,24 +574,12 @@
                     <div class="form-group">
                         <label>Есть ли у тебя документы и карта? *</label>
                         <div class="radio-group radio-group-vertical">
-                            <label class="radio-item">
-                                <input type="radio" name="teamPassport" value="Есть паспорт" required>
-                                <span><i class="fas fa-id-card"></i> Есть паспорт</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="teamPassport" value="Нет паспорта">
-                                <span><i class="fas fa-times-circle"></i> Нет паспорта</span>
-                            </label>
+                            <label class="radio-item"><input type="radio" name="teamPassport" value="Есть паспорт" required><span><i class="fas fa-id-card"></i> Есть паспорт</span></label>
+                            <label class="radio-item"><input type="radio" name="teamPassport" value="Нет паспорта"><span><i class="fas fa-times-circle"></i> Нет паспорта</span></label>
                         </div>
                         <div class="radio-group radio-group-vertical" style="margin-top: 8px;">
-                            <label class="radio-item">
-                                <input type="radio" name="teamBankCard" value="Есть карта российского банка" required>
-                                <span><i class="fas fa-credit-card"></i> Есть карта российского банка</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="teamBankCard" value="Нет карты российского банка">
-                                <span><i class="fas fa-times-circle"></i> Нет карты российского банка</span>
-                            </label>
+                            <label class="radio-item"><input type="radio" name="teamBankCard" value="Есть карта российского банка" required><span><i class="fas fa-credit-card"></i> Есть карта российского банка</span></label>
+                            <label class="radio-item"><input type="radio" name="teamBankCard" value="Нет карты российского банка"><span><i class="fas fa-times-circle"></i> Нет карты российского банка</span></label>
                         </div>
                     </div>
 
@@ -851,9 +630,7 @@
 
                     <div class="form-actions">
                         <button type="button" class="btn btn-secondary" id="teamCancel">Отмена</button>
-                        <button type="submit" class="btn btn-primary" id="teamSubmit">
-                            <i class="fas fa-paper-plane"></i> Отправить заявку
-                        </button>
+                        <button type="submit" class="btn btn-primary" id="teamSubmit"><i class="fas fa-paper-plane"></i> Отправить заявку</button>
                     </div>
                 </form>
             </div>
@@ -866,141 +643,88 @@
                 </div>
                 <div class="result-text-wrapper">
                     <textarea id="teamResultText" class="result-text" readonly rows="14"></textarea>
-                    <button type="button" class="copy-btn" id="teamCopyBtn" aria-label="Скопировать текст заявки">
-                        <i class="fas fa-copy"></i> <span>Скопировать</span>
-                    </button>
+                    <button type="button" class="copy-btn" id="teamCopyBtn" aria-label="Скопировать текст заявки"><i class="fas fa-copy"></i> <span>Скопировать</span></button>
                 </div>
                 <div class="result-actions">
-                    <button type="button" class="btn btn-secondary" id="teamBackToForm">
-                        <i class="fas fa-arrow-left"></i> Назад к форме
-                    </button>
-                    <a href="https://discord.com/users/1146355058880040970" target="_blank" rel="noopener" class="btn btn-primary btn-discord">
-                        <i class="fab fa-discord"></i> Открыть Discord и отправить
-                    </a>
+                    <button type="button" class="btn btn-secondary" id="teamBackToForm"><i class="fas fa-arrow-left"></i> Назад к форме</button>
+                    <a href="https://discord.com/users/1146355058880040970" target="_blank" rel="noopener" class="btn btn-primary btn-discord"><i class="fab fa-discord"></i> Открыть Discord и отправить</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- МОДАЛКА: ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ -->
+    <!-- ЮРИДИЧЕСКАЯ — Политика -->
     <div class="modal-overlay" id="privacyModal" aria-hidden="true" role="dialog" aria-labelledby="privacyTitle">
         <div class="modal-content legal-modal-content">
-            <button type="button" class="modal-close" id="privacyModalClose" aria-label="Закрыть">
-                <i class="fas fa-times"></i>
-            </button>
-
+            <button type="button" class="modal-close" id="privacyModalClose" aria-label="Закрыть"><i class="fas fa-times"></i></button>
             <div class="modal-header">
                 <h3 id="privacyTitle"><i class="fas fa-shield-alt"></i> Политика конфиденциальности</h3>
                 <p class="modal-subtitle">Последнее обновление: 7 октября 2026</p>
             </div>
-
             <div class="legal-content">
                 <h4>1. Общие положения</h4>
-                <p>Настоящая Политика конфиденциальности (далее — «Политика») действует в отношении всей информации, которую студия TStudios (далее — «Студия», «мы») может получить о пользователе во время использования сайта <a href="https://timoshamoscow.github.io/tstudios/" target="_blank" rel="noopener">timoshamoscow.github.io/tstudios/</a> (далее — «Сайт»).</p>
+                <p>Настоящая Политика конфиденциальности (далее — «Политика») действует в отношении всей информации, которую студия TStudios (далее — «Студия», «мы») может получить о пользователе во время использования сайта <a href="https://timoshamoscow.github.io/tstudios/" target="_blank" rel="noopener">timoshamoscow.github.io/tstudios/</a>.</p>
                 <p>Использование Сайта означает безоговорочное согласие пользователя с настоящей Политикой и указанными в ней условиями обработки его персональной информации.</p>
 
                 <h4>2. Какие данные мы собираем</h4>
-                <p>Мы можем собирать следующие данные:</p>
                 <ul>
-                    <li><strong>Данные, которые вы оставляете сами:</strong> имя или никнейм, описание заказа, контакты (Discord, Telegram), референсы и другие сведения, которые вы указываете в формах на Сайте.</li>
-                    <li><strong>Автоматически собираемые данные:</strong> IP-адрес, тип браузера, операционная система, дата и время посещения, страницы, которые вы просматриваете, файлы cookie.</li>
-                    <li><strong>Данные из внешних источников:</strong> если вы переходите на Сайт по ссылке из наших соцсетей, мы можем видеть источник перехода (аналитика).</li>
+                    <li><strong>Данные, которые вы оставляете сами:</strong> имя или никнейм, описание заказа, контакты (Discord, Telegram), референсы и другие сведения из форм на Сайте.</li>
+                    <li><strong>Автоматически собираемые данные:</strong> IP-адрес, тип браузера, ОС, дата и время посещения, файлы cookie.</li>
                 </ul>
 
                 <h4>3. Зачем мы собираем данные</h4>
-                <p>Ваши данные используются исключительно для:</p>
                 <ul>
-                    <li>Обработки и выполнения ваших заказов (создание скинов, рендеров).</li>
-                    <li>Связи с вами по вопросам заказа (уточнение деталей, отправка результата).</li>
-                    <li>Улучшения работы Сайта и качества услуг.</li>
-                    <li>Ведения статистики и анализа посещаемости (через Яндекс.Метрику, Google Analytics).</li>
+                    <li>Обработка и выполнение заказов.</li>
+                    <li>Связь по вопросам заказа.</li>
+                    <li>Улучшение работы Сайта и аналитика.</li>
                 </ul>
 
-                <h4>4. Как мы защищаем данные</h4>
-                <p>Мы принимаем необходимые организационные и технические меры для защиты персональной информации пользователя от неправомерного или случайного доступа, уничтожения, изменения, блокирования, копирования, распространения.</p>
-                <p>Однако мы не можем гарантировать абсолютную защиту — интернет не является полностью безопасной средой. Передавая данные, вы принимаете этот риск.</p>
+                <h4>4. Передача данных третьим лицам</h4>
+                <p>Мы <strong>не продаём и не передаём</strong> ваши персональные данные третьим лицам, кроме случаев, предусмотренных законом РФ.</p>
 
-                <h4>5. Передача данных третьим лицам</h4>
-                <p>Мы <strong>не продаём и не передаём</strong> ваши персональные данные третьим лицам, за исключением случаев:</p>
-                <ul>
-                    <li>Когда это требуется по закону РФ.</li>
-                    <li>Когда это необходимо для выполнения вашего заказа (например, использование Discord для связи).</li>
-                    <li>Когда вы сами дали на это согласие.</li>
-                </ul>
-
-                <h4>6. Файлы cookie</h4>
-                <p>Сайт использует файлы cookie для улучшения работы и аналитики. Вы можете отключить cookie в настройках браузера, но это может повлиять на работу некоторых функций Сайта.</p>
-
-                <h4>7. Ваши права</h4>
-                <p>Вы имеете право:</p>
-                <ul>
-                    <li>Запросить информацию о том, какие ваши данные мы храним.</li>
-                    <li>Потребовать удаления ваших данных (если они больше не нужны для выполнения заказа).</li>
-                    <li>Отозвать согласие на обработку данных.</li>
-                </ul>
-                <p>Для этого напишите нам в Discord: <strong>timosha_moscow</strong>.</p>
-
-                <h4>8. Изменения в Политике</h4>
-                <p>Мы можем обновлять эту Политику. Актуальная версия всегда доступна на этой странице. Продолжая пользоваться Сайтом после изменений, вы принимаете новую редакцию.</p>
-
-                <h4>9. Контакты</h4>
-                <p>По всем вопросам, связанным с обработкой персональных данных, обращайтесь:</p>
-                <ul>
-                    <li>Discord: <strong>timosha_moscow</strong></li>
-                </ul>
+                <h4>5. Ваши права</h4>
+                <p>Вы можете запросить информацию о ваших данных, потребовать удаления или отозвать согласие. Для этого напишите в Discord: <strong>timosha_moscow</strong>.</p>
             </div>
         </div>
     </div>
 
-    <!-- МОДАЛКА: УСЛОВИЯ ИСПОЛЬЗОВАНИЯ -->
+    <!-- ЮРИДИЧЕСКАЯ — Условия -->
     <div class="modal-overlay" id="termsModal" aria-hidden="true" role="dialog" aria-labelledby="termsTitle">
         <div class="modal-content legal-modal-content">
-            <button type="button" class="modal-close" id="termsModalClose" aria-label="Закрыть">
-                <i class="fas fa-times"></i>
-            </button>
-
+            <button type="button" class="modal-close" id="termsModalClose" aria-label="Закрыть"><i class="fas fa-times"></i></button>
             <div class="modal-header">
                 <h3 id="termsTitle"><i class="fas fa-file-contract"></i> Условия использования</h3>
                 <p class="modal-subtitle">Последнее обновление: 7 октября 2026</p>
             </div>
-
             <div class="legal-content">
                 <h4>1. Общие условия</h4>
-                <p>Используя сайт <a href="https://timoshamoscow.github.io/tstudios/" target="_blank" rel="noopener">timoshamoscow.github.io/tstudios/</a> (далее — «Сайт») и заказывая услуги студии TStudios (далее — «Студия»), вы соглашаетесь с настоящими Условиями использования.</p>
-                <p>Если вы не согласны с условиями — пожалуйста, не используйте Сайт и не заказывайте услуги.</p>
+                <p>Используя сайт <a href="https://timoshamoscow.github.io/tstudios/" target="_blank" rel="noopener">timoshamoscow.github.io/tstudios/</a> и заказывая услуги студии TStudios, вы соглашаетесь с настоящими Условиями.</p>
 
                 <h4>2. Услуги Студии</h4>
-                <p>Студия предоставляет услуги по созданию:</p>
                 <ul>
-                    <li><strong>Скинов Minecraft</strong> — индивидуальный дизайн скина под ваш образ или бренд.</li>
-                    <li><strong>3D-рендеров Minecraft</strong> — визуализация скинов для аватарок, обложек и баннеров.</li>
+                    <li><strong>Скины Minecraft</strong> — индивидуальный дизайн скина.</li>
+                    <li><strong>3D-рендеры Minecraft</strong> — визуализация скинов.</li>
                 </ul>
 
                 <h4>3. Порядок заказа</h4>
                 <ol>
-                    <li>Вы выбираете услугу на Сайте и заполняете форму заказа.</li>
-                    <li>Скопированный текст заказа вы отправляете нам в Discord.</li>
-                    <li>Мы обсуждаем детали, сроки и стоимость.</li>
-                    <li>После согласования вы вносите предоплату (или полную оплату — по договорённости).</li>
-                    <li>Мы выполняем работу и отправляем результат.</li>
-                    <li>Вы вносите правки (если нужно) в рамках оговорённого количества.</li>
+                    <li>Выбираете услугу и заполняете форму.</li>
+                    <li>Отправляете заявку в Discord.</li>
+                    <li>Согласуем детали, сроки, стоимость.</li>
+                    <li>После согласования оплачиваете.</li>
+                    <li>Получаете результат и вносите правки.</li>
                 </ol>
 
                 <h4>4. Оплата</h4>
-                <p>Оплата принимается переводом (От покупателя к исполнителю).</p>
-                <p><strong>Оплата производится только после согласования финального результата.</strong> Сначала вы видите готовую работу, проверяете её и, если всё устраивает, переводите оплату <strong>на реквизиты, предоставленные исполнителем заказа</strong> (СБП или карта РФ).</p>
-                <p>Стоимость услуг указана на Сайте и может быть изменена в зависимости от сложности заказа. Точная цена согласовывается до начала работы.</p>
+                <p>Оплата — переводом (СБП или карта РФ). <strong>Оплата производится только после согласования финального результата.</strong></p>
 
-                <h4>5. Сроки выполнения</h4>
-                <p>Ориентировочные сроки:</p>
+                <h4>5. Сроки</h4>
                 <ul>
                     <li>Скин — 1-2 дня.</li>
                     <li>Рендер — до 24 часов.</li>
                 </ul>
-                <p>Сроки могут быть увеличены в случае большой загрузки или сложного заказа — мы предупредим заранее.</p>
 
-                <h4>6. Правки и доработки</h4>
-                <p>В стоимость входит:</p>
+                <h4>6. Правки</h4>
                 <ul>
                     <li>Скины — до 3-х правок.</li>
                     <li>Рендеры — до 2-х правок.</li>
@@ -1008,37 +732,25 @@
                 <p>Дополнительные правки сверх нормы — 45 ₽ за каждую.</p>
 
                 <h4>7. Возврат средств</h4>
-                <p>Возврат средств возможен <strong>до начала работы</strong> — в полном объёме. После начала работы возврат обсуждается индивидуально.</p>
-                <p>Если результат вас не устроил — мы предложим правки или частичный возврат (в зависимости от ситуации).</p>
+                <p>Возврат возможен <strong>до начала работы</strong> — в полном объёме. После начала работы — индивидуально.</p>
 
                 <h4>8. Авторские права</h4>
-                <p>Все работы, созданные Студией по вашему заказу, передаются вам после полной оплаты. Вы можете использовать их в личных и коммерческих целях.</p>
-                <p>Студия оставляет за собой право показывать выполненные работы в портфолио (если вы не против). Если вы хотите сохранить работу приватной — сообщите заранее.</p>
+                <p>Все работы передаются вам после полной оплаты. Студия вправе показывать работы в портфолио.</p>
 
                 <h4>9. Запрещено</h4>
-                <p>Мы не выполняем заказы, содержащие:</p>
                 <ul>
-                    <li>Нацистскую символику и пропаганду.</li>
-                    <li>Порнографию и материалы 18+.</li>
-                    <li>Оскорбления по расовому, религиозному или национальному признаку.</li>
-                    <li>Призывы к насилию и экстремизму.</li>
-                    <li>Материалы, нарушающие авторские права третьих лиц.</li>
+                    <li>Нацистская символика.</li>
+                    <li>Материалы 18+.</li>
+                    <li>Оскорбления по расовому/религиозному признаку.</li>
+                    <li>Призывы к насилию.</li>
+                    <li>Нарушение авторских прав.</li>
                 </ul>
-                <p>В таких случаях мы оставляем за собой право отказать в заказе без объяснения причин.</p>
 
                 <h4>10. Ответственность</h4>
-                <p>Студия не несёт ответственности за:</p>
-                <ul>
-                    <li>Использование вами готовых работ в нарушение авторских прав третьих лиц.</li>
-                    <li>Возможные баны вашего аккаунта в Minecraft или на YouTube.</li>
-                    <li>Технические сбои Discord, YouTube и других платформ, не зависящие от нас.</li>
-                </ul>
+                <p>Студия не несёт ответственности за использование вами работ в нарушение авторских прав, баны аккаунтов, технические сбои сторонних платформ.</p>
 
-                <h4>11. Изменения условий</h4>
-                <p>Мы можем обновлять эти Условия. Актуальная версия всегда на этой странице. Продолжая пользоваться Сайтом, вы принимаете новую редакцию.</p>
-
-                <h4>12. Контакты</h4>
-                <p>По всем вопросам — Discord: <strong>timosha_moscow</strong>.</p>
+                <h4>11. Контакты</h4>
+                <p>Discord: <strong>timosha_moscow</strong>.</p>
             </div>
         </div>
     </div>
@@ -1046,6 +758,5 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <script src="script.js"></script>
-
 </body>
 </html>
