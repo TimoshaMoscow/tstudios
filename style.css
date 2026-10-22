@@ -2835,7 +2835,7 @@ input, textarea, select { font-family: inherit; }
     margin: 0;
 }
 
-/* Если отзыва нет */
+/* Если отзыва нет. */
 .lightbox-review.is-empty {
     border-left-color: var(--border-strong);
     opacity: 0.65;

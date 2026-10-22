@@ -394,7 +394,7 @@ document.addEventListener('DOMContentLoaded', function () {
     requestAnimationFrame(animateCarousels);
 
     /* ============================================================
-       8. LIGHTBOX
+       8. LIGHTBOX.
     ============================================================ */
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
