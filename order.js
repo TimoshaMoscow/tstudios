@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
         skin: 250,
         skinFemale: 300,
         render: 150,
+        cape: 150,
         revision: 45
     };
 
@@ -14,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const isSkin = service === 'skin';
     const isRender = service === 'render';
 
-    const BASE_PRICES = { skin: PRICES.skin, render: PRICES.render };
+    const BASE_PRICES = {skin: PRICES.skin,render: PRICES.render,cape: PRICES.cape};
     const basePrice = BASE_PRICES[service] || 0;
 
     const authors = [
@@ -260,6 +261,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (skinTheme) skinTheme.focus();
                 return false;
             }
+        } else if (service === 'cape') {
+            const themeField = document.getElementById('mainText');
+            if (!themeField || !themeField.value.trim()) {
+                showToast('Заполни обязательные поля', 'error');
+            if (themeField) themeField.focus();
+                return false;
+            }
         } else if (isRender) {
             if (!selectedPose) {
                 showToast('Выбери позу или добавь свою', 'error');
@@ -321,7 +329,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let text = '';
         text += `Заказ в TStudios\n`;
         text += `━━━━━━━━━━━━━━━━━━━━\n\n`;
-        text += `Услуга: ${isSkin ? 'Скин' : 'Рендер'}\n`;
+        text += `Услуга: ${isSkin ? 'Скин' : service === 'render' ? 'Рендер' : 'Плащ'}\n`;
         text += `Имя: ${name}\n`;
         if (orderState.executorName) text += `Исполнитель: ${orderState.executorName}\n`;
 
@@ -331,6 +339,11 @@ document.addEventListener('DOMContentLoaded', function () {
             if (skinTheme && skinTheme.value.trim()) text += `Тема / стиль: ${skinTheme.value.trim()}\n`;
             if (skinColors && skinColors.value.trim()) text += `Цвета: ${skinColors.value.trim()}\n`;
             if (skinRefs && skinRefs.value.trim()) text += `Референсы: ${skinRefs.value.trim()}\n`;
+} else if (service === 'cape') {
+    const renderType = document.querySelector('input[name="renderType"]:checked');
+    if (renderType) text += 'Тип: ' + renderType.value + '\n';
+    const mainText = document.getElementById('mainText');
+    if (mainText && mainText.value.trim()) text += 'Текст: ' + mainText.value.trim() + '\n';
         } else if (isRender) {
             const renderType = document.querySelector('input[name="renderType"]:checked');
             if (renderType) text += `Тип рендера: ${renderType.value}\n`;
@@ -435,9 +448,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const shareBtn = document.getElementById('shareBtn');
     if (shareBtn) {
         shareBtn.addEventListener('click', async () => {
-            const text = isSkin
-                ? 'Закажи уникальный скин по Minecraft в TStudios — от 250 ₽, срок 1-2 дня, сначала результат, потом оплата.'
-                : 'Закажи 3D-рендер по Minecraft в TStudios — от 150 ₽, готов за сутки, сначала результат, потом оплата.';
+const text = isSkin
+    ? 'Закажи уникальный скин по Minecraft в TStudios — от 250 ₽, срок 1-2 дня, сначала результат, потом оплата.'
+    : isRender
+        ? 'Закажи 3D-рендер по Minecraft в TStudios — от 150 ₽, готов за сутки, сначала результат, потом оплата.'
+        : 'Закажи плащ в TStudios — от 150 ₽, сначала результат, потом оплата.';
             const url = window.location.href;
             if (navigator.share) {
                 try { await navigator.share({ title: 'TStudios', text, url }); return; } catch (err) {}

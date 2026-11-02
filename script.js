@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
         skin: 250,
         skinFemale: 300,
         render: 150,
-        revision: 45
+        revision: 45,
+        cape: 150
     };
 
     document.querySelectorAll('[data-price]').forEach(el => {
@@ -595,6 +596,17 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+const shareCapeBtn = document.getElementById('shareПлащBtn');
+if (shareCapeBtn) {
+    shareCapeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const url = `${window.location.origin}${window.location.pathname.replace(/[^/]*$/, '')}order-cape.html`;
+        const text = 'Закажи плащ в TStudios — от 150 ₽, сначала результат, потом оплата.';
+        shareText(text, url);
+    });
+}
+
     const shareRenderBtn = document.getElementById('shareRenderBtn');
     if (shareRenderBtn) {
         shareRenderBtn.addEventListener('click', (e) => {
@@ -828,7 +840,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (calcOrderBtn) {
         calcOrderBtn.addEventListener('click', () => {
-            const page = calcState.service === 'Рендер' ? 'order-render.html' : 'order-skin.html';
+            const PAGES = {'Скин': 'order-skin.html','Рендер': 'order-render.html','Плащ': 'order-cape.html'};
+            const page = PAGES[calcState.service] || 'order-skin.html';
             const params = new URLSearchParams();
             if (calcState.revisions > 0) params.set('revisions', calcState.revisions);
             if (calcState.urgencyMult !== 1) params.set('urgency', calcState.urgencyMult);
