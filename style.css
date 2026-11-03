@@ -2873,3 +2873,89 @@ input, textarea, select { font-family: inherit; }
     .lightbox-review-text { font-size: 0.76rem; line-height: 1.55; }
     .lightbox-review.is-empty .lightbox-review-empty-text { font-size: 0.76rem; }
 }
+
+/* ============================================================
+   Friends (наши друзья)
+   ============================================================ */
+
+.friends { padding: 80px 0; }
+
+.friends-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.friends-row {
+    width: 100%;
+}
+
+.friends-viewport {
+    overflow: hidden;
+    padding: 4px 0;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, black 60px, black calc(100% - 60px), transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, black 60px, black calc(100% - 60px), transparent 100%);
+}
+
+.friends-viewport:has(.friend-card:only-child),
+.friends-viewport:has(.friend-card:nth-child(1):last-child) {
+    /* если в строке 1 карточка — без маски */
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+/* если карточек ≤3 — центрируем, не крутим */
+.friends-track {
+    display: flex;
+    gap: 12px;
+    will-change: transform;
+    justify-content: center;
+}
+
+.friends-track:has(.friend-card:nth-child(4)) {
+    /* если карточек 4+ — убираем центрирование (карусель) */
+    justify-content: flex-start;
+}
+
+.friend-card {
+    flex: 0 0 auto;
+    min-width: 200px;
+    padding: 18px 24px;
+    border-radius: var(--radius);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.friend-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary);
+    box-shadow: 0 12px 28px -8px rgba(99, 102, 241, 0.45);
+    color: var(--primary-light);
+}
+
+@media (max-width: 768px) {
+    .friends { padding: 60px 0; }
+    .friends-rows { gap: 12px; }
+    .friend-card {
+        min-width: 160px;
+        padding: 14px 18px;
+        font-size: 0.88rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .friend-card {
+        min-width: 140px;
+        padding: 12px 16px;
+        font-size: 0.82rem;
+    }
+}

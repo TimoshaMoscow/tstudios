@@ -215,6 +215,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     ];
 
+/* ============================================================
+   5.5. НАШИ ДРУЗЬЯ
+   ============================================================ */
+const friendsData = [
+    { name: 'SKX Studio', url: 'https://beatlewin.github.io/skxstudio/' }
+];
+
     /* formatPrice — учитывает tag: gift / practice / цена */
     function formatPrice(price, tag) {
         if (tag === 'gift') {
@@ -364,6 +371,98 @@ document.addEventListener('DOMContentLoaded', function () {
             setTimeout(() => { carouselDragMoved[key] = false; }, 50);
         });
     }
+
+/* ============================================================
+   7.5. КАРУСЕЛИ ДРУЗЕЙ
+   ============================================================ */
+const friendsRowsEl = document.getElementById('friendsRows');
+const friendCarousels = [];
+
+if (friendsRowsEl && friendsData.length > 0) {
+    // сколько строк и какой размер
+    let rowsCount = 1;
+    if (friendsData.length >= 10) rowsCount = 3;
+    else if (friendsData.length >= 7) rowsCount = 2;
+
+    // распределяем друзей по строкам максимально равномерно
+    const perRow = Math.ceil(friendsData.length / rowsCount);
+    const rows = [];
+    for (let i = 0; i < rowsCount; i++) {
+        rows.push(friendsData.slice(i * perRow, (i + 1) * perRow));
+    }
+
+    rows.forEach((rowItems, rowIndex) => {
+        if (!rowItems.length) return;
+
+        const rowWrap = document.createElement('div');
+        rowWrap.className = 'friends-row';
+
+        const viewport = document.createElement('div');
+        viewport.className = 'friends-viewport';
+
+        const track = document.createElement('div');
+        track.className = 'friends-track';
+
+        // если карточек мало (≤3) — не крутим, просто по центру
+        const doAnimate = rowItems.length > 3;
+
+        // если анимируем — утраиваем для бесшовности
+        const items = doAnimate ? [...rowItems, ...rowItems, ...rowItems] : rowItems;
+
+        items.forEach((friend) => {
+            const a = document.createElement('a');
+            a.className = 'friend-card';
+            a.href = friend.url;
+            a.target = '_blank';
+            a.rel = 'noopener';
+            a.textContent = friend.name;
+            track.appendChild(a);
+        });
+
+        viewport.appendChild(track);
+        rowWrap.appendChild(viewport);
+        friendsRowsEl.appendChild(rowWrap);
+
+        if (doAnimate) {
+            const c = {
+                track,
+                viewport,
+                direction: rowIndex % 2 === 0 ? 'left' : 'right',
+                offset: 0,
+                paused: false,
+                speed: 0.5
+            };
+            viewport.addEventListener('mouseenter', () => { c.paused = true; });
+            viewport.addEventListener('mouseleave', () => { c.paused = false; });
+            friendCarousels.push(c);
+        }
+    });
+}
+
+function animateFriendCarousels() {
+    friendCarousels.forEach(c => {
+        const singleSetWidth = c.track.scrollWidth / 3;
+        if (singleSetWidth <= 0) return;
+
+        if (!c.paused) {
+            if (c.direction === 'left') {
+                c.offset += c.speed;
+                if (c.offset >= singleSetWidth) c.offset -= singleSetWidth;
+            } else {
+                c.offset -= c.speed;
+                if (c.offset <= 0) c.offset += singleSetWidth;
+            }
+        }
+
+        if (c.offset < 0) c.offset += singleSetWidth;
+        if (c.offset >= singleSetWidth * 2) c.offset -= singleSetWidth;
+
+        c.track.style.transform = `translate3d(${-c.offset}px, 0, 0)`;
+    });
+    requestAnimationFrame(animateFriendCarousels);
+}
+
+if (friendCarousels.length) requestAnimationFrame(animateFriendCarousels);
 
     function animateCarousels() {
         Object.keys(carousels).forEach(key => {
