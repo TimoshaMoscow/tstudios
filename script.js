@@ -1,15 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     /* ============================================================
-       0. ГЛОБАЛЬНЫЕ ЦЕНЫ
+       0. ГЛОБАЛЬНЫЕ ЦЕНЫ + РЕЕСТР УСЛУГ
     ============================================================ */
+    const SERVICES = window.TSTUDIOS_SERVICES || {};
+
     const PRICES = {
-        skin: 250,
-        skinFemale: 300,
-        render: 150,
         revision: 45,
-        cape: 150
+        skinFemale: SERVICES.skin?.femalePrice || 300
     };
+    Object.entries(SERVICES).forEach(([key, s]) => {
+        PRICES[key] = s.price;
+    });
 
     document.querySelectorAll('[data-price]').forEach(el => {
         const key = el.getAttribute('data-price');
@@ -215,12 +217,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     ];
 
-/* ============================================================
-   5.5. НАШИ ДРУЗЬЯ
-   ============================================================ */
-const friendsData = [
-    { name: 'SKX Studio', url: 'https://beatlewin.github.io/skxstudio/' }
-];
+    /* ============================================================
+       5.5. НАШИ ДРУЗЬЯ
+    ============================================================ */
+    const friendsData = [
+        { name: 'SKX Studio', url: 'https://beatlewin.github.io/skxstudio/' }
+    ];
 
     /* formatPrice — учитывает tag: gift / practice / цена */
     function formatPrice(price, tag) {
@@ -372,97 +374,92 @@ const friendsData = [
         });
     }
 
-/* ============================================================
-   7.5. КАРУСЕЛИ ДРУЗЕЙ
-   ============================================================ */
-const friendsRowsEl = document.getElementById('friendsRows');
-const friendCarousels = [];
+    /* ============================================================
+       7.5. КАРУСЕЛИ ДРУЗЕЙ
+    ============================================================ */
+    const friendsRowsEl = document.getElementById('friendsRows');
+    const friendCarousels = [];
 
-if (friendsRowsEl && friendsData.length > 0) {
-    // сколько строк и какой размер
-    let rowsCount = 1;
-    if (friendsData.length >= 10) rowsCount = 3;
-    else if (friendsData.length >= 7) rowsCount = 2;
+    if (friendsRowsEl && friendsData.length > 0) {
+        let rowsCount = 1;
+        if (friendsData.length >= 10) rowsCount = 3;
+        else if (friendsData.length >= 7) rowsCount = 2;
 
-    // распределяем друзей по строкам максимально равномерно
-    const perRow = Math.ceil(friendsData.length / rowsCount);
-    const rows = [];
-    for (let i = 0; i < rowsCount; i++) {
-        rows.push(friendsData.slice(i * perRow, (i + 1) * perRow));
+        const perRow = Math.ceil(friendsData.length / rowsCount);
+        const rows = [];
+        for (let i = 0; i < rowsCount; i++) {
+            rows.push(friendsData.slice(i * perRow, (i + 1) * perRow));
+        }
+
+        rows.forEach((rowItems, rowIndex) => {
+            if (!rowItems.length) return;
+
+            const rowWrap = document.createElement('div');
+            rowWrap.className = 'friends-row';
+
+            const viewport = document.createElement('div');
+            viewport.className = 'friends-viewport';
+
+            const track = document.createElement('div');
+            track.className = 'friends-track';
+
+            const doAnimate = rowItems.length > 3;
+            const items = doAnimate ? [...rowItems, ...rowItems, ...rowItems] : rowItems;
+
+            items.forEach((friend) => {
+                const a = document.createElement('a');
+                a.className = 'friend-card';
+                a.href = friend.url;
+                a.target = '_blank';
+                a.rel = 'noopener';
+                a.textContent = friend.name;
+                track.appendChild(a);
+            });
+
+            viewport.appendChild(track);
+            rowWrap.appendChild(viewport);
+            friendsRowsEl.appendChild(rowWrap);
+
+            if (doAnimate) {
+                const c = {
+                    track,
+                    viewport,
+                    direction: rowIndex % 2 === 0 ? 'left' : 'right',
+                    offset: 0,
+                    paused: false,
+                    speed: 0.5
+                };
+                viewport.addEventListener('mouseenter', () => { c.paused = true; });
+                viewport.addEventListener('mouseleave', () => { c.paused = false; });
+                friendCarousels.push(c);
+            }
+        });
     }
 
-    rows.forEach((rowItems, rowIndex) => {
-        if (!rowItems.length) return;
+    function animateFriendCarousels() {
+        friendCarousels.forEach(c => {
+            const singleSetWidth = c.track.scrollWidth / 3;
+            if (singleSetWidth <= 0) return;
 
-        const rowWrap = document.createElement('div');
-        rowWrap.className = 'friends-row';
-
-        const viewport = document.createElement('div');
-        viewport.className = 'friends-viewport';
-
-        const track = document.createElement('div');
-        track.className = 'friends-track';
-
-        // если карточек мало (≤3) — не крутим, просто по центру
-        const doAnimate = rowItems.length > 3;
-
-        // если анимируем — утраиваем для бесшовности
-        const items = doAnimate ? [...rowItems, ...rowItems, ...rowItems] : rowItems;
-
-        items.forEach((friend) => {
-            const a = document.createElement('a');
-            a.className = 'friend-card';
-            a.href = friend.url;
-            a.target = '_blank';
-            a.rel = 'noopener';
-            a.textContent = friend.name;
-            track.appendChild(a);
-        });
-
-        viewport.appendChild(track);
-        rowWrap.appendChild(viewport);
-        friendsRowsEl.appendChild(rowWrap);
-
-        if (doAnimate) {
-            const c = {
-                track,
-                viewport,
-                direction: rowIndex % 2 === 0 ? 'left' : 'right',
-                offset: 0,
-                paused: false,
-                speed: 0.5
-            };
-            viewport.addEventListener('mouseenter', () => { c.paused = true; });
-            viewport.addEventListener('mouseleave', () => { c.paused = false; });
-            friendCarousels.push(c);
-        }
-    });
-}
-
-function animateFriendCarousels() {
-    friendCarousels.forEach(c => {
-        const singleSetWidth = c.track.scrollWidth / 3;
-        if (singleSetWidth <= 0) return;
-
-        if (!c.paused) {
-            if (c.direction === 'left') {
-                c.offset += c.speed;
-                if (c.offset >= singleSetWidth) c.offset -= singleSetWidth;
-            } else {
-                c.offset -= c.speed;
-                if (c.offset <= 0) c.offset += singleSetWidth;
+            if (!c.paused) {
+                if (c.direction === 'left') {
+                    c.offset += c.speed;
+                    if (c.offset >= singleSetWidth) c.offset -= singleSetWidth;
+                } else {
+                    c.offset -= c.speed;
+                    if (c.offset <= 0) c.offset += singleSetWidth;
+                }
             }
-        }
 
-        if (c.offset < 0) c.offset += singleSetWidth;
-        if (c.offset >= singleSetWidth * 2) c.offset -= singleSetWidth;
+            if (c.offset < 0) c.offset += singleSetWidth;
+            if (c.offset >= singleSetWidth * 2) c.offset -= singleSetWidth;
 
-        c.track.style.transform = `translate3d(${-c.offset}px, 0, 0)`;
-    });
-    requestAnimationFrame(animateFriendCarousels);
-}
+            c.track.style.transform = `translate3d(${-c.offset}px, 0, 0)`;
+        });
+        requestAnimationFrame(animateFriendCarousels);
+    }
 
-if (friendCarousels.length) requestAnimationFrame(animateFriendCarousels);
+    if (friendCarousels.length) requestAnimationFrame(animateFriendCarousels);
 
     function animateCarousels() {
         Object.keys(carousels).forEach(key => {
@@ -494,7 +491,7 @@ if (friendCarousels.length) requestAnimationFrame(animateFriendCarousels);
     requestAnimationFrame(animateCarousels);
 
     /* ============================================================
-       8. LIGHTBOX.
+       8. LIGHTBOX
     ============================================================ */
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
@@ -544,7 +541,6 @@ if (friendCarousels.length) requestAnimationFrame(animateFriendCarousels);
             lightboxAuthorSocials.innerHTML += `<a href="${author.telegram}" target="_blank" rel="noopener" class="tg"><i class="fab fa-telegram"></i> ТГК</a>`;
         }
 
-        /* --- Отзыв работы (если есть) --- */
         const lightboxReview = document.getElementById('lightboxReview');
         if (lightboxReview) {
             if (item.review && item.review.text) {
@@ -640,13 +636,7 @@ if (friendCarousels.length) requestAnimationFrame(animateFriendCarousels);
         return window.location.origin + window.location.pathname;
     }
 
-    async function shareText(text, url) {
-        if (navigator.share) {
-            try {
-                await navigator.share({ title: 'TStudios', text, url });
-                return;
-            } catch (err) { /* отменил */ }
-        }
+    function shareText(text, url) {
         copyToClipboard(`${text}\n${url}`, 'Скопировано!');
     }
 
@@ -684,35 +674,41 @@ if (friendCarousels.length) requestAnimationFrame(animateFriendCarousels);
         });
     }
 
-    const shareSkinBtn = document.getElementById('shareSkinBtn');
-    if (shareSkinBtn) {
-        shareSkinBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const url = `${window.location.origin}${window.location.pathname.replace(/[^/]*$/, '')}order-skin.html`;
-            const text = 'Закажи уникальный скин по Minecraft в TStudios — от 250 ₽, срок 1-2 дня, сначала результат, потом оплата.';
-            shareText(text, url);
+    /* Карточки услуг — генерируем из реестра и вешаем шаринг на data-share */
+    const servicesGrid = document.getElementById('servicesGrid');
+    if (servicesGrid) {
+        servicesGrid.innerHTML = '';
+        Object.entries(SERVICES).forEach(([key, s]) => {
+            const a = document.createElement('a');
+            a.href = s.page;
+            a.className = 'service-card';
+            a.setAttribute('aria-label', `Заказать ${s.name}`);
+            a.innerHTML = `
+                <img class="service-bg" src="services/${key}.png" alt="" loading="lazy">
+                <div class="service-overlay"></div>
+                <button type="button" class="service-share" data-share="${key}" aria-label="Поделиться ${s.name}">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+                <div class="service-badge">от ${s.price} ₽</div>
+                <div class="service-content">
+                    <h3>${s.name}</h3>
+                    <p>${s.cardDesc}</p>
+                    <span class="service-cta">Заказать <i class="fas fa-arrow-right"></i></span>
+                </div>
+            `;
+            servicesGrid.appendChild(a);
         });
-    }
 
-const shareCapeBtn = document.getElementById('shareПлащBtn');
-if (shareCapeBtn) {
-    shareCapeBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const url = `${window.location.origin}${window.location.pathname.replace(/[^/]*$/, '')}order-cape.html`;
-        const text = 'Закажи плащ в TStudios — от 150 ₽, сначала результат, потом оплата.';
-        shareText(text, url);
-    });
-}
-
-    const shareRenderBtn = document.getElementById('shareRenderBtn');
-    if (shareRenderBtn) {
-        shareRenderBtn.addEventListener('click', (e) => {
+        servicesGrid.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-share]');
+            if (!btn) return;
             e.preventDefault();
             e.stopPropagation();
-            const url = `${window.location.origin}${window.location.pathname.replace(/[^/]*$/, '')}order-render.html`;
-            const text = 'Закажи 3D-рендер по Minecraft в TStudios — от 150 ₽, готов за сутки, сначала результат, потом оплата.';
+            const key = btn.dataset.share;
+            const s = SERVICES[key];
+            if (!s) return;
+            const url = `${window.location.origin}${window.location.pathname.replace(/[^/]*$/, '')}${s.page}`;
+            const text = `Закажи ${s.name.toLowerCase()} в TStudios — от ${s.price} ₽, сначала результат, потом оплата.`;
             shareText(text, url);
         });
     }
@@ -869,7 +865,7 @@ if (shareCapeBtn) {
 
     let calcState = {
         service: 'Скин',
-        basePrice: PRICES.skin,
+        basePrice: PRICES.skin || 0,
         genderExtra: 0,
         revisions: 0,
         revisionsPrice: PRICES.revision,
@@ -884,6 +880,19 @@ if (shareCapeBtn) {
     }
 
     if (calcService) {
+        /* Кнопки услуг — генерируем из реестра */
+        calcService.innerHTML = '';
+        Object.entries(SERVICES).forEach(([key, s], i) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'calc-opt' + (i === 0 ? ' active' : '');
+            btn.dataset.service = s.name;
+            btn.dataset.price = s.price;
+            btn.dataset.key = key;
+            btn.innerHTML = `<i class="fas ${s.icon}"></i> ${s.name}`;
+            calcService.appendChild(btn);
+        });
+
         calcService.querySelectorAll('.calc-opt').forEach(btn => {
             btn.addEventListener('click', function () {
                 calcService.querySelectorAll('.calc-opt').forEach(b => b.classList.remove('active'));
@@ -891,10 +900,11 @@ if (shareCapeBtn) {
                 calcState.service = this.dataset.service;
                 calcState.basePrice = parseInt(this.dataset.price);
 
-                if (calcState.service === 'Скин') {
-                    calcGenderRow.hidden = false;
-                } else {
-                    calcGenderRow.hidden = true;
+                const svc = SERVICES[this.dataset.key] || {};
+                const showGender = !!svc.hasGender;
+                if (calcGenderRow) calcGenderRow.hidden = !showGender;
+
+                if (!showGender) {
                     calcState.genderExtra = 0;
                     if (calcGender) {
                         calcGender.querySelectorAll('.calc-opt').forEach(b => b.classList.remove('active'));
@@ -939,8 +949,11 @@ if (shareCapeBtn) {
 
     if (calcOrderBtn) {
         calcOrderBtn.addEventListener('click', () => {
-            const PAGES = {'Скин': 'order-skin.html','Рендер': 'order-render.html','Плащ': 'order-cape.html'};
+            /* PAGES собираем из реестра: имя -> страница */
+            const PAGES = {};
+            Object.values(SERVICES).forEach(s => { PAGES[s.name] = s.page; });
             const page = PAGES[calcState.service] || 'order-skin.html';
+
             const params = new URLSearchParams();
             if (calcState.revisions > 0) params.set('revisions', calcState.revisions);
             if (calcState.urgencyMult !== 1) params.set('urgency', calcState.urgencyMult);

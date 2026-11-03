@@ -1,21 +1,28 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     /* ============================================================
-       0. ЦЕНЫ
+       0. ЦЕНЫ + РЕЕСТР УСЛУГ
     ============================================================ */
+    const SERVICES = window.TSTUDIOS_SERVICES || {};
+
     const PRICES = {
-        skin: 250,
-        skinFemale: 300,
-        render: 150,
-        cape: 150,
-        revision: 45
+        revision: 45,
+        skinFemale: SERVICES.skin?.femalePrice || 300
     };
+    Object.entries(SERVICES).forEach(([key, s]) => {
+        PRICES[key] = s.price;
+    });
 
     const service = document.body.dataset.service;
+    const svc = SERVICES[service] || null;
+
     const isSkin = service === 'skin';
     const isRender = service === 'render';
 
-    const BASE_PRICES = {skin: PRICES.skin,render: PRICES.render,cape: PRICES.cape};
+    const BASE_PRICES = {};
+    Object.entries(SERVICES).forEach(([key, s]) => {
+        BASE_PRICES[key] = s.price;
+    });
     const basePrice = BASE_PRICES[service] || 0;
 
     const authors = [
@@ -63,7 +70,8 @@ document.addEventListener('DOMContentLoaded', function () {
     /* ============================================================
        3. PREFILL
     ============================================================ */
-    if (isSkin) {
+    const genderRadios = document.querySelectorAll('input[name="skinGender"]');
+    if (genderRadios.length) {
         const maleRadio = document.querySelector('input[name="skinGender"][value="Мужской"]');
         const femaleRadio = document.querySelector('input[name="skinGender"][value="Женский"]');
         if (initial.gender === 'female' && femaleRadio) femaleRadio.checked = true;
@@ -143,8 +151,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    if (isSkin) {
-        document.querySelectorAll('input[name="skinGender"]').forEach(radio => {
+    if (genderRadios.length) {
+        genderRadios.forEach(radio => {
             radio.addEventListener('change', function () {
                 orderState.gender = this.value === 'Женский' ? 'female' : 'male';
                 updatePriceBanner();
@@ -180,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       6. ШАГ 2 — ЧИПСЫ ПОЗЫ + ОСТАЛЬНОЕ
+       6. ШАГ 2 — ЧИПСЫ + ОСТАЛЬНЫЕ ПОЛЯ
     ============================================================ */
     const poseChips = document.querySelectorAll('.pose-chip');
     const customPoseWrap = document.getElementById('customPoseWrap');
@@ -265,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const themeField = document.getElementById('mainText');
             if (!themeField || !themeField.value.trim()) {
                 showToast('Заполни обязательные поля', 'error');
-            if (themeField) themeField.focus();
+                if (themeField) themeField.focus();
                 return false;
             }
         } else if (isRender) {
@@ -326,10 +334,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const desc = orderDesc ? orderDesc.value.trim() : '';
         const extra = orderExtra ? orderExtra.value.trim() : '';
 
+        const serviceLabel = svc?.name || service;
+
         let text = '';
         text += `Заказ в TStudios\n`;
         text += `━━━━━━━━━━━━━━━━━━━━\n\n`;
-        text += `Услуга: ${isSkin ? 'Скин' : service === 'render' ? 'Рендер' : 'Плащ'}\n`;
+        text += `Услуга: ${serviceLabel}\n`;
         text += `Имя: ${name}\n`;
         if (orderState.executorName) text += `Исполнитель: ${orderState.executorName}\n`;
 
@@ -339,11 +349,11 @@ document.addEventListener('DOMContentLoaded', function () {
             if (skinTheme && skinTheme.value.trim()) text += `Тема / стиль: ${skinTheme.value.trim()}\n`;
             if (skinColors && skinColors.value.trim()) text += `Цвета: ${skinColors.value.trim()}\n`;
             if (skinRefs && skinRefs.value.trim()) text += `Референсы: ${skinRefs.value.trim()}\n`;
-} else if (service === 'cape') {
-    const renderType = document.querySelector('input[name="renderType"]:checked');
-    if (renderType) text += 'Тип: ' + renderType.value + '\n';
-    const mainText = document.getElementById('mainText');
-    if (mainText && mainText.value.trim()) text += 'Текст: ' + mainText.value.trim() + '\n';
+        } else if (service === 'cape') {
+            const renderType = document.querySelector('input[name="renderType"]:checked');
+            if (renderType) text += 'Тип: ' + renderType.value + '\n';
+            const mainText = document.getElementById('mainText');
+            if (mainText && mainText.value.trim()) text += 'Текст: ' + mainText.value.trim() + '\n';
         } else if (isRender) {
             const renderType = document.querySelector('input[name="renderType"]:checked');
             if (renderType) text += `Тип рендера: ${renderType.value}\n`;
@@ -447,16 +457,14 @@ document.addEventListener('DOMContentLoaded', function () {
     ============================================================ */
     const shareBtn = document.getElementById('shareBtn');
     if (shareBtn) {
-        shareBtn.addEventListener('click', async () => {
-const text = isSkin
-    ? 'Закажи уникальный скин по Minecraft в TStudios — от 250 ₽, срок 1-2 дня, сначала результат, потом оплата.'
-    : isRender
-        ? 'Закажи 3D-рендер по Minecraft в TStudios — от 150 ₽, готов за сутки, сначала результат, потом оплата.'
-        : 'Закажи плащ в TStudios — от 150 ₽, сначала результат, потом оплата.';
-            const url = window.location.href;
-            if (navigator.share) {
-                try { await navigator.share({ title: 'TStudios', text, url }); return; } catch (err) {}
+        shareBtn.addEventListener('click', () => {
+            let text;
+            if (svc) {
+                text = `Закажи ${svc.name.toLowerCase()} в TStudios — от ${svc.price} ₽, сначала результат, потом оплата.`;
+            } else {
+                text = 'TStudios — скины, рендеры и многое другое по Minecraft на заказ.';
             }
+            const url = window.location.href;
             copyToClipboard(`${text}\n${url}`, 'Скопировано!');
         });
     }

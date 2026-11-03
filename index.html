@@ -180,52 +180,12 @@
         </div>
     </section>
 
-    <!-- УСЛУГИ. -->
+    <!-- УСЛУГИ -->
     <section class="services" id="services">
         <div class="container">
             <h2 class="section-title">Что можно заказать</h2>
             <p class="section-subtitle">Выбери услугу — цена сразу видна. Кликни по карточке, чтобы начать заказ</p>
-            <div class="services-grid">
-                <a href="order-skin.html" class="service-card" aria-label="Заказать скин">
-                    <img class="service-bg" src="services/skin.png" alt="" loading="lazy">
-                    <div class="service-overlay"></div>
-                    <button type="button" class="service-share" id="shareSkinBtn" aria-label="Поделиться скином">
-                        <i class="fas fa-share-alt"></i>
-                    </button>
-                    <div class="service-badge">от 250 ₽</div>
-                    <div class="service-content">
-                        <h3>Скин</h3>
-                        <p>Уникальный скин под твой образ</p>
-                        <span class="service-cta">Заказать <i class="fas fa-arrow-right"></i></span>
-                    </div>
-                </a>
-                <a href="order-render.html" class="service-card" aria-label="Заказать рендер">
-                    <img class="service-bg" src="services/render.png" alt="" loading="lazy">
-                    <div class="service-overlay"></div>
-                    <button type="button" class="service-share" id="shareRenderBtn" aria-label="Поделиться рендером">
-                        <i class="fas fa-share-alt"></i>
-                    </button>
-                    <div class="service-badge">от 150 ₽</div>
-                    <div class="service-content">
-                        <h3>Рендер</h3>
-                        <p>3D-рендер твоего персонажа</p>
-                        <span class="service-cta">Заказать <i class="fas fa-arrow-right"></i></span>
-                    </div>
-                </a>
-                <a href="order-cape.html" class="service-card" aria-label="Заказать Плащ">
-                    <img class="service-bg" src="services/cape.png" alt="" loading="lazy">
-                    <div class="service-overlay"></div>
-                    <button type="button" class="service-share" id="shareCapeBtn" aria-label="Поделиться Плащ">
-                        <i class="fas fa-share-alt"></i>
-                    </button>
-                    <div class="service-badge">от 150 ₽</div>
-                    <div class="service-content">
-                        <h3>Плащ</h3>
-                        <p>Уникальный плащ под твой скин</p>
-                        <span class="service-cta">Заказать <i class="fas fa-arrow-right"></i></span>
-                    </div>
-                </a>
-            </div>
+            <div class="services-grid" id="servicesGrid"></div>
         </div>
     </section>
 
@@ -237,17 +197,7 @@
             <div class="calculator-wrapper">
                 <div class="calc-row">
                     <label>Что нужно?</label>
-                    <div class="calc-options" id="calcService">
-                        <button type="button" class="calc-opt active" data-service="Скин" data-price="250">
-                            <i class="fas fa-paint-brush"></i> Скин
-                        </button>
-                        <button type="button" class="calc-opt" data-service="Рендер" data-price="150">
-                            <i class="fas fa-cube"></i> Рендер
-                        </button>
-                        <button type="button" class="calc-opt" data-service="Плащ" data-price="150">
-                            <i class="fas fa-cube"></i> Плащ
-                        </button>
-                    </div>
+                    <div class="calc-options" id="calcService"></div>
                 </div>
 
                 <div class="calc-row" id="calcGenderRow">
@@ -382,14 +332,14 @@
         </div>
     </section>
 
-<!-- НАШИ ДРУЗЬЯ -->
-<section class="friends" id="friends">
-    <div class="container">
-        <h2 class="section-title">Наши друзья</h2>
-        <p class="section-subtitle">Ребята, с которыми мы дружим и работаем</p>
-    </div>
-    <div class="friends-rows" id="friendsRows"></div>
-</section>
+    <!-- НАШИ ДРУЗЬЯ -->
+    <section class="friends" id="friends">
+        <div class="container">
+            <h2 class="section-title">Наши друзья</h2>
+            <p class="section-subtitle">Ребята, с которыми мы дружим и работаем</p>
+        </div>
+        <div class="friends-rows" id="friendsRows"></div>
+    </section>
 
     <!-- FAQ -->
     <section class="faq" id="faq">
@@ -538,7 +488,7 @@
         <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Следующая работа"><i class="fas fa-chevron-right"></i></button>
     </div>
 
-    <!-- МОДАЛКА ЗАЯВКИ В КОМАНДУ (осталась) -->
+    <!-- МОДАЛКА ЗАЯВКИ В КОМАНДУ -->
     <div class="modal-overlay" id="teamModal" aria-hidden="true" role="dialog" aria-labelledby="teamModalTitle">
         <div class="modal-content team-modal-content">
             <button type="button" class="modal-close" id="teamModalClose" aria-label="Закрыть"><i class="fas fa-times"></i></button>
@@ -773,6 +723,7 @@
 
     <div class="toast-container" id="toastContainer"></div>
 
+    <script src="services.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
