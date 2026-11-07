@@ -2959,3 +2959,12 @@ input, textarea, select { font-family: inherit; }
         font-size: 0.82rem;
     }
 }
+
+.lightbox-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    padding: 4px 0;
+}
+
+.lightbox-date[hidden] { display: none; }

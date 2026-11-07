@@ -106,6 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
             image: 'skins/tmusic.png',
             author: 'Тимошка из Москвы',
             tag: 'gift',
+            date: '2026-03-28',
             review: { name: 'Тимоша Музыка', rating: 5, text: 'Классный Скин!', service: 'Скин' }
         },
         {
@@ -114,6 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
             image: 'skins/beatlewind.png',
             author: 'Тимошка из Москвы',
             tag: 'gift',
+            date: '2026-05-13',
             review: { name: 'Beatlewind', rating: 4, text: 'Хорошо подобран стиль, но не хватает уникальности и изюминки в скине.', service: 'Скин' }
         },
         {
@@ -122,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
             image: 'skins/firefox.png',
             author: 'Тимошка из Москвы',
             tag: 'gift',
+            date: '2026-05-29',
             review: { name: 'FIREFOX', rating: 5, text: 'Очень хорошее качество и очень не плохое качество рук и буква моего канала.', service: 'Скин' }
         },
         {
@@ -130,6 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
             image: 'skins/knight.png',
             author: 'Тимошка из Москвы',
             tag: 'practice',
+            date: '2026-06-06',
             review: null
         },
         {
@@ -137,7 +141,8 @@ document.addEventListener('DOMContentLoaded', function () {
             price: 50,
             image: 'skins/toxinator.png',
             author: 'Тимошка из Москвы',
-            tag: null,
+            tag: 'oldprice',
+            date: '2026-08-16',
             review: null
         },
         {
@@ -146,6 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
             image: 'skins/zakazMAJORrender.png',
             author: 'Тимошка из Москвы',
             tag: 'gift',
+            date: '2026-09-16',
             review: { name: 'арсик', rating: 5, text: 'автор красава, все четко сделал:)', service: 'Скин' }
         },
         {
@@ -154,6 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
             image: 'skins/dasha.png',
             author: 'Тимошка из Москвы',
             tag: 'gift',
+            date: '2026-10-19',
             review: { name: 'Дашка', rating: 4, text: 'хороший.', service: 'Скин' }
         },
         {
@@ -162,6 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
             image: 'skins/timgirl.png',
             author: 'Тимошка из Москвы',
             tag: 'practice',
+            date: '2026-10-16',
             review: null
         },
         {
@@ -170,6 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
             image: 'skins/v2timgirl.png',
             author: 'Тимошка из Москвы',
             tag: 'practice',
+            date: '2026-10-19',
             review: null
         }
     ];
@@ -180,7 +189,8 @@ document.addEventListener('DOMContentLoaded', function () {
             price: 50,
             image: 'renders/npot.png',
             author: 'Тимошка из Москвы',
-            tag: null,
+            tag: 'oldprice',
+            date: '2026-10-05',
             review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
         },
         {
@@ -188,7 +198,8 @@ document.addEventListener('DOMContentLoaded', function () {
             price: 50,
             image: 'renders/sword.png',
             author: 'Тимошка из Москвы',
-            tag: null,
+            tag: 'oldprice',
+            date: '2026-10-05',
             review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
         },
         {
@@ -196,7 +207,8 @@ document.addEventListener('DOMContentLoaded', function () {
             price: 50,
             image: 'renders/OP.png',
             author: 'Тимошка из Москвы',
-            tag: null,
+            tag: 'oldprice',
+            date: '2026-10-05',
             review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
         },
         {
@@ -204,7 +216,8 @@ document.addEventListener('DOMContentLoaded', function () {
             price: 50,
             image: 'renders/peeks.png',
             author: 'Тимошка из Москвы',
-            tag: null,
+            tag: 'oldprice',
+            date: '2026-10-06',
             review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
         },
         {
@@ -212,7 +225,8 @@ document.addEventListener('DOMContentLoaded', function () {
             price: 50,
             image: 'renders/question.png',
             author: 'Тимошка из Москвы',
-            tag: null,
+            tag: 'oldprice',
+            date: '2026-10-06',
             review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
         }
     ];
@@ -221,7 +235,8 @@ document.addEventListener('DOMContentLoaded', function () {
        5.5. НАШИ ДРУЗЬЯ
     ============================================================ */
     const friendsData = [
-        { name: 'SKX Studio', url: 'https://beatlewin.github.io/skxstudio/' }
+        { name: 'SKX Studio', url: 'https://beatlewin.github.io/skxstudio/' },
+        { name: 'Багрянство', url: 'https://maxivanovih.github.io/osnova/' }
     ];
 
     /* formatPrice — учитывает tag: gift / practice / цена */
@@ -231,6 +246,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         if (tag === 'practice') {
             return '<i class="fas fa-pen"></i> Практика';
+        }
+        if (tag === 'oldprice') {
+            return `<i class="fas fa-tag"></i> Старая цена (${price} ₽)`;
         }
         if (price === 0 || price === '0' || price === '0 ₽') {
             return '<i class="fas fa-gift"></i> Подарок';
@@ -525,7 +543,21 @@ document.addEventListener('DOMContentLoaded', function () {
         lightboxType.textContent = type === 'skins' ? 'Скин' : 'Рендер';
         lightboxTitle.textContent = item.name;
         lightboxPrice.innerHTML = formatPrice(item.price, item.tag);
-
+const lightboxDate = document.getElementById('lightboxDate');
+if (lightboxDate) {
+    if (item.date) {
+        const d = new Date(item.date);
+        const formatted = d.toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+        lightboxDate.textContent = `Создано: ${formatted}`;
+        lightboxDate.hidden = false;
+    } else {
+        lightboxDate.hidden = true;
+    }
+}
         lightboxAuthorAvatar.src = author.avatar;
         lightboxAuthorAvatar.alt = author.name;
         lightboxAuthorName.textContent = author.name;
