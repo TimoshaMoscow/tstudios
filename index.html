@@ -132,11 +132,8 @@
             <nav class="main-nav" aria-label="Главная навигация">
                 <ul>
                     <li><a href="#services">Услуги</a></li>
-                    <li><a href="#how">Как работаем</a></li>
                     <li><a href="#gallery">Портфолио</a></li>
-                    <li><a href="#friends">Друзья</a></li>
                     <li><a href="#faq">FAQ</a></li>
-                    <li><a href="#join">В команду</a></li>
                     <li><a href="#projects">Проекты</a></li>
                 </ul>
             </nav>
@@ -347,6 +344,15 @@
         </div>
     </section>
 
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title">Частые вопросы</h2>
+            <p class="section-subtitle">Всё, что важно знать перед заказом</p>
+            <div class="faq-list" id="faqList"></div>
+        </div>
+    </section>
+
     <!-- НАШИ ДРУЗЬЯ -->
     <section class="friends" id="friends">
         <div class="container">
@@ -354,6 +360,62 @@
             <p class="section-subtitle">Ребята, с которыми мы дружим и работаем</p>
         </div>
         <div class="friends-rows" id="friendsRows"></div>
+    </section>
+
+    <!-- В КОМАНДУ -->
+    <section class="join" id="join">
+        <div class="container">
+            <h2 class="section-title">Хочешь работать с нами?</h2>
+            <p class="section-subtitle">Ищем талантливых ребят в команду TStudios</p>
+            <div class="join-wrapper">
+                <div class="join-info">
+                    <div class="join-icon"><i class="fas fa-users"></i></div>
+                    <h3>Ищем ребят в команду TStudios</h3>
+                    <p>Нужны художники скинов, 3D-моделлеры, монтажёры и строители. Если умеешь работать с Blockbench, Photoshop, Premiere Pro или Axiom — нам по пути.</p>
+
+                    <ul class="join-requirements">
+                        <li><i class="fas fa-check-circle"></i> Тебе <strong>есть 14 лет</strong></li>
+                        <li><i class="fas fa-check-circle"></i> Есть <strong>паспорт</strong></li>
+                        <li><i class="fas fa-check-circle"></i> Есть <strong>карта российского банка</strong></li>
+                        <li><i class="fas fa-check-circle"></i> Ты адекватный</li>
+                        <li><i class="fas fa-check-circle"></i> Пишешь без ошибок</li>
+                        <li><i class="fas fa-check-circle"></i> Навыки в одной из ролей</li>
+                    </ul>
+
+                    <div class="join-rules">
+                        <h4 class="join-rules-title"><i class="fas fa-info-circle"></i> Важно знать перед подачей заявки</h4>
+                        <div class="join-rule">
+                            <div class="join-rule-icon"><i class="fas fa-wallet"></i></div>
+                            <div class="join-rule-text">
+                                <strong>Всю оплату за свои заказы оставляешь себе.</strong>
+                                Клиент переводит деньги <strong>лично тебе</strong> на твои реквизиты — <strong><span class="join-highlight">Пока что</span></strong> мы не берём процент с заказов, которые пришли через нас.
+                            </div>
+                        </div>
+                        <div class="join-rule">
+                            <div class="join-rule-icon"><i class="fas fa-file-invoice"></i></div>
+                            <div class="join-rule-text">
+                                <strong><span class="join-highlight">Пока что</span></strong> для выполнения заказов <strong>не нужна самозанятость</strong> и тем более <strong>ИП</strong>. Как только это понадобится — мы сообщим.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="join-actions">
+                        <button type="button" class="btn btn-primary btn-large" id="openTeamModal">
+                            <i class="fas fa-paper-plane"></i> Заполнить заявку
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-large" id="shareJoinBtn">
+                            <i class="fas fa-share-alt"></i> Поделиться
+                        </button>
+                    </div>
+                </div>
+                <div class="join-decor" aria-hidden="true">
+                    <i class="fas fa-paint-brush"></i>
+                    <i class="fas fa-cube"></i>
+                    <i class="fas fa-image"></i>
+                    <i class="fas fa-music"></i>
+                </div>
+            </div>
+        </div>
     </section>
 
 <!-- НАШИ ПРОЕКТЫ -->
@@ -470,71 +532,6 @@
         </div>
     </div>
 </section>
-
-    <!-- FAQ -->
-    <section class="faq" id="faq">
-        <div class="container">
-            <h2 class="section-title">Частые вопросы</h2>
-            <p class="section-subtitle">Всё, что важно знать перед заказом</p>
-            <div class="faq-list" id="faqList"></div>
-        </div>
-    </section>
-
-    <!-- В КОМАНДУ -->
-    <section class="join" id="join">
-        <div class="container">
-            <h2 class="section-title">Хочешь работать с нами?</h2>
-            <p class="section-subtitle">Ищем талантливых ребят в команду TStudios</p>
-            <div class="join-wrapper">
-                <div class="join-info">
-                    <div class="join-icon"><i class="fas fa-users"></i></div>
-                    <h3>Ищем ребят в команду TStudios</h3>
-                    <p>Нужны художники скинов, 3D-моделлеры, монтажёры и строители. Если умеешь работать с Blockbench, Photoshop, Premiere Pro или Axiom — нам по пути.</p>
-
-                    <ul class="join-requirements">
-                        <li><i class="fas fa-check-circle"></i> Тебе <strong>есть 14 лет</strong></li>
-                        <li><i class="fas fa-check-circle"></i> Есть <strong>паспорт</strong></li>
-                        <li><i class="fas fa-check-circle"></i> Есть <strong>карта российского банка</strong></li>
-                        <li><i class="fas fa-check-circle"></i> Ты адекватный</li>
-                        <li><i class="fas fa-check-circle"></i> Пишешь без ошибок</li>
-                        <li><i class="fas fa-check-circle"></i> Навыки в одной из ролей</li>
-                    </ul>
-
-                    <div class="join-rules">
-                        <h4 class="join-rules-title"><i class="fas fa-info-circle"></i> Важно знать перед подачей заявки</h4>
-                        <div class="join-rule">
-                            <div class="join-rule-icon"><i class="fas fa-wallet"></i></div>
-                            <div class="join-rule-text">
-                                <strong>Всю оплату за свои заказы оставляешь себе.</strong>
-                                Клиент переводит деньги <strong>лично тебе</strong> на твои реквизиты — <strong><span class="join-highlight">Пока что</span></strong> мы не берём процент с заказов, которые пришли через нас.
-                            </div>
-                        </div>
-                        <div class="join-rule">
-                            <div class="join-rule-icon"><i class="fas fa-file-invoice"></i></div>
-                            <div class="join-rule-text">
-                                <strong><span class="join-highlight">Пока что</span></strong> для выполнения заказов <strong>не нужна самозанятость</strong> и тем более <strong>ИП</strong>. Как только это понадобится — мы сообщим.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="join-actions">
-                        <button type="button" class="btn btn-primary btn-large" id="openTeamModal">
-                            <i class="fas fa-paper-plane"></i> Заполнить заявку
-                        </button>
-                        <button type="button" class="btn btn-secondary btn-large" id="shareJoinBtn">
-                            <i class="fas fa-share-alt"></i> Поделиться
-                        </button>
-                    </div>
-                </div>
-                <div class="join-decor" aria-hidden="true">
-                    <i class="fas fa-paint-brush"></i>
-                    <i class="fas fa-cube"></i>
-                    <i class="fas fa-image"></i>
-                    <i class="fas fa-music"></i>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- ФУТЕР -->
     <footer class="footer" id="contacts" role="contentinfo">
