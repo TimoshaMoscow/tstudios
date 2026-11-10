@@ -1223,4 +1223,80 @@ if (lightboxDate) {
         }
     });
 
+    /* ============================================================
+       16. СЛАЙДЕР ПРОЕКТОВ
+    ============================================================ */
+    const projectsTrack = document.getElementById('projectsTrack');
+    const projectsPrev = document.getElementById('projectsPrev');
+    const projectsNext = document.getElementById('projectsNext');
+    const projectsDots = document.getElementById('projectsDots');
+
+    if (projectsTrack) {
+        const slides = projectsTrack.querySelectorAll('.project-slide');
+        const total = slides.length;
+        let current = 0;
+
+        function goToSlide(index) {
+            current = (index + total) % total;
+            projectsTrack.style.transform = `translateX(-${current * 100}%)`;
+            if (projectsDots) {
+                projectsDots.querySelectorAll('.projects-dot').forEach((d, i) => {
+                    d.classList.toggle('active', i === current);
+                });
+            }
+        }
+
+        /* Точки */
+        if (projectsDots) {
+            projectsDots.innerHTML = '';
+            for (let i = 0; i < total; i++) {
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'projects-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', `Проект ${i + 1}`);
+                dot.addEventListener('click', () => goToSlide(i));
+                projectsDots.appendChild(dot);
+            }
+        }
+
+        if (projectsPrev) {
+            projectsPrev.addEventListener('click', () => goToSlide(current - 1));
+        }
+        if (projectsNext) {
+            projectsNext.addEventListener('click', () => goToSlide(current + 1));
+        }
+
+        /* Стрелки клавиатуры */
+        document.addEventListener('keydown', (e) => {
+            if (!projectsTrack.offsetParent) return;
+            if (e.key === 'ArrowLeft') {
+                const rect = projectsTrack.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    goToSlide(current - 1);
+                }
+            }
+            if (e.key === 'ArrowRight') {
+                const rect = projectsTrack.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    goToSlide(current + 1);
+                }
+            }
+        });
+
+        /* Свайп на мобильных */
+        let touchStartX = 0;
+        let touchEndX = 0;
+        projectsTrack.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        projectsTrack.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) goToSlide(current + 1);
+                else goToSlide(current - 1);
+            }
+        }, { passive: true });
+    }
+
 });

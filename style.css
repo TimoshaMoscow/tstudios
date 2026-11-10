@@ -2970,36 +2970,100 @@ input, textarea, select { font-family: inherit; }
 .lightbox-date[hidden] { display: none; }
 
 /* ============================================================
-   Projects (наши проекты)
+   Projects (слайдер проектов)
    ============================================================ */
 
 .projects { padding: 80px 0; }
 
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 24px;
+.projects-slider {
+    position: relative;
     max-width: 960px;
     margin: 0 auto;
 }
 
-.project-card {
+.projects-viewport {
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-strong);
+    background: var(--bg-elevated);
+    box-shadow: var(--shadow-lg);
+}
+
+.projects-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+.project-slide {
+    flex: 0 0 100%;
+    display: flex;
+    align-items: stretch;
+    position: relative;
+    min-height: 520px;
+    overflow: hidden;
+}
+
+/* Картинка справа — заполняет всю правую половину */
+.project-slide-media {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    z-index: 0;
+    background: #0a0e1a;
+    overflow: hidden;
+}
+
+.project-slide-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* У комикса обложка вертикальная — object-fit: contain, чтобы не обрезалась */
+.project-slide-media-comic img {
+    object-fit: contain;
+    padding: 24px;
+    background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.15), transparent 70%);
+}
+
+/* Плавный переход от картинки к тексту */
+.project-slide-media::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 120px;
+    background: linear-gradient(90deg, var(--bg-elevated) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Затемнение всей карточки — чтобы текст читался и слева, и справа */
+.project-slide-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(90deg, rgba(17, 24, 39, 0.98) 0%, rgba(17, 24, 39, 0.92) 45%, rgba(17, 24, 39, 0.35) 70%, rgba(17, 24, 39, 0.15) 100%);
+    pointer-events: none;
+}
+
+.project-slide-body {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    padding: 32px;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-lg);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s;
+    padding: 40px;
+    width: 50%;
+    max-width: 520px;
 }
 
-.project-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(99, 102, 241, 0.45);
-    box-shadow: 0 24px 60px -12px rgba(99, 102, 241, 0.35);
-}
-
+/* Переиспользуем старые классы для содержимого */
 .project-icon {
     width: 56px;
     height: 56px;
@@ -3015,7 +3079,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .project-title {
-    font-size: clamp(1.35rem, 3vw, 1.75rem);
+    font-size: clamp(1.5rem, 3vw, 2rem);
     font-weight: 900;
     letter-spacing: -0.025em;
     margin: 0;
@@ -3026,7 +3090,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .project-tagline {
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     color: var(--primary-light);
     font-weight: 500;
     margin: 0;
@@ -3039,7 +3103,8 @@ input, textarea, select { font-family: inherit; }
     margin: 6px 0 2px;
 }
 
-.project-features {
+.project-features,
+.project-steps {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -3048,7 +3113,10 @@ input, textarea, select { font-family: inherit; }
     gap: 6px;
 }
 
-.project-features li {
+.project-steps { counter-reset: project-step; }
+
+.project-features li,
+.project-steps li {
     position: relative;
     padding: 8px 12px 8px 34px;
     background: rgba(99, 102, 241, 0.05);
@@ -3071,27 +3139,7 @@ input, textarea, select { font-family: inherit; }
     color: var(--success);
 }
 
-.project-steps {
-    list-style: none;
-    counter-reset: project-step;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.project-steps li {
-    counter-increment: project-step;
-    position: relative;
-    padding: 8px 12px 8px 34px;
-    background: rgba(99, 102, 241, 0.05);
-    border: 1px solid rgba(99, 102, 241, 0.15);
-    border-radius: var(--radius-sm);
-    font-size: 0.88rem;
-    color: var(--text-soft);
-    line-height: 1.5;
-}
+.project-steps li { counter-increment: project-step; }
 
 .project-steps li::before {
     content: counter(project-step);
@@ -3126,98 +3174,6 @@ input, textarea, select { font-family: inherit; }
     font-family: 'Consolas', monospace;
     font-size: 0.82rem;
     color: var(--cyan);
-}
-
-.project-note {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 12px 14px;
-    background: rgba(245, 158, 11, 0.06);
-    border: 1px solid rgba(245, 158, 11, 0.25);
-    border-radius: var(--radius-sm);
-    font-size: 0.82rem;
-    color: #fbbf24;
-    line-height: 1.55;
-    margin-top: 4px;
-}
-
-.project-note i { color: var(--warning); flex-shrink: 0; margin-top: 1px; font-size: 0.95rem; }
-
-.project-note a {
-    color: var(--warning);
-    border-bottom: 1px solid rgba(245, 158, 11, 0.4);
-    transition: border-color 0.2s;
-}
-
-.project-note a:hover { border-color: var(--warning); }
-
-.project-actions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: auto;
-    padding-top: 8px;
-}
-
-@media (max-width: 992px) {
-    .projects-grid { grid-template-columns: 1fr; max-width: 500px; }
-}
-
-@media (max-width: 768px) {
-    .projects { padding: 60px 0; }
-    .project-card { padding: 26px; }
-}
-
-@media (max-width: 480px) {
-    .project-card { padding: 22px; }
-    .project-icon { width: 48px; height: 48px; font-size: 1.3rem; }
-    .project-features li,
-    .project-steps li { font-size: 0.82rem; padding: 7px 10px 7px 32px; }
-    .project-note { font-size: 0.78rem; padding: 10px 12px; }
-    .project-actions { flex-direction: column; }
-    .project-actions .btn { width: 100%; }
-}
-
-/* ===== Комикс-карточка ===== */
-.project-card-comic {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 32px;
-    align-items: start;
-    padding: 32px;
-}
-
-.project-comic-body {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    min-width: 0;
-}
-
-.project-comic-cover {
-    width: 240px;
-    aspect-ratio: 9 / 16;
-    border-radius: var(--radius);
-    overflow: hidden;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--border);
-    position: relative;
-    flex-shrink: 0;
-    align-self: start;
-}
-
-.project-comic-cover img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.project-card-comic:hover .project-comic-cover img {
-    transform: scale(1.03);
 }
 
 .project-desc {
@@ -3265,100 +3221,133 @@ input, textarea, select { font-family: inherit; }
     justify-content: center;
 }
 
+.project-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px 14px;
+    background: rgba(245, 158, 11, 0.06);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    color: #fbbf24;
+    line-height: 1.55;
+    margin-top: 4px;
+}
+
+.project-note i { color: var(--warning); flex-shrink: 0; margin-top: 1px; font-size: 0.95rem; }
+
+.project-note a {
+    color: var(--warning);
+    border-bottom: 1px solid rgba(245, 158, 11, 0.4);
+    transition: border-color 0.2s;
+}
+
+.project-note a:hover { border-color: var(--warning); }
+
+.project-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: auto;
+    padding-top: 12px;
+}
+
+/* Стрелки */
+.projects-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(17, 24, 39, 0.9);
+    border: 1px solid var(--border-strong);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.projects-arrow:hover {
+    background: var(--primary);
+    border-color: transparent;
+    transform: translateY(-50%) scale(1.08);
+    box-shadow: 0 12px 32px rgba(99, 102, 241, 0.5);
+}
+
+.projects-prev { left: -26px; }
+.projects-next { right: -26px; }
+
+/* Точки */
+.projects-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+}
+
+.projects-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    padding: 0;
+}
+
+.projects-dot.active {
+    background: var(--primary);
+    width: 24px;
+    border-radius: 4px;
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.6);
+}
+
+/* ===== Мобильная адаптация ===== */
 @media (max-width: 992px) {
-    .project-card-comic {
-        grid-template-columns: 1fr;
-        gap: 20px;
+    .project-slide { min-height: 600px; }
+    .project-slide-media { width: 100%; opacity: 0.35; }
+    .project-slide-media::after { display: none; }
+    .project-slide-body {
+        width: 100%;
+        max-width: 100%;
+        padding: 32px;
     }
-    .project-comic-cover {
-        width: 180px;
-        align-self: center;
+    .project-slide-overlay {
+        background: linear-gradient(180deg, rgba(17, 24, 39, 0.85) 0%, rgba(17, 24, 39, 0.95) 100%);
     }
+    .projects-prev { left: 12px; }
+    .projects-next { right: 12px; }
+    .projects-arrow { width: 44px; height: 44px; font-size: 1rem; }
 }
 
 @media (max-width: 768px) {
-    .project-card-comic {
-        padding: 26px;
-    }
-}
-
-@media (max-width: 480px) {
-    .project-card-comic {
-        padding: 22px;
-    }
-    .project-comic-cover {
-        width: 160px;
-    }
+    .projects { padding: 60px 0; }
+    .project-slide { min-height: 560px; }
+    .project-slide-body { padding: 26px; }
+    .project-features li,
+    .project-steps li { font-size: 0.82rem; padding: 7px 10px 7px 32px; }
+    .project-note { font-size: 0.78rem; padding: 10px 12px; }
     .project-questions li { font-size: 0.8rem; padding: 7px 10px 7px 30px; }
     .project-desc { font-size: 0.82rem; }
 }
 
-/* ===== Карточки проектов с картинкой справа ===== */
-.project-card-media {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 32px;
-    align-items: start;
-    padding: 32px;
-}
-
-.project-body {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    min-width: 0;
-}
-
-.project-media {
-    flex-shrink: 0;
-    align-self: start;
-    border-radius: var(--radius);
-    overflow: hidden;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--border);
-    position: relative;
-}
-
-.project-media img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.project-card-media:hover .project-media img {
-    transform: scale(1.03);
-}
-
-.project-media-launcher {
-    width: 280px;
-    aspect-ratio: 4 / 3;
-}
-
-.project-media-bot {
-    width: 200px;
-    aspect-ratio: 1 / 1;
-}
-
-@media (max-width: 992px) {
-    .project-card-media {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    .project-media {
-        justify-self: center;
-    }
-    .project-media-launcher { width: 100%; max-width: 380px; }
-    .project-media-bot { width: 180px; }
-}
-
-@media (max-width: 768px) {
-    .project-card-media { padding: 26px; }
-}
-
 @media (max-width: 480px) {
-    .project-card-media { padding: 22px; }
-    .project-media-bot { width: 160px; }
+    .project-slide { min-height: 520px; }
+    .project-slide-body { padding: 22px; }
+    .project-icon { width: 48px; height: 48px; font-size: 1.3rem; }
+    .project-actions { flex-direction: column; }
+    .project-actions .btn { width: 100%; }
+    .projects-arrow { width: 40px; height: 40px; }
+    .projects-prev { left: 6px; }
+    .projects-next { right: 6px; }
 }

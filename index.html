@@ -424,111 +424,125 @@
         <h2 class="section-title">Наши проекты</h2>
         <p class="section-subtitle">Что мы делаем помимо скинов и рендеров</p>
 
-        <div class="projects-grid">
+        <div class="projects-slider">
+            <button type="button" class="projects-arrow projects-prev" id="projectsPrev" aria-label="Предыдущий проект">
+                <i class="fas fa-chevron-left"></i>
+            </button>
 
-<!-- TStudios Лаунчер -->
-<div class="project-card project-card-media">
-    <div class="project-body">
-        <div class="project-icon"><i class="fa-solid fa-cube"></i></div>
-        <h3 class="project-title">TStudios Лаунчер</h3>
-        <p class="project-tagline">Лучший Minecraft лаунчер</p>
+            <div class="projects-viewport">
+                <div class="projects-track" id="projectsTrack">
 
-        <h4 class="project-subtitle">Почему лучший</h4>
-        <ul class="project-features">
-            <li>Создание своих сборок (больше одной)</li>
-            <li>Поддержка современных способов входа (+ оффлайн ник)</li>
-            <li>Скачивание модов прямо из лаунчера</li>
-            <li>Мгновенная смена скина</li>
-        </ul>
+                    <!-- TStudios Лаунчер -->
+                    <div class="project-slide">
+                        <div class="project-slide-media">
+                            <img src="launcher1.png" alt="TStudios Лаунчер — концепт-арт" loading="lazy">
+                        </div>
+                        <div class="project-slide-overlay"></div>
+                        <div class="project-slide-body">
+                            <div class="project-icon"><i class="fa-solid fa-cube"></i></div>
+                            <h3 class="project-title">TStudios Лаунчер</h3>
+                            <p class="project-tagline">Лучший Minecraft лаунчер</p>
 
-        <div class="project-note">
-            <i class="fas fa-info-circle"></i>
-            <span>Скоро откроется бетатест, ожидайте</span>
-        </div>
+                            <h4 class="project-subtitle">Почему лучший</h4>
+                            <ul class="project-features">
+                                <li>Создание своих сборок (больше одной)</li>
+                                <li>Поддержка современных способов входа (+ оффлайн ник)</li>
+                                <li>Скачивание модов прямо из лаунчера</li>
+                                <li>Мгновенная смена скина</li>
+                            </ul>
 
-        <div class="project-actions">
-            <a href="https://donatepay.ru/don/2020tima" target="_blank" rel="noopener" class="btn btn-secondary">
-                <i class="fas fa-heart"></i> Поддержать
-            </a>
-        </div>
-    </div>
+                            <div class="project-note">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Скоро откроется бетатест, ожидайте</span>
+                            </div>
 
-    <div class="project-media project-media-launcher">
-        <img src="launcher1.png" alt="TStudios Лаунчер — концепт-арт" loading="lazy">
-    </div>
-</div>
+                            <div class="project-actions">
+                                <a href="https://donatepay.ru/don/2020tima" target="_blank" rel="noopener" class="btn btn-secondary">
+                                    <i class="fas fa-heart"></i> Поддержать
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-<!-- Бот-модератор TEE7 -->
-<div class="project-card project-card-media">
-    <div class="project-body">
-        <div class="project-icon"><i class="fas fa-robot"></i></div>
-        <h3 class="project-title">TEE7</h3>
-        <p class="project-tagline">Лучший бот-модератор в Disalive</p>
+                    <!-- Бот-модератор TEE7 -->
+                    <div class="project-slide">
+                        <div class="project-slide-media">
+                            <img src="tee7.png" alt="TEE7 — бот-модератор" loading="lazy">
+                        </div>
+                        <div class="project-slide-overlay"></div>
+                        <div class="project-slide-body">
+                            <div class="project-icon"><i class="fas fa-robot"></i></div>
+                            <h3 class="project-title">TEE7</h3>
+                            <p class="project-tagline">Лучший бот-модератор в Disalive</p>
 
-        <h4 class="project-subtitle">Установка</h4>
-        <ol class="project-steps">
-            <li>Зарегистрируйтесь на <a href="https://disalive.ru" target="_blank" rel="noopener">disalive.ru</a></li>
-            <li>Создайте сервер</li>
-            <li>Добавьте бота <code>bot_5df7a8900f6225</code> на странице <a href="https://disalive.ru/developers" target="_blank" rel="noopener">disalive.ru/developers</a></li>
-            <li>Пользуйтесь!</li>
-        </ol>
+                            <h4 class="project-subtitle">Установка</h4>
+                            <ol class="project-steps">
+                                <li>Зарегистрируйтесь на <a href="https://disalive.ru" target="_blank" rel="noopener">disalive.ru</a></li>
+                                <li>Создайте сервер</li>
+                                <li>Добавьте бота <code>bot_5df7a8900f6225</code> на странице <a href="https://disalive.ru/developers" target="_blank" rel="noopener">disalive.ru/developers</a></li>
+                                <li>Пользуйтесь!</li>
+                            </ol>
 
-        <div class="project-note">
-            <i class="fas fa-info-circle"></i>
-            <span>Сейчас бот запускается с ПК Тимошки. Если хотите 24/7 — задонатьте на хостинг (пожалуйста 🥺): <a href="https://donatepay.ru/don/2020tima" target="_blank" rel="noopener">donatepay.ru/don/2020tima</a></span>
-        </div>
+                            <div class="project-note">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Сейчас бот запускается с ПК Тимошки. Если хотите 24/7 — задонатьте на хостинг (пожалуйста 🥺): <a href="https://donatepay.ru/don/2020tima" target="_blank" rel="noopener">donatepay.ru/don/2020tima</a></span>
+                            </div>
 
-        <div class="project-actions">
-            <a href="https://disalive.ru" target="_blank" rel="noopener" class="btn btn-primary">
-                <i class="fas fa-external-link-alt"></i> Открыть Disalive
-            </a>
-            <a href="https://donatepay.ru/don/2020tima" target="_blank" rel="noopener" class="btn btn-secondary">
-                <i class="fas fa-heart"></i> Поддержать
-            </a>
-        </div>
-    </div>
+                            <div class="project-actions">
+                                <a href="https://disalive.ru" target="_blank" rel="noopener" class="btn btn-primary">
+                                    <i class="fas fa-external-link-alt"></i> Открыть Disalive
+                                </a>
+                                <a href="https://donatepay.ru/don/2020tima" target="_blank" rel="noopener" class="btn btn-secondary">
+                                    <i class="fas fa-heart"></i> Поддержать
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-    <div class="project-media project-media-bot">
-        <img src="tee7.png" alt="TEE7 — бот-модератор" loading="lazy">
-    </div>
-</div>
+                    <!-- Комикс Тайна Кристалла -->
+                    <div class="project-slide">
+                        <div class="project-slide-media project-slide-media-comic">
+                            <img src="comix1.png" alt="Тайна Кристалла — обложка комикса" loading="lazy">
+                        </div>
+                        <div class="project-slide-overlay"></div>
+                        <div class="project-slide-body">
+                            <div class="project-icon"><i class="fas fa-book"></i></div>
+                            <h3 class="project-title">Тайна Кристалла</h3>
+                            <p class="project-tagline">Часть 1: Кристальный зов</p>
 
-<!-- Комикс Тайна Кристалла -->
-<div class="project-card project-card-comic">
-    <div class="project-comic-body">
-        <div class="project-icon"><i class="fas fa-book"></i></div>
-        <h3 class="project-title">Тайна Кристалла</h3>
-        <p class="project-tagline">Часть 1: Кристальный зов</p>
+                            <p class="project-desc">Этот комикс, выполненный в стиле исекай с элементами фэнтези и мистики, рассказывает историю о необычном путешествии Тимофея в совершенно неизвестный мир.</p>
+                            <p class="project-desc">Это только начало большой истории, которая в будущем погрузит читателей ещё глубже в мой лор, историю моего персонажа и тайну моей куртки.</p>
 
-        <p class="project-desc">Этот комикс, выполненный в стиле исекай с элементами фэнтези и мистики, рассказывает историю о необычном путешествии Тимофея в совершенно неизвестный мир.</p>
-        <p class="project-desc">Это только начало большой истории, которая в будущем погрузит читателей ещё глубже в мой лор, историю моего персонажа и тайну моей куртки.</p>
+                            <ul class="project-questions">
+                                <li>Что скрывают кристаллы?</li>
+                                <li>Кто такой Гид?</li>
+                                <li>И почему именно куртка Тимофея реагирует на неизвестную силу?</li>
+                            </ul>
 
-        <ul class="project-questions">
-            <li>Что скрывают кристаллы?</li>
-            <li>Кто такой Гид?</li>
-            <li>И почему именно куртка Тимофея реагирует на неизвестную силу?</li>
-        </ul>
+                            <div class="project-note">
+                                <i class="fas fa-star"></i>
+                                <span>История только начинается...</span>
+                            </div>
 
-        <div class="project-note">
-            <i class="fas fa-star"></i>
-            <span>История только начинается...</span>
-        </div>
+                            <div class="project-actions">
+                                <a href="https://drive.google.com/file/d/18zSETSxNmdFHM8woWxTjC1IvOrkRlyKz/view?usp=sharing" target="_blank" rel="noopener" class="btn btn-primary">
+                                    <i class="fas fa-book-open"></i> Читать комикс
+                                </a>
+                                <a href="https://donatepay.ru/don/2020tima" target="_blank" rel="noopener" class="btn btn-secondary">
+                                    <i class="fas fa-heart"></i> Поддержать
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-        <div class="project-actions">
-            <a href="https://drive.google.com/file/d/18zSETSxNmdFHM8woWxTjC1IvOrkRlyKz/view?usp=sharing" target="_blank" rel="noopener" class="btn btn-primary">
-                <i class="fas fa-book-open"></i> Читать комикс
-            </a>
-            <a href="https://donatepay.ru/don/2020tima" target="_blank" rel="noopener" class="btn btn-secondary">
-                <i class="fas fa-heart"></i> Поддержать
-            </a>
-        </div>
-    </div>
+                </div>
+            </div>
 
-    <div class="project-comic-cover">
-        <img src="comix1.png" alt="Тайна Кристалла — обложка комикса" loading="lazy">
-    </div>
-</div>
+            <button type="button" class="projects-arrow projects-next" id="projectsNext" aria-label="Следующий проект">
+                <i class="fas fa-chevron-right"></i>
+            </button>
 
+            <div class="projects-dots" id="projectsDots"></div>
         </div>
     </div>
 </section>
