@@ -3178,3 +3178,117 @@ input, textarea, select { font-family: inherit; }
     .project-actions { flex-direction: column; }
     .project-actions .btn { width: 100%; }
 }
+
+/* ===== Комикс-карточка ===== */
+.project-card-comic {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: start;
+    padding: 32px;
+}
+
+.project-comic-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+.project-comic-cover {
+    width: 240px;
+    aspect-ratio: 9 / 16;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border);
+    position: relative;
+    flex-shrink: 0;
+    align-self: start;
+}
+
+.project-comic-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-card-comic:hover .project-comic-cover img {
+    transform: scale(1.03);
+}
+
+.project-desc {
+    font-size: 0.88rem;
+    color: var(--text-soft);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.project-questions {
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.project-questions li {
+    position: relative;
+    padding: 8px 12px 8px 32px;
+    background: rgba(168, 85, 247, 0.06);
+    border: 1px solid rgba(168, 85, 247, 0.22);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    color: #c4b5fd;
+    line-height: 1.5;
+}
+
+.project-questions li::before {
+    content: '?';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--purple);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 992px) {
+    .project-card-comic {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .project-comic-cover {
+        width: 180px;
+        align-self: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .project-card-comic {
+        padding: 26px;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-card-comic {
+        padding: 22px;
+    }
+    .project-comic-cover {
+        width: 160px;
+    }
+    .project-questions li { font-size: 0.8rem; padding: 7px 10px 7px 30px; }
+    .project-desc { font-size: 0.82rem; }
+}
