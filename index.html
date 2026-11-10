@@ -104,6 +104,20 @@
     }
     </script>
 
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=114146492', 'ym');
+
+    ym(114146492, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/114146492" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -123,8 +137,7 @@
                     <li><a href="#friends">Друзья</a></li>
                     <li><a href="#faq">FAQ</a></li>
                     <li><a href="#join">В команду</a></li>
-                    <li><a href="#bot">Бот</a></li>
-                    <li><a href="#launcher">Лаунчер</a></li>
+                    <li><a href="#projects">Проекты</a></li>
                 </ul>
             </nav>
             <div class="header-actions">
@@ -343,78 +356,60 @@
         <div class="friends-rows" id="friendsRows"></div>
     </section>
 
-<!-- ЛАУНЧЕР -->
-<section class="bot" id="launcher">
+<!-- НАШИ ПРОЕКТЫ -->
+<section class="projects" id="projects">
     <div class="container">
-        <h2 class="section-title">TStudios Лаунчер</h2>
-        <p class="section-subtitle">Наш собственный лаунчер Minecraft</p>
+        <h2 class="section-title">Наши проекты</h2>
+        <p class="section-subtitle">Что мы делаем помимо скинов и рендеров</p>
 
-        <div class="bot-wrapper">
-            <div class="bot-info">
-                <h3><i class="fa-solid fa-cube"></i> TStudios Лаунчер</h3>
-                <p class="bot-tagline">Лучший Minecraft лаунчер</p>
+        <div class="projects-grid">
 
-                <h4 class="bot-subtitle">Почему лучший</h4>
-                <ol class="bot-steps">
-                    <li>Создание своих сборок (Больше одной)</li>
-                    <li>Поддержка современных способов входа (+оффлайн ник)</li>
+            <!-- TStudios Лаунчер -->
+            <div class="project-card">
+                <div class="project-icon"><i class="fa-solid fa-cube"></i></div>
+                <h3 class="project-title">TStudios Лаунчер</h3>
+                <p class="project-tagline">Лучший Minecraft лаунчер</p>
+
+                <h4 class="project-subtitle">Почему лучший</h4>
+                <ul class="project-features">
+                    <li>Создание своих сборок (больше одной)</li>
+                    <li>Поддержка современных способов входа (+ оффлайн ник)</li>
                     <li>Скачивание модов прямо из лаунчера</li>
                     <li>Мгновенная смена скина</li>
-                </ol>
+                </ul>
 
-                <div class="bot-note">
+                <div class="project-note">
                     <i class="fas fa-info-circle"></i>
-                    <div>
-                        Скоро откроется бетатест, ожидайте
-                    </div>
+                    <span>Скоро откроется бетатест, ожидайте</span>
                 </div>
 
-                <div class="bot-actions">
+                <div class="project-actions">
                     <a href="https://donatepay.ru/don/2020tima" target="_blank" rel="noopener" class="btn btn-secondary">
                         <i class="fas fa-heart"></i> Поддержать
                     </a>
                 </div>
             </div>
 
-            <div class="bot-decor" aria-hidden="true">
-                <i class="fa-solid fa-list"></i>
-                <i class="fa-solid fa-user-lock"></i>
-                <i class="fa-solid fa-download"></i>
-                <i class="fas fa-bolt"></i>
-            </div>
-        </div>
-    </div>
-</section>
+            <!-- Бот-модератор TEE7 -->
+            <div class="project-card">
+                <div class="project-icon"><i class="fas fa-robot"></i></div>
+                <h3 class="project-title">TEE7</h3>
+                <p class="project-tagline">Лучший бот-модератор в Disalive</p>
 
-
-<!-- БОТ-МОДЕРАТОР -->
-<section class="bot" id="bot">
-    <div class="container">
-        <h2 class="section-title">Бот-модератор</h2>
-        <p class="section-subtitle">Наш бот на платформе Disalive (Дискорд, работающий в России)</p>
-
-        <div class="bot-wrapper">
-            <div class="bot-info">
-                <h3><i class="fas fa-robot"></i> TEE7</h3>
-                <p class="bot-tagline">Лучший бот-модератор в Disalive</p>
-
-                <h4 class="bot-subtitle">Установка</h4>
-                <ol class="bot-steps">
+                <h4 class="project-subtitle">Установка</h4>
+                <ol class="project-steps">
                     <li>Зарегистрируйтесь на <a href="https://disalive.ru" target="_blank" rel="noopener">disalive.ru</a></li>
                     <li>Создайте сервер</li>
                     <li>Добавьте бота <code>bot_5df7a8900f6225</code> на странице <a href="https://disalive.ru/developers" target="_blank" rel="noopener">disalive.ru/developers</a></li>
                     <li>Пользуйтесь!</li>
                 </ol>
 
-                <div class="bot-note">
+                <div class="project-note">
                     <i class="fas fa-info-circle"></i>
-                    <div>
-                        Сейчас бот запускается с ПК Тимошки. Если хотите 24/7 работу — задонатьте нам на хостинг (пожалуйста 🥺):
-                        <a href="https://donatepay.ru/don/2020tima" target="_blank" rel="noopener">donatepay.ru/don/2020tima</a>
-                    </div>
+                    <span>Сейчас бот запускается с ПК Тимошки. Если хотите 24/7 — задонатьте на хостинг (пожалуйста 🥺): <a href="https://donatepay.ru/don/2020tima" target="_blank" rel="noopener">donatepay.ru/don/2020tima</a></span>
                 </div>
 
-                <div class="bot-actions">
+                <div class="project-actions">
                     <a href="https://disalive.ru" target="_blank" rel="noopener" class="btn btn-primary">
                         <i class="fas fa-external-link-alt"></i> Открыть Disalive
                     </a>
@@ -424,12 +419,6 @@
                 </div>
             </div>
 
-            <div class="bot-decor" aria-hidden="true">
-                <i class="fas fa-robot"></i>
-                <i class="fas fa-shield-alt"></i>
-                <i class="fas fa-comments"></i>
-                <i class="fas fa-bolt"></i>
-            </div>
         </div>
     </div>
 </section>
