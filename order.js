@@ -13,21 +13,35 @@ document.addEventListener('DOMContentLoaded', function () {
         PRICES[key] = s.price;
     });
 
+    const AUTHORS = window.TSTUDIOS_AUTHORS || [];
+
+    const BASE_PRICES = {};
+    Object.entries(SERVICES).forEach(([key, s]) => {
+        BASE_PRICES[key] = s.price;
+    });
+
+    function getAuthorByName(name) {
+        return AUTHORS.find(a => a.name === name) || AUTHORS[0] || null;
+    }
+
+    /* цена услуги у конкретного автора, иначе базовая */
+    function getAuthorPrice(author, serviceKey) {
+        if (!author) return BASE_PRICES[serviceKey] || 0;
+        if (author.prices && author.prices[serviceKey] != null) {
+            return author.prices[serviceKey];
+        }
+        return BASE_PRICES[serviceKey] || 0;
+    }
+
     const service = document.body.dataset.service;
     const svc = SERVICES[service] || null;
 
     const isSkin = service === 'skin';
     const isRender = service === 'render';
 
-    const BASE_PRICES = {};
-    Object.entries(SERVICES).forEach(([key, s]) => {
-        BASE_PRICES[key] = s.price;
-    });
     const basePrice = BASE_PRICES[service] || 0;
 
-    const authors = [
-        { name: 'Тимошка из Москвы', discord: 'https://discord.com/users/1146355058880040970' }
-    ];
+    const authors = window.TSTUDIOS_AUTHORS || [];
 
     /* ============================================================
        1. ПАРАМЕТРЫ URL
@@ -91,9 +105,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const orderExecutor = document.getElementById('orderExecutor');
-    if (orderExecutor && initial.executor) {
-        const opt = Array.from(orderExecutor.options).find(o => o.value === initial.executor);
-        if (opt) orderExecutor.value = initial.executor;
+    if (orderExecutor) {
+        AUTHORS.forEach(a => {
+            if (!a.services || a.services.includes(service)) {
+                const opt = document.createElement('option');
+                opt.value = a.name;
+                opt.textContent = a.name;
+                orderExecutor.appendChild(opt);
+            }
+        });
+
+        if (initial.executor) {
+            const opt = Array.from(orderExecutor.options).find(o => o.value === initial.executor);
+            if (opt) orderExecutor.value = initial.executor;
+        }
     }
 
     /* ============================================================
@@ -108,12 +133,21 @@ document.addEventListener('DOMContentLoaded', function () {
             : initial.urgencyMult === 1.5 ? 'Быстрее (×1.5)'
             : 'Срочно (×2)',
         executorName: initial.executor || null,
-        executorDiscord: (authors.find(a => a.name === initial.executor) || {}).discord || null
+        executorDiscord: (getAuthorByName(initial.executor) || {}).discord || null
     };
 
     function getBaseForService() {
-        if (isSkin && orderState.gender === 'female') return PRICES.skinFemale;
-        return basePrice;
+        const author = getAuthorByName(orderState.executorName);
+
+        if (isSkin && orderState.gender === 'female') {
+            /* femalePrice у автора, иначе базовая skinFemale */
+            if (author && author.prices && author.prices.skinFemale != null) {
+                return author.prices.skinFemale;
+            }
+            return PRICES.skinFemale;
+        }
+
+        return getAuthorPrice(author, service);
     }
 
     function calcTotal() {
@@ -181,9 +215,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (orderExecutor) {
         orderExecutor.addEventListener('change', function () {
-            const author = authors.find(a => a.name === this.value);
+            const author = getAuthorByName(this.value);
             orderState.executorName = author ? author.name : null;
             orderState.executorDiscord = author ? author.discord : null;
+            updatePriceBanner();
         });
     }
 

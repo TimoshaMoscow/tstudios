@@ -82,15 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
     /* ============================================================
        5. АВТОРЫ
     ============================================================ */
-    const authors = [
-        {
-            name: 'Тимошка из Москвы',
-            avatar: 'autors/tim.png',
-            youtube: 'https://www.youtube.com/@Timosha_MoscowOF',
-            discord: 'https://discord.com/users/1146355058880040970',
-            telegram: 'https://t.me/MinecraftWithTimosha'
-        }
-    ];
+    const authors = window.TSTUDIOS_AUTHORS || [];
 
     function getAuthorByName(name) {
         return authors.find(a => a.name === name) || authors[0];
@@ -228,6 +220,33 @@ document.addEventListener('DOMContentLoaded', function () {
             tag: 'oldprice',
             date: '2026-10-06',
             review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
+        },
+        {
+            name: 'Авес',
+            price: 0,
+            image: 'renders/aves.png',
+            author: 'Авес',
+            date: '2026-11-13',
+            tag: 'practice',
+            review: null
+        },
+        {
+            name: 'Авес Джедай',
+            price: 0,
+            image: 'renders/avesjedi.png',
+            author: 'Авес',
+            date: '2026-11-13',
+            tag: 'practice',
+            review: null
+        },
+        {
+            name: 'Хантер',
+            price: 0,
+            image: 'renders/hunter.png',
+            author: 'Авес',
+            date: '2026-11-13',
+            tag: 'practice',
+            review: null
         }
     ];
 
