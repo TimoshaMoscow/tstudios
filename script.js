@@ -88,6 +88,15 @@ document.addEventListener('DOMContentLoaded', function () {
         return authors.find(a => a.name === name) || authors[0];
     }
 
+    /* минимальная цена услуги среди авторов, у которых она есть */
+    function getMinPrice(serviceKey) {
+        const base = SERVICES[serviceKey]?.price || 0;
+        const list = (window.TSTUDIOS_AUTHORS || [])
+            .filter(a => !a.services || a.services.includes(serviceKey))
+            .map(a => (a.prices && a.prices[serviceKey] != null) ? a.prices[serviceKey] : base);
+        return list.length ? Math.min(...list) : base;
+    }
+    
     /* ============================================================
        6. ПОРТФОЛИО
     ============================================================ */
@@ -730,6 +739,7 @@ if (lightboxDate) {
     if (servicesGrid) {
         servicesGrid.innerHTML = '';
         Object.entries(SERVICES).forEach(([key, s]) => {
+            const minPrice = getMinPrice(key);
             const a = document.createElement('a');
             a.href = s.page;
             a.className = 'service-card';
@@ -740,7 +750,7 @@ if (lightboxDate) {
                 <button type="button" class="service-share" data-share="${key}" aria-label="Поделиться ${s.name}">
                     <i class="fas fa-share-alt"></i>
                 </button>
-                <div class="service-badge">от ${s.price} ₽</div>
+                <div class="service-badge">от ${minPrice} ₽</div>
                 <div class="service-content">
                     <h3>${s.name}</h3>
                     <p>${s.cardDesc}</p>
@@ -759,7 +769,7 @@ if (lightboxDate) {
             const s = SERVICES[key];
             if (!s) return;
             const url = `${window.location.origin}${window.location.pathname.replace(/[^/]*$/, '')}${s.page}`;
-            const text = `Закажи ${s.name.toLowerCase()} в TStudios — от ${s.price} ₽, сначала результат, потом оплата.`;
+            const text = `Закажи ${s.name.toLowerCase()} в TStudios — от ${getMinPrice(key)} ₽, сначала результат, потом оплата.`;
             shareText(text, url);
         });
     }
@@ -916,7 +926,7 @@ if (lightboxDate) {
 
     let calcState = {
         service: 'Скин',
-        basePrice: PRICES.skin || 0,
+        basePrice: getMinPrice('skin'),
         genderExtra: 0,
         revisions: 0,
         revisionsPrice: PRICES.revision,
@@ -938,7 +948,7 @@ if (lightboxDate) {
             btn.type = 'button';
             btn.className = 'calc-opt' + (i === 0 ? ' active' : '');
             btn.dataset.service = s.name;
-            btn.dataset.price = s.price;
+            btn.dataset.price = getMinPrice(key);
             btn.dataset.key = key;
             btn.innerHTML = `<i class="fas ${s.icon}"></i> ${s.name}`;
             calcService.appendChild(btn);
