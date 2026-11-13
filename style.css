@@ -3351,3 +3351,233 @@ input, textarea, select { font-family: inherit; }
     .projects-prev { left: 6px; }
     .projects-next { right: 6px; }
 }
+
+/* ============================================================
+   Team page (для команды)
+   ============================================================ */
+
+.team-page {
+    padding-top: 90px;
+}
+
+.team-main {
+    padding: 40px 0 80px;
+}
+
+.team-hero {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 56px;
+}
+
+.team-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: var(--radius-full);
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: var(--primary-light);
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.team-hero-badge i { color: var(--warning); }
+
+.team-hero h1 {
+    font-size: clamp(1.9rem, 4.5vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, #c7d2fe 40%, #67e8f9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.team-hero p {
+    font-size: 1.02rem;
+    color: var(--text-soft);
+    line-height: 1.65;
+}
+
+/* Секции */
+.team-section {
+    max-width: 820px;
+    margin: 0 auto 48px;
+}
+
+.team-section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.team-section-title i {
+    color: var(--primary-light);
+    font-size: 1.15rem;
+}
+
+/* Шаги */
+.team-steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    counter-reset: team-step;
+}
+
+.team-step {
+    display: flex;
+    gap: 18px;
+    padding: 20px 22px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.team-step:hover {
+    border-color: rgba(99, 102, 241, 0.4);
+    transform: translateX(4px);
+}
+
+.team-step-num {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+}
+
+.team-step-content h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.35;
+}
+
+.team-step-content p {
+    font-size: 0.92rem;
+    color: var(--text-soft);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.team-step-content strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* Правила */
+.team-rules {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.team-rule {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 18px;
+    background: rgba(99, 102, 241, 0.04);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    border-radius: var(--radius);
+    font-size: 0.92rem;
+    color: var(--text-soft);
+    line-height: 1.6;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.team-rule:hover {
+    background: rgba(99, 102, 241, 0.08);
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+.team-rule > i {
+    color: var(--success);
+    font-size: 1.05rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.team-rule strong {
+    color: var(--text);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 2px;
+}
+
+/* Что делать, если что-то не так */
+.team-troubles {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.team-troubles li {
+    padding: 14px 18px;
+    background: rgba(245, 158, 11, 0.05);
+    border: 1px solid rgba(245, 158, 11, 0.22);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    color: var(--text-soft);
+    line-height: 1.6;
+}
+
+.team-troubles li strong {
+    color: #fbbf24;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 2px;
+}
+
+/* Кнопка назад */
+.team-back {
+    text-align: center;
+    margin-top: 48px;
+}
+
+/* Мобильная адаптация */
+@media (max-width: 768px) {
+    .team-page { padding-top: 80px; }
+    .team-main { padding: 24px 0 60px; }
+    .team-hero { margin-bottom: 40px; }
+    .team-section { margin-bottom: 36px; }
+    .team-section-title { font-size: 1.15rem; }
+    .team-step { padding: 16px 18px; gap: 14px; }
+    .team-step-num { width: 36px; height: 36px; font-size: 1rem; }
+    .team-step-content h3 { font-size: 0.98rem; }
+    .team-step-content p { font-size: 0.86rem; }
+    .team-rule { padding: 14px 16px; font-size: 0.86rem; }
+    .team-troubles li { padding: 12px 14px; font-size: 0.85rem; }
+}
+
+@media (max-width: 480px) {
+    .team-step { padding: 14px; gap: 12px; }
+    .team-step-num { width: 32px; height: 32px; font-size: 0.9rem; }
+    .team-step-content h3 { font-size: 0.92rem; }
+    .team-step-content p { font-size: 0.82rem; }
+    .team-rule { padding: 12px 14px; font-size: 0.82rem; }
+    .team-troubles li { padding: 10px 12px; font-size: 0.82rem; }
+}
