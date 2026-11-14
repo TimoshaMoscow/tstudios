@@ -214,6 +214,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     tag: 'practice',
                     date: '2026-10-19',
                     review: null
+                },
+                {
+                    name: 'Вампирша',
+                    price: 0,
+                    image: 'skins/vampiregirl.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'practice',
+                    date: '2026-11-14',
+                    review: null
                 }
             ]
         },
