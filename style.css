@@ -3581,3 +3581,9 @@ input, textarea, select { font-family: inherit; }
     .team-rule { padding: 12px 14px; font-size: 0.82rem; }
     .team-troubles li { padding: 10px 12px; font-size: 0.82rem; }
 }
+
+.gallery-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}

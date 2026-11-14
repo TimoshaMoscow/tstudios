@@ -96,168 +96,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .map(a => (a.prices && a.prices[serviceKey] != null) ? a.prices[serviceKey] : base);
         return list.length ? Math.min(...list) : base;
     }
-    
-    /* ============================================================
-       6. ПОРТФОЛИО
-    ============================================================ */
-    const skinsData = [
-        {
-            name: 'Тимоша Музыка',
-            price: 0,
-            image: 'skins/tmusic.png',
-            author: 'Тимошка из Москвы',
-            tag: 'gift',
-            date: '2026-03-28',
-            review: { name: 'Тимоша Музыка', rating: 5, text: 'Классный Скин!', service: 'Скин' }
-        },
-        {
-            name: 'beatlewind',
-            price: 0,
-            image: 'skins/beatlewind.png',
-            author: 'Тимошка из Москвы',
-            tag: 'gift',
-            date: '2026-05-13',
-            review: { name: 'Beatlewind', rating: 4, text: 'Хорошо подобран стиль, но не хватает уникальности и изюминки в скине.', service: 'Скин' }
-        },
-        {
-            name: 'FIREFOX',
-            price: 0,
-            image: 'skins/firefox.png',
-            author: 'Тимошка из Москвы',
-            tag: 'gift',
-            date: '2026-05-29',
-            review: { name: 'FIREFOX', rating: 5, text: 'Очень хорошее качество и очень не плохое качество рук и буква моего канала.', service: 'Скин' }
-        },
-        {
-            name: 'Рыцарь',
-            price: 0,
-            image: 'skins/knight.png',
-            author: 'Тимошка из Москвы',
-            tag: 'practice',
-            date: '2026-06-06',
-            review: null
-        },
-        {
-            name: 'Toxinator',
-            price: 50,
-            image: 'skins/toxinator.png',
-            author: 'Тимошка из Москвы',
-            tag: 'oldprice',
-            date: '2026-08-16',
-            review: null
-        },
-        {
-            name: 'арсик',
-            price: 0,
-            image: 'skins/zakazMAJORrender.png',
-            author: 'Тимошка из Москвы',
-            tag: 'gift',
-            date: '2026-09-16',
-            review: { name: 'арсик', rating: 5, text: 'автор красава, все четко сделал:)', service: 'Скин' }
-        },
-        {
-            name: 'Дашка',
-            price: 0,
-            image: 'skins/dasha.png',
-            author: 'Тимошка из Москвы',
-            tag: 'gift',
-            date: '2026-10-19',
-            review: { name: 'Дашка', rating: 4, text: 'хороший.', service: 'Скин' }
-        },
-        {
-            name: 'Тима-тян',
-            price: 0,
-            image: 'skins/timgirl.png',
-            author: 'Тимошка из Москвы',
-            tag: 'practice',
-            date: '2026-10-16',
-            review: null
-        },
-        {
-            name: 'Тима-тян 2',
-            price: 0,
-            image: 'skins/v2timgirl.png',
-            author: 'Тимошка из Москвы',
-            tag: 'practice',
-            date: '2026-10-19',
-            review: null
-        }
-    ];
-
-    const rendersData = [
-        {
-            name: 'NPOT',
-            price: 50,
-            image: 'renders/npot.png',
-            author: 'Тимошка из Москвы',
-            tag: 'oldprice',
-            date: '2026-10-05',
-            review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
-        },
-        {
-            name: 'Sword',
-            price: 50,
-            image: 'renders/sword.png',
-            author: 'Тимошка из Москвы',
-            tag: 'oldprice',
-            date: '2026-10-05',
-            review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
-        },
-        {
-            name: 'OP',
-            price: 50,
-            image: 'renders/OP.png',
-            author: 'Тимошка из Москвы',
-            tag: 'oldprice',
-            date: '2026-10-05',
-            review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
-        },
-        {
-            name: 'Наблюдение',
-            price: 50,
-            image: 'renders/peeks.png',
-            author: 'Тимошка из Москвы',
-            tag: 'oldprice',
-            date: '2026-10-06',
-            review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
-        },
-        {
-            name: 'Думает',
-            price: 50,
-            image: 'renders/question.png',
-            author: 'Тимошка из Москвы',
-            tag: 'oldprice',
-            date: '2026-10-06',
-            review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
-        },
-        {
-            name: 'Авес',
-            price: 0,
-            image: 'renders/aves.png',
-            author: 'Авес',
-            date: '2026-11-13',
-            tag: 'practice',
-            review: null
-        },
-        {
-            name: 'Авес Джедай',
-            price: 0,
-            image: 'renders/avesjedi.png',
-            author: 'Авес',
-            date: '2026-11-13',
-            tag: 'practice',
-            review: null
-        },
-        {
-            name: 'Хантер',
-            price: 0,
-            image: 'renders/hunter.png',
-            author: 'Авес',
-            date: '2026-11-13',
-            tag: 'practice',
-            review: null
-        }
-    ];
 
     /* ============================================================
        5.5. НАШИ ДРУЗЬЯ
@@ -285,36 +123,228 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       7. КАРУСЕЛИ
-    ============================================================ */
-    const CAROUSEL_SPEED = 0.6;
-
-    const carousels = {
-        skins: {
-            viewport: document.getElementById('carouselSkins'),
-            track: document.getElementById('carouselSkinsTrack'),
-            data: skinsData,
-            direction: 'left',
-            offset: 0,
-            paused: false,
-            dragging: false,
-            dragStartX: 0,
-            dragStartOffset: 0
+       6. ПОРТФОЛИО — категории
+       Один массив = одна категория (для мета-инфы).
+       Карусели строятся не по категориям, а по отдельным работам.
+       ============================================================ */
+    const galleryCategories = [
+        {
+            key: 'skins',
+            label: 'Скины',
+            page: 'order-skin.html',
+            typeLabel: 'Скин',
+            data: [
+                {
+                    name: 'Тимоша Музыка',
+                    price: 0,
+                    image: 'skins/tmusic.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'gift',
+                    date: '2026-03-28',
+                    review: { name: 'Тимоша Музыка', rating: 5, text: 'Классный Скин!', service: 'Скин' }
+                },
+                {
+                    name: 'beatlewind',
+                    price: 0,
+                    image: 'skins/beatlewind.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'gift',
+                    date: '2026-05-13',
+                    review: { name: 'Beatlewind', rating: 4, text: 'Хорошо подобран стиль, но не хватает уникальности и изюминки в скине.', service: 'Скин' }
+                },
+                {
+                    name: 'FIREFOX',
+                    price: 0,
+                    image: 'skins/firefox.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'gift',
+                    date: '2026-05-29',
+                    review: { name: 'FIREFOX', rating: 5, text: 'Очень хорошее качество и очень не плохое качество рук и буква моего канала.', service: 'Скин' }
+                },
+                {
+                    name: 'Рыцарь',
+                    price: 0,
+                    image: 'skins/knight.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'practice',
+                    date: '2026-06-06',
+                    review: null
+                },
+                {
+                    name: 'Toxinator',
+                    price: 50,
+                    image: 'skins/toxinator.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'oldprice',
+                    date: '2026-08-16',
+                    review: null
+                },
+                {
+                    name: 'арсик',
+                    price: 0,
+                    image: 'skins/zakazMAJORrender.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'gift',
+                    date: '2026-09-16',
+                    review: { name: 'арсик', rating: 5, text: 'автор красава, все четко сделал:)', service: 'Скин' }
+                },
+                {
+                    name: 'Дашка',
+                    price: 0,
+                    image: 'skins/dasha.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'gift',
+                    date: '2026-10-19',
+                    review: { name: 'Дашка', rating: 4, text: 'хороший.', service: 'Скин' }
+                },
+                {
+                    name: 'Тима-тян',
+                    price: 0,
+                    image: 'skins/timgirl.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'practice',
+                    date: '2026-10-16',
+                    review: null
+                },
+                {
+                    name: 'Тима-тян 2',
+                    price: 0,
+                    image: 'skins/v2timgirl.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'practice',
+                    date: '2026-10-19',
+                    review: null
+                }
+            ]
         },
-        renders: {
-            viewport: document.getElementById('carouselRenders'),
-            track: document.getElementById('carouselRendersTrack'),
-            data: rendersData,
-            direction: 'right',
-            offset: 0,
-            paused: false,
-            dragging: false,
-            dragStartX: 0,
-            dragStartOffset: 0
+        {
+            key: 'renders',
+            label: 'Рендеры',
+            page: 'order-render.html',
+            typeLabel: 'Рендер',
+            data: [
+                {
+                    name: 'NPOT',
+                    price: 50,
+                    image: 'renders/npot.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'oldprice',
+                    date: '2026-10-05',
+                    review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
+                },
+                {
+                    name: 'Sword',
+                    price: 50,
+                    image: 'renders/sword.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'oldprice',
+                    date: '2026-10-05',
+                    review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
+                },
+                {
+                    name: 'OP',
+                    price: 50,
+                    image: 'renders/OP.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'oldprice',
+                    date: '2026-10-05',
+                    review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
+                },
+                {
+                    name: 'Наблюдение',
+                    price: 50,
+                    image: 'renders/peeks.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'oldprice',
+                    date: '2026-10-06',
+                    review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
+                },
+                {
+                    name: 'Думает',
+                    price: 50,
+                    image: 'renders/question.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'oldprice',
+                    date: '2026-10-06',
+                    review: { name: 'Vakulko', rating: 5, text: 'да круто вышло, спасибо', service: 'Рендер' }
+                },
+                {
+                    name: 'Авес',
+                    price: 0,
+                    image: 'renders/aves.png',
+                    author: 'Авес',
+                    date: '2026-11-13',
+                    tag: 'practice',
+                    review: null
+                },
+                {
+                    name: 'Авес Джедай',
+                    price: 0,
+                    image: 'renders/avesjedi.png',
+                    author: 'Авес',
+                    date: '2026-11-13',
+                    tag: 'practice',
+                    review: null
+                },
+                {
+                    name: 'Хантер',
+                    price: 0,
+                    image: 'renders/hunter.png',
+                    author: 'Авес',
+                    date: '2026-11-13',
+                    tag: 'practice',
+                    review: null
+                }
+            ]
         }
-    };
+    ];
 
-    const carouselDragMoved = { skins: false, renders: false };
+    /* ============================================================
+       6.1. ПЛОСКИЙ СПИСОК РАБОТ + РАСКЛАДКА ПО КАРУСЕЛЯМ
+       ============================================================ */
+
+    /* Перемешивание (Fisher–Yates) */
+    function shuffleWorks(arr) {
+        const a = arr.slice();
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    /* Все работы в одном плоском массиве, с мета-инфой категории */
+    const allWorks = shuffleWorks(
+        galleryCategories.flatMap(cat =>
+            (cat.data || []).map(item => ({
+                ...item,
+                categoryKey: cat.key,
+                categoryLabel: cat.label,
+                typeLabel: cat.typeLabel,
+                page: cat.page
+            }))
+        )
+    );
+
+    /* Максимум каруселей — 3. Меньше — если работ мало. */
+    const MAX_CAROUSELS = 3;
+    const carouselCount = allWorks.length
+        ? Math.min(MAX_CAROUSELS, allWorks.length)
+        : 0;
+
+    /* Раскидываем работы по каруселям вперемешку (round-robin) */
+    const carouselGroups = Array.from({ length: carouselCount }, () => []);
+    allWorks.forEach((work, i) => {
+        carouselGroups[i % carouselCount].push(work);
+    });
+
+    /* ============================================================
+       7. КАРУСЕЛИ (универсальные, по отдельным работам)
+       ============================================================ */
+    const CAROUSEL_SPEED = 0.6;
+    const carousels = {};
+    const carouselDragMoved = {};
+    const galleryRowsEl = document.getElementById('galleryRows');
 
     function createCarouselCard(item, index, carouselKey) {
         const author = getAuthorByName(item.author);
@@ -360,7 +390,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function initCarousel(key) {
         const c = carousels[key];
-        if (!c.viewport || !c.track) return;
+        if (!c || !c.viewport || !c.track) return;
         c.track.innerHTML = '';
 
         const items = [...c.data, ...c.data, ...c.data];
@@ -420,9 +450,75 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    function animateCarousels() {
+        Object.keys(carousels).forEach(key => {
+            const c = carousels[key];
+            if (!c || !c.track) return;
+            const singleSetWidth = c.track.scrollWidth / 3;
+            if (singleSetWidth <= 0) return;
+
+            if (!c.paused && !c.dragging) {
+                if (c.direction === 'left') {
+                    c.offset += CAROUSEL_SPEED;
+                    if (c.offset >= singleSetWidth) c.offset -= singleSetWidth;
+                } else {
+                    c.offset -= CAROUSEL_SPEED;
+                    if (c.offset <= 0) c.offset += singleSetWidth;
+                }
+            }
+
+            if (c.offset < 0) c.offset += singleSetWidth;
+            if (c.offset >= singleSetWidth * 2) c.offset -= singleSetWidth;
+
+            c.track.style.transform = `translate3d(${-c.offset}px, 0, 0)`;
+        });
+        requestAnimationFrame(animateCarousels);
+    }
+
+    if (galleryRowsEl) {
+        galleryRowsEl.innerHTML = '';
+
+        carouselGroups.forEach((works, idx) => {
+            if (!works.length) return;
+
+            const row = document.createElement('div');
+            row.className = 'carousel-block';
+
+            const viewport = document.createElement('div');
+            viewport.className = 'carousel-viewport';
+            viewport.setAttribute('aria-label', `Карусель ${idx + 1}`);
+
+            const track = document.createElement('div');
+            track.className = 'carousel-track';
+
+            viewport.appendChild(track);
+            row.appendChild(viewport);
+            galleryRowsEl.appendChild(row);
+
+            const key = `carousel_${idx}`;
+
+            carousels[key] = {
+                viewport,
+                track,
+                data: works,
+                direction: idx % 2 === 0 ? 'left' : 'right',
+                offset: 0,
+                paused: false,
+                dragging: false,
+                dragStartX: 0,
+                dragStartOffset: 0
+            };
+            carouselDragMoved[key] = false;
+
+            initCarousel(key);
+        });
+
+        requestAnimationFrame(animateCarousels);
+    }
+
     /* ============================================================
        7.5. КАРУСЕЛИ ДРУЗЕЙ
-    ============================================================ */
+       ============================================================ */
     const friendsRowsEl = document.getElementById('friendsRows');
     const friendCarousels = [];
 
@@ -507,38 +603,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (friendCarousels.length) requestAnimationFrame(animateFriendCarousels);
 
-    function animateCarousels() {
-        Object.keys(carousels).forEach(key => {
-            const c = carousels[key];
-            if (!c.track) return;
-            const singleSetWidth = c.track.scrollWidth / 3;
-            if (singleSetWidth <= 0) return;
-
-            if (!c.paused && !c.dragging) {
-                if (c.direction === 'left') {
-                    c.offset += CAROUSEL_SPEED;
-                    if (c.offset >= singleSetWidth) c.offset -= singleSetWidth;
-                } else {
-                    c.offset -= CAROUSEL_SPEED;
-                    if (c.offset <= 0) c.offset += singleSetWidth;
-                }
-            }
-
-            if (c.offset < 0) c.offset += singleSetWidth;
-            if (c.offset >= singleSetWidth * 2) c.offset -= singleSetWidth;
-
-            c.track.style.transform = `translate3d(${-c.offset}px, 0, 0)`;
-        });
-        requestAnimationFrame(animateCarousels);
-    }
-
-    initCarousel('skins');
-    initCarousel('renders');
-    requestAnimationFrame(animateCarousels);
-
     /* ============================================================
        8. LIGHTBOX
-    ============================================================ */
+       ============================================================ */
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const lightboxTitle = document.getElementById('lightboxTitle');
@@ -556,7 +623,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let lightboxItems = [];
     let lightboxIndex = 0;
-    let lightboxCurrentType = 'skins';
+    let lightboxCurrentType = 'carousel_0';
 
     function openLightbox(type, index) {
         lightboxCurrentType = type;
@@ -568,24 +635,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const author = getAuthorByName(item.author);
 
-        lightboxType.textContent = type === 'skins' ? 'Скин' : 'Рендер';
+        lightboxType.textContent = item.typeLabel || 'Работа';
         lightboxTitle.textContent = item.name;
         lightboxPrice.innerHTML = formatPrice(item.price, item.tag);
-const lightboxDate = document.getElementById('lightboxDate');
-if (lightboxDate) {
-    if (item.date) {
-        const d = new Date(item.date);
-        const formatted = d.toLocaleDateString('ru-RU', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        });
-        lightboxDate.textContent = `Создано: ${formatted}`;
-        lightboxDate.hidden = false;
-    } else {
-        lightboxDate.hidden = true;
-    }
-}
+
+        const lightboxDate = document.getElementById('lightboxDate');
+        if (lightboxDate) {
+            if (item.date) {
+                const d = new Date(item.date);
+                const formatted = d.toLocaleDateString('ru-RU', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+                lightboxDate.textContent = `Создано: ${formatted}`;
+                lightboxDate.hidden = false;
+            } else {
+                lightboxDate.hidden = true;
+            }
+        }
+
         lightboxAuthorAvatar.src = author.avatar;
         lightboxAuthorAvatar.alt = author.name;
         lightboxAuthorName.textContent = author.name;
@@ -667,10 +736,10 @@ if (lightboxDate) {
 
     if (lightboxOrderBtn) {
         lightboxOrderBtn.addEventListener('click', () => {
-            const type = lightboxCurrentType;
             const item = lightboxItems[lightboxIndex];
-            const executor = item ? item.author : '';
-            const page = type === 'renders' ? 'order-render.html' : 'order-skin.html';
+            if (!item) return;
+            const executor = item.author || '';
+            const page = item.page || 'order-skin.html';
             const url = executor
                 ? `${page}?executor=${encodeURIComponent(executor)}`
                 : page;
@@ -682,16 +751,16 @@ if (lightboxDate) {
         lightboxShareBtn.addEventListener('click', () => {
             const item = lightboxItems[lightboxIndex];
             if (!item) return;
-            const page = lightboxCurrentType === 'renders' ? 'order-render.html' : 'order-skin.html';
+            const page = item.page || 'order-skin.html';
             const url = `${window.location.origin}${window.location.pathname.replace(/[^/]*$/, '')}${page}`;
-            const text = `${item.name} — работа в TStudios (${lightboxCurrentType === 'renders' ? 'рендер' : 'скин'} по Minecraft)`;
+            const text = `${item.name} — работа в TStudios (${item.typeLabel || 'работа'} по Minecraft)`;
             shareText(text, url);
         });
     }
 
     /* ============================================================
        9. ПОДЕЛИТЬСЯ
-    ============================================================ */
+       ============================================================ */
     function getBaseUrl() {
         return window.location.origin + window.location.pathname;
     }
@@ -792,7 +861,7 @@ if (lightboxDate) {
 
     /* ============================================================
        10. FAQ
-    ============================================================ */
+       ============================================================ */
     const faqData = [
         { q: 'Как оплатить?', a: 'Сначала показываем готовое — платишь, только если всё нравится. Переводом (СБП или карта).' },
         { q: 'Сколько ждать готовую работу?', a: 'Скин — 1-2 дня, рендер — до 24 часов. Нужно быстрее — есть ускорение за доплату.' },
@@ -834,13 +903,13 @@ if (lightboxDate) {
 
     /* ============================================================
        11. ОТЗЫВЫ — собираем из портфолио
-    ============================================================ */
-    const reviewsData = [
-        ...skinsData.map(item => item.review).filter(Boolean),
-        ...rendersData.map(item => item.review).filter(Boolean)
-    ].filter((r, i, arr) =>
-        arr.findIndex(x => x.name === r.name && x.text === r.text) === i
-    );
+       ============================================================ */
+    const reviewsData = allWorks
+        .map(item => item.review)
+        .filter(Boolean)
+        .filter((r, i, arr) =>
+            arr.findIndex(x => x.name === r.name && x.text === r.text) === i
+        );
 
     const serviceIcons = { 'Скин': 'fa-paint-brush', 'Рендер': 'fa-cube' };
     const reviewsSlider = document.getElementById('reviewsSlider');
@@ -914,7 +983,7 @@ if (lightboxDate) {
 
     /* ============================================================
        12. КАЛЬКУЛЯТОР
-    ============================================================ */
+       ============================================================ */
     const calcService = document.getElementById('calcService');
     const calcGenderRow = document.getElementById('calcGenderRow');
     const calcGender = document.getElementById('calcGender');
@@ -1026,7 +1095,7 @@ if (lightboxDate) {
 
     /* ============================================================
        13. МОДАЛКА «В КОМАНДУ»
-    ============================================================ */
+       ============================================================ */
     const teamModal = document.getElementById('teamModal');
     const teamModalClose = document.getElementById('teamModalClose');
     const openTeamModalBtn = document.getElementById('openTeamModal');
@@ -1193,7 +1262,7 @@ if (lightboxDate) {
 
     /* ============================================================
        14. ЮРИДИЧЕСКИЕ МОДАЛКИ
-    ============================================================ */
+       ============================================================ */
     const privacyModal = document.getElementById('privacyModal');
     const privacyModalClose = document.getElementById('privacyModalClose');
     const openPrivacyModalBtn = document.getElementById('openPrivacyModal');
@@ -1238,7 +1307,7 @@ if (lightboxDate) {
 
     /* ============================================================
        15. ESCAPE
-    ============================================================ */
+       ============================================================ */
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             if (lightbox && lightbox.classList.contains('active')) closeLightbox();
@@ -1254,7 +1323,7 @@ if (lightboxDate) {
 
     /* ============================================================
        16. СЛАЙДЕР ПРОЕКТОВ
-    ============================================================ */
+       ============================================================ */
     const projectsTrack = document.getElementById('projectsTrack');
     const projectsPrev = document.getElementById('projectsPrev');
     const projectsNext = document.getElementById('projectsNext');
