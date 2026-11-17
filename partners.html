@@ -168,6 +168,21 @@
     </div>
 </footer>
 
+<script>
+(function () {
+    var now = new Date();
+    var start = new Date('2026-11-17T00:00:00');
+    var end = new Date('2026-11-25T00:00:00');
+
+    if (now >= start && now < end) {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'gta6.css';
+        document.head.appendChild(link);
+    }
+})();
+</script>
+
 <script src="authors.js"></script>
 <script src="services.js"></script>
 <script src="script.js"></script>
