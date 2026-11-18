@@ -223,6 +223,33 @@ document.addEventListener('DOMContentLoaded', function () {
                     tag: 'practice',
                     date: '2026-11-14',
                     review: null
+                },
+                {
+                    name: 'Стив TStudios version',
+                    price: 0,
+                    image: 'skins/steve.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'practice',
+                    date: '2026-11-17',
+                    review: null
+                },
+                {
+                    name: 'Алекс TStudios version',
+                    price: 0,
+                    image: 'skins/alex.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'practice',
+                    date: '2026-11-17',
+                    review: null
+                },
+                {
+                    name: 'Мальчик, розовые волосы, школьная форма, куртка',
+                    price: 0,
+                    image: 'skins/timonika.png',
+                    author: 'Тимошка из Москвы',
+                    tag: 'practice',
+                    date: '2026-11-18',
+                    review: null
                 }
             ]
         },
