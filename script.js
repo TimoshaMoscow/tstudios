@@ -1383,11 +1383,15 @@ document.addEventListener('DOMContentLoaded', function () {
         /* Точки */
         if (projectsDots) {
             projectsDots.innerHTML = '';
+            const projectIcons = ['fa-cube', 'fa-book', 'fa-solid fa-gear', 'fa-robot',];
+            
             for (let i = 0; i < total; i++) {
                 const dot = document.createElement('button');
                 dot.type = 'button';
                 dot.className = 'projects-dot' + (i === 0 ? ' active' : '');
                 dot.setAttribute('aria-label', `Проект ${i + 1}`);
+                const icon = projectIcons[i] || 'fa-circle';
+                dot.innerHTML = `<i class="fas ${icon}"></i>`;
                 dot.addEventListener('click', () => goToSlide(i));
                 projectsDots.appendChild(dot);
             }

@@ -3286,30 +3286,42 @@ input, textarea, select { font-family: inherit; }
 .projects-prev { left: -26px; }
 .projects-next { right: -26px; }
 
-/* Точки */
 .projects-dots {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    align-items: center;
+    gap: 16px;
     margin-top: 24px;
 }
 
+/* Убираем любые фоны, рамки и фиксированные размеры */
 .projects-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
+    background: transparent;
     border: none;
-    cursor: pointer;
-    transition: all 0.25s ease;
     padding: 0;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem; /* Размер иконки */
+    opacity: 0.5;
 }
 
+/* При наведении чуть ярче */
+.projects-dot:hover {
+    opacity: 1;
+    color: var(--text-soft);
+    transform: scale(1.1);
+}
+
+/* Активная иконка — яркая, с фирменным цветом и свечением */
 .projects-dot.active {
-    background: var(--primary);
-    width: 24px;
-    border-radius: 4px;
-    box-shadow: 0 0 12px rgba(99, 102, 241, 0.6);
+    opacity: 1;
+    color: var(--primary);
+    transform: scale(1.2); /* Чуть крупнее остальных */
+    filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.6)); /* Добавляем неоновое свечение */
 }
 
 /* ===== Мобильная адаптация ===== */
