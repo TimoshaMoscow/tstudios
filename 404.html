@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, follow">
+    <title>404 — Мы переехали | TStudios</title>
+    <style>
+        :root {
+            --bg: #0d0d12;
+            --card: #16161f;
+            --text: #f2f2f7;
+            --muted: #9a9aad;
+            --primary: #7c4dff;
+            --primary-light: #a37bff;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: radial-gradient(circle at 50% 0%, #1d1730 0%, var(--bg) 60%);
+            color: var(--text);
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            text-align: center;
+        }
+
+        .card {
+            max-width: 560px;
+            width: 100%;
+            padding: 48px 32px;
+            background: var(--card);
+            border: 1px solid rgba(124, 77, 255, 0.25);
+            border-radius: 20px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+        }
+
+        .code {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1;
+            margin: 0 0 8px;
+            background: linear-gradient(135deg, var(--primary-light), #56ccf2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin: 0 0 12px;
+        }
+
+        p {
+            margin: 0 0 28px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 36px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            font-size: 17px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 10px 28px rgba(124, 77, 255, 0.35);
+        }
+
+        .btn:hover,
+        .btn:focus-visible {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 34px rgba(124, 77, 255, 0.5);
+        }
+
+        @media (max-width: 480px) {
+            .card { padding: 36px 20px; }
+            .code { font-size: 56px; }
+            h1 { font-size: 21px; }
+            .btn { width: 100%; padding: 15px 24px; }
+        }
+    </style>
+</head>
+<body>
+    <main class="card">
+        <p class="code">404</p>
+        <h1>Мы переехали</h1>
+        <p>Эта страница больше не существует. Наш сайт теперь живёт по новому адресу — жми кнопку ниже.</p>
+        <a class="btn" id="newSiteLink" href="https://example.com" rel="noopener">Перейти на новый сайт</a>
+    </main>
+    <script>
+        // TODO: заменить на реальный адрес нового сайта
+        const NEW_SITE_URL = 'https://example.com';
+        document.getElementById('newSiteLink').href = NEW_SITE_URL;
+    </script>
+</body>
+</html>
